@@ -86,6 +86,7 @@ const App = () => (
           <Route path="page-design" element={<PageDesignControl />} />
           <Route path="users" element={<UserManagement />} />
           <Route path="products" element={<ProductServiceManagement />} />
+          <Route path="medicines" element={<div>Medicines Management (Use /admin/products)</div>} />
           
           {/* Service Modules */}
           <Route path="orders" element={<div>Orders Management (Coming Soon)</div>} />
