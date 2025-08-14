@@ -14,16 +14,1987 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      ambulance_services: {
+        Row: {
+          available_24x7: boolean | null
+          city: string
+          contact: string | null
+          created_at: string
+          description: string | null
+          equipment: string[] | null
+          id: string
+          image_url: string | null
+          name: string
+          price: number
+          updated_at: string
+          vehicle_type: string | null
+        }
+        Insert: {
+          available_24x7?: boolean | null
+          city: string
+          contact?: string | null
+          created_at?: string
+          description?: string | null
+          equipment?: string[] | null
+          id?: string
+          image_url?: string | null
+          name: string
+          price: number
+          updated_at?: string
+          vehicle_type?: string | null
+        }
+        Update: {
+          available_24x7?: boolean | null
+          city?: string
+          contact?: string | null
+          created_at?: string
+          description?: string | null
+          equipment?: string[] | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          price?: number
+          updated_at?: string
+          vehicle_type?: string | null
+        }
+        Relationships: []
+      }
+      blood_banks: {
+        Row: {
+          address: string
+          available_blood_groups: string[] | null
+          city: string
+          contact: string | null
+          created_at: string
+          emergency_contact: string | null
+          id: string
+          image_url: string | null
+          lat: number | null
+          lng: number | null
+          name: string
+          pincode: string
+          state: string
+          updated_at: string
+        }
+        Insert: {
+          address: string
+          available_blood_groups?: string[] | null
+          city: string
+          contact?: string | null
+          created_at?: string
+          emergency_contact?: string | null
+          id?: string
+          image_url?: string | null
+          lat?: number | null
+          lng?: number | null
+          name: string
+          pincode: string
+          state: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string
+          available_blood_groups?: string[] | null
+          city?: string
+          contact?: string | null
+          created_at?: string
+          emergency_contact?: string | null
+          id?: string
+          image_url?: string | null
+          lat?: number | null
+          lng?: number | null
+          name?: string
+          pincode?: string
+          state?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      bottom_navigation: {
+        Row: {
+          active: boolean | null
+          created_at: string
+          icon_url: string | null
+          id: string
+          link: string
+          sort_order: number | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string
+          icon_url?: string | null
+          id?: string
+          link: string
+          sort_order?: number | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string
+          icon_url?: string | null
+          id?: string
+          link?: string
+          sort_order?: number | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      carousel_items: {
+        Row: {
+          carousel_id: string
+          created_at: string
+          id: string
+          item_id: string
+          item_type: string
+          sort_order: number | null
+          updated_at: string
+        }
+        Insert: {
+          carousel_id: string
+          created_at?: string
+          id?: string
+          item_id: string
+          item_type: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Update: {
+          carousel_id?: string
+          created_at?: string
+          id?: string
+          item_id?: string
+          item_type?: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "carousel_items_carousel_id_fkey"
+            columns: ["carousel_id"]
+            isOneToOne: false
+            referencedRelation: "carousels"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      carousels: {
+        Row: {
+          active: boolean | null
+          created_at: string
+          id: string
+          module_name: string
+          sort_order: number | null
+          title: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string
+          id?: string
+          module_name: string
+          sort_order?: number | null
+          title: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string
+          id?: string
+          module_name?: string
+          sort_order?: number | null
+          title?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      diabetes_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      diabetes_diets: {
+        Row: {
+          calories: number | null
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          instructions: string | null
+          name: string
+          plan_id: string
+          updated_at: string
+        }
+        Insert: {
+          calories?: number | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          instructions?: string | null
+          name: string
+          plan_id: string
+          updated_at?: string
+        }
+        Update: {
+          calories?: number | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          instructions?: string | null
+          name?: string
+          plan_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "diabetes_diets_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "diabetes_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      diabetes_experts: {
+        Row: {
+          bio: string | null
+          contact: string | null
+          created_at: string
+          experience: number | null
+          id: string
+          image_url: string | null
+          name: string
+          qualification: string | null
+          speciality: string | null
+          updated_at: string
+        }
+        Insert: {
+          bio?: string | null
+          contact?: string | null
+          created_at?: string
+          experience?: number | null
+          id?: string
+          image_url?: string | null
+          name: string
+          qualification?: string | null
+          speciality?: string | null
+          updated_at?: string
+        }
+        Update: {
+          bio?: string | null
+          contact?: string | null
+          created_at?: string
+          experience?: number | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          qualification?: string | null
+          speciality?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      diabetes_plans: {
+        Row: {
+          created_at: string
+          description: string | null
+          duration: number | null
+          expert_id: string | null
+          id: string
+          image_url: string | null
+          name: string
+          price: number
+          sessions: number | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          duration?: number | null
+          expert_id?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          price: number
+          sessions?: number | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          duration?: number | null
+          expert_id?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          price?: number
+          sessions?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "diabetes_plans_expert_id_fkey"
+            columns: ["expert_id"]
+            isOneToOne: false
+            referencedRelation: "diabetes_experts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      diabetes_products: {
+        Row: {
+          category_id: string
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          price: number
+          updated_at: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          price: number
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          price?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "diabetes_products_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "diabetes_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      diabetes_services: {
+        Row: {
+          category_id: string
+          created_at: string
+          description: string | null
+          expert_id: string | null
+          id: string
+          image_url: string | null
+          name: string
+          price: number
+          updated_at: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          description?: string | null
+          expert_id?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          price: number
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          description?: string | null
+          expert_id?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          price?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "diabetes_services_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "diabetes_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "diabetes_services_expert_id_fkey"
+            columns: ["expert_id"]
+            isOneToOne: false
+            referencedRelation: "diabetes_experts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      diabetes_tests: {
+        Row: {
+          category_id: string
+          created_at: string
+          description: string | null
+          fasting_required: boolean | null
+          featured: boolean | null
+          home_collection_available: boolean | null
+          id: string
+          image_url: string | null
+          instructions: string | null
+          mrp: number
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          description?: string | null
+          fasting_required?: boolean | null
+          featured?: boolean | null
+          home_collection_available?: boolean | null
+          id?: string
+          image_url?: string | null
+          instructions?: string | null
+          mrp: number
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          description?: string | null
+          fasting_required?: boolean | null
+          featured?: boolean | null
+          home_collection_available?: boolean | null
+          id?: string
+          image_url?: string | null
+          instructions?: string | null
+          mrp?: number
+          name?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "diabetes_tests_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "diabetes_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      diagnostics_centres: {
+        Row: {
+          active: boolean | null
+          address: string
+          city: string
+          contact: string | null
+          created_at: string
+          id: string
+          image_url: string | null
+          lat: number | null
+          lng: number | null
+          name: string
+          pincode: string
+          state: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean | null
+          address: string
+          city: string
+          contact?: string | null
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          lat?: number | null
+          lng?: number | null
+          name: string
+          pincode: string
+          state: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean | null
+          address?: string
+          city?: string
+          contact?: string | null
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          lat?: number | null
+          lng?: number | null
+          name?: string
+          pincode?: string
+          state?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      diet_guides: {
+        Row: {
+          calories_per_day: number | null
+          category: string
+          created_at: string
+          description: string | null
+          duration: number | null
+          id: string
+          image_url: string | null
+          instructions: string | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          calories_per_day?: number | null
+          category: string
+          created_at?: string
+          description?: string | null
+          duration?: number | null
+          id?: string
+          image_url?: string | null
+          instructions?: string | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          calories_per_day?: number | null
+          category?: string
+          created_at?: string
+          description?: string | null
+          duration?: number | null
+          id?: string
+          image_url?: string | null
+          instructions?: string | null
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      hero_banners: {
+        Row: {
+          active: boolean | null
+          created_at: string
+          id: string
+          image_url: string
+          link: string | null
+          sort_order: number | null
+          subtitle: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string
+          id?: string
+          image_url: string
+          link?: string | null
+          sort_order?: number | null
+          subtitle?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string
+          id?: string
+          image_url?: string
+          link?: string | null
+          sort_order?: number | null
+          subtitle?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      homecare_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      homecare_services: {
+        Row: {
+          category_id: string
+          created_at: string
+          description: string | null
+          duration: number | null
+          id: string
+          image_url: string | null
+          name: string
+          price: number
+          sessions: number | null
+          updated_at: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          description?: string | null
+          duration?: number | null
+          id?: string
+          image_url?: string | null
+          name: string
+          price: number
+          sessions?: number | null
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          description?: string | null
+          duration?: number | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          price?: number
+          sessions?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "homecare_services_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "homecare_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      hospitals: {
+        Row: {
+          address: string
+          city: string
+          contact: string | null
+          created_at: string
+          emergency_services: boolean | null
+          id: string
+          image_url: string | null
+          lat: number | null
+          lng: number | null
+          name: string
+          pincode: string
+          specialities: string[] | null
+          state: string
+          updated_at: string
+        }
+        Insert: {
+          address: string
+          city: string
+          contact?: string | null
+          created_at?: string
+          emergency_services?: boolean | null
+          id?: string
+          image_url?: string | null
+          lat?: number | null
+          lng?: number | null
+          name: string
+          pincode: string
+          specialities?: string[] | null
+          state: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string
+          city?: string
+          contact?: string | null
+          created_at?: string
+          emergency_services?: boolean | null
+          id?: string
+          image_url?: string | null
+          lat?: number | null
+          lng?: number | null
+          name?: string
+          pincode?: string
+          specialities?: string[] | null
+          state?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      insurance_plans: {
+        Row: {
+          coverage_amount: number
+          created_at: string
+          description: string | null
+          duration: number
+          exclusions: string[] | null
+          features: string[] | null
+          id: string
+          image_url: string | null
+          name: string
+          premium: number
+          provider: string
+          updated_at: string
+        }
+        Insert: {
+          coverage_amount: number
+          created_at?: string
+          description?: string | null
+          duration: number
+          exclusions?: string[] | null
+          features?: string[] | null
+          id?: string
+          image_url?: string | null
+          name: string
+          premium: number
+          provider: string
+          updated_at?: string
+        }
+        Update: {
+          coverage_amount?: number
+          created_at?: string
+          description?: string | null
+          duration?: number
+          exclusions?: string[] | null
+          features?: string[] | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          premium?: number
+          provider?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      lab_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      lab_packages: {
+        Row: {
+          category_id: string
+          created_at: string
+          description: string | null
+          fasting_required: boolean | null
+          home_collection_available: boolean | null
+          id: string
+          image_url: string | null
+          instructions: string | null
+          mrp: number
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          description?: string | null
+          fasting_required?: boolean | null
+          home_collection_available?: boolean | null
+          id?: string
+          image_url?: string | null
+          instructions?: string | null
+          mrp: number
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          description?: string | null
+          fasting_required?: boolean | null
+          home_collection_available?: boolean | null
+          id?: string
+          image_url?: string | null
+          instructions?: string | null
+          mrp?: number
+          name?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lab_packages_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "lab_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lab_test_variants: {
+        Row: {
+          created_at: string
+          diagnostic_centre_id: string
+          id: string
+          lab_test_id: string
+          price: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          diagnostic_centre_id: string
+          id?: string
+          lab_test_id: string
+          price: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          diagnostic_centre_id?: string
+          id?: string
+          lab_test_id?: string
+          price?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lab_test_variants_diagnostic_centre_id_fkey"
+            columns: ["diagnostic_centre_id"]
+            isOneToOne: false
+            referencedRelation: "diagnostics_centres"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lab_test_variants_lab_test_id_fkey"
+            columns: ["lab_test_id"]
+            isOneToOne: false
+            referencedRelation: "lab_tests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lab_tests: {
+        Row: {
+          category_id: string
+          created_at: string
+          description: string | null
+          fasting_required: boolean | null
+          featured: boolean | null
+          home_collection_available: boolean | null
+          id: string
+          image_url: string | null
+          instructions: string | null
+          mrp: number
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          description?: string | null
+          fasting_required?: boolean | null
+          featured?: boolean | null
+          home_collection_available?: boolean | null
+          id?: string
+          image_url?: string | null
+          instructions?: string | null
+          mrp: number
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          description?: string | null
+          fasting_required?: boolean | null
+          featured?: boolean | null
+          home_collection_available?: boolean | null
+          id?: string
+          image_url?: string | null
+          instructions?: string | null
+          mrp?: number
+          name?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lab_tests_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "lab_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medicine_brands: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          logo_url: string | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          logo_url?: string | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      medicine_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          parent_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          parent_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          parent_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medicine_categories_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "medicine_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medicines: {
+        Row: {
+          brand: string | null
+          brand_id: string | null
+          branded_alternatives: string[] | null
+          category_id: string
+          created_at: string
+          description: string | null
+          expiry_date: string | null
+          featured: boolean | null
+          generic_alternative: string | null
+          id: string
+          image_url: string | null
+          mrp: number
+          name: string
+          prescription_required: boolean | null
+          sale_price: number
+          stock_qty: number
+          tags: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          brand?: string | null
+          brand_id?: string | null
+          branded_alternatives?: string[] | null
+          category_id: string
+          created_at?: string
+          description?: string | null
+          expiry_date?: string | null
+          featured?: boolean | null
+          generic_alternative?: string | null
+          id?: string
+          image_url?: string | null
+          mrp: number
+          name: string
+          prescription_required?: boolean | null
+          sale_price: number
+          stock_qty?: number
+          tags?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          brand?: string | null
+          brand_id?: string | null
+          branded_alternatives?: string[] | null
+          category_id?: string
+          created_at?: string
+          description?: string | null
+          expiry_date?: string | null
+          featured?: boolean | null
+          generic_alternative?: string | null
+          id?: string
+          image_url?: string | null
+          mrp?: number
+          name?: string
+          prescription_required?: boolean | null
+          sale_price?: number
+          stock_qty?: number
+          tags?: string[] | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medicines_brand_id_fkey"
+            columns: ["brand_id"]
+            isOneToOne: false
+            referencedRelation: "medicine_brands"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medicines_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "medicine_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mega_menu: {
+        Row: {
+          active: boolean | null
+          created_at: string
+          id: string
+          link: string
+          module_name: string
+          parent_id: string | null
+          sort_order: number | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string
+          id?: string
+          link: string
+          module_name: string
+          parent_id?: string | null
+          sort_order?: number | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string
+          id?: string
+          link?: string
+          module_name?: string
+          parent_id?: string | null
+          sort_order?: number | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mega_menu_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "mega_menu"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mobile_menu: {
+        Row: {
+          active: boolean | null
+          created_at: string
+          icon_url: string | null
+          id: string
+          link: string
+          sort_order: number | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string
+          icon_url?: string | null
+          id?: string
+          link: string
+          sort_order?: number | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string
+          icon_url?: string | null
+          id?: string
+          link?: string
+          sort_order?: number | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      offer_strips: {
+        Row: {
+          active: boolean | null
+          created_at: string
+          description: string | null
+          discount: string | null
+          id: string
+          image_url: string | null
+          link: string | null
+          sort_order: number | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string
+          description?: string | null
+          discount?: string | null
+          id?: string
+          image_url?: string | null
+          link?: string | null
+          sort_order?: number | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string
+          description?: string | null
+          discount?: string | null
+          id?: string
+          image_url?: string | null
+          link?: string | null
+          sort_order?: number | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      physiotherapy_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      physiotherapy_centres: {
+        Row: {
+          active: boolean | null
+          address: string
+          city: string
+          contact: string | null
+          created_at: string
+          id: string
+          image_url: string | null
+          lat: number | null
+          lng: number | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean | null
+          address: string
+          city: string
+          contact?: string | null
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          lat?: number | null
+          lng?: number | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean | null
+          address?: string
+          city?: string
+          contact?: string | null
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          lat?: number | null
+          lng?: number | null
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      physiotherapy_services: {
+        Row: {
+          category_id: string
+          created_at: string
+          description: string | null
+          duration: number | null
+          id: string
+          image_url: string | null
+          name: string
+          price: number
+          sessions: number | null
+          updated_at: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          description?: string | null
+          duration?: number | null
+          id?: string
+          image_url?: string | null
+          name: string
+          price: number
+          sessions?: number | null
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          description?: string | null
+          duration?: number | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          price?: number
+          sessions?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "physiotherapy_services_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "physiotherapy_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          address: string | null
+          city: string | null
+          created_at: string
+          date_of_birth: string | null
+          email: string | null
+          full_name: string | null
+          gender: string | null
+          id: string
+          phone: string | null
+          pincode: string | null
+          profile_image_url: string | null
+          state: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          address?: string | null
+          city?: string | null
+          created_at?: string
+          date_of_birth?: string | null
+          email?: string | null
+          full_name?: string | null
+          gender?: string | null
+          id?: string
+          phone?: string | null
+          pincode?: string | null
+          profile_image_url?: string | null
+          state?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          address?: string | null
+          city?: string | null
+          created_at?: string
+          date_of_birth?: string | null
+          email?: string | null
+          full_name?: string | null
+          gender?: string | null
+          id?: string
+          phone?: string | null
+          pincode?: string | null
+          profile_image_url?: string | null
+          state?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      promotional_strips: {
+        Row: {
+          active: boolean | null
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          link: string | null
+          module_name: string
+          sort_order: number | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          link?: string | null
+          module_name: string
+          sort_order?: number | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          link?: string | null
+          module_name?: string
+          sort_order?: number | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      scan_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      scan_variants: {
+        Row: {
+          created_at: string
+          diagnostic_centre_id: string
+          id: string
+          price: number
+          scan_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          diagnostic_centre_id: string
+          id?: string
+          price: number
+          scan_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          diagnostic_centre_id?: string
+          id?: string
+          price?: number
+          scan_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scan_variants_diagnostic_centre_id_fkey"
+            columns: ["diagnostic_centre_id"]
+            isOneToOne: false
+            referencedRelation: "diagnostics_centres"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scan_variants_scan_id_fkey"
+            columns: ["scan_id"]
+            isOneToOne: false
+            referencedRelation: "scans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scans: {
+        Row: {
+          category_id: string
+          created_at: string
+          description: string | null
+          featured: boolean | null
+          id: string
+          image_url: string | null
+          instructions: string | null
+          mrp: number
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          description?: string | null
+          featured?: boolean | null
+          id?: string
+          image_url?: string | null
+          instructions?: string | null
+          mrp: number
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          description?: string | null
+          featured?: boolean | null
+          id?: string
+          image_url?: string | null
+          instructions?: string | null
+          mrp?: number
+          name?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scans_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "scan_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      search_placeholders: {
+        Row: {
+          active: boolean | null
+          created_at: string
+          id: string
+          module_name: string
+          text: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string
+          id?: string
+          module_name: string
+          text: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string
+          id?: string
+          module_name?: string
+          text?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      services_cards: {
+        Row: {
+          active: boolean | null
+          created_at: string
+          icon_url: string | null
+          id: string
+          link: string
+          sort_order: number | null
+          subtitle: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string
+          icon_url?: string | null
+          id?: string
+          link: string
+          sort_order?: number | null
+          subtitle?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string
+          icon_url?: string | null
+          id?: string
+          link?: string
+          sort_order?: number | null
+          subtitle?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      surgeons: {
+        Row: {
+          bio: string | null
+          contact: string | null
+          created_at: string
+          experience: number | null
+          id: string
+          image_url: string | null
+          name: string
+          qualification: string | null
+          speciality_id: string
+          updated_at: string
+        }
+        Insert: {
+          bio?: string | null
+          contact?: string | null
+          created_at?: string
+          experience?: number | null
+          id?: string
+          image_url?: string | null
+          name: string
+          qualification?: string | null
+          speciality_id: string
+          updated_at?: string
+        }
+        Update: {
+          bio?: string | null
+          contact?: string | null
+          created_at?: string
+          experience?: number | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          qualification?: string | null
+          speciality_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "surgeons_speciality_id_fkey"
+            columns: ["speciality_id"]
+            isOneToOne: false
+            referencedRelation: "surgery_specialities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      surgery_procedures: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          price: number | null
+          speciality_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          price?: number | null
+          speciality_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          price?: number | null
+          speciality_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "surgery_procedures_speciality_id_fkey"
+            columns: ["speciality_id"]
+            isOneToOne: false
+            referencedRelation: "surgery_specialities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      surgery_specialities: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          active: boolean | null
+          created_at: string
+          id: string
+          image_url: string | null
+          location: string | null
+          message: string
+          name: string
+          rating: number | null
+          sort_order: number | null
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          location?: string | null
+          message: string
+          name: string
+          rating?: number | null
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          location?: string | null
+          message?: string
+          name?: string
+          rating?: number | null
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      therapists: {
+        Row: {
+          centre_id: string
+          contact: string | null
+          created_at: string
+          experience: number | null
+          id: string
+          image_url: string | null
+          name: string
+          qualification: string | null
+          speciality: string | null
+          updated_at: string
+        }
+        Insert: {
+          centre_id: string
+          contact?: string | null
+          created_at?: string
+          experience?: number | null
+          id?: string
+          image_url?: string | null
+          name: string
+          qualification?: string | null
+          speciality?: string | null
+          updated_at?: string
+        }
+        Update: {
+          centre_id?: string
+          contact?: string | null
+          created_at?: string
+          experience?: number | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          qualification?: string | null
+          speciality?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "therapists_centre_id_fkey"
+            columns: ["centre_id"]
+            isOneToOne: false
+            referencedRelation: "physiotherapy_centres"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trusted_partners: {
+        Row: {
+          active: boolean | null
+          created_at: string
+          id: string
+          link: string | null
+          logo_url: string
+          name: string
+          sort_order: number | null
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          logo_url: string
+          name: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          logo_url?: string
+          name?: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      wellness_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      wellness_services: {
+        Row: {
+          category_id: string
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          price: number
+          updated_at: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          price: number
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          price?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wellness_services_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "wellness_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_current_user_role: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      gtrgm_compress: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      gtrgm_decompress: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      gtrgm_in: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      gtrgm_options: {
+        Args: { "": unknown }
+        Returns: undefined
+      }
+      gtrgm_out: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      set_limit: {
+        Args: { "": number }
+        Returns: number
+      }
+      show_limit: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
+      show_trgm: {
+        Args: { "": string }
+        Returns: string[]
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "super_admin" | "admin" | "moderator" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +2121,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["super_admin", "admin", "moderator", "user"],
+    },
   },
 } as const
