@@ -30,6 +30,14 @@ export default function AmbulanceManagement() {
     { name: 'image_url', label: 'Image URL', type: 'text' as const },
   ];
 
+  const handleCreate = async (data: any) => {
+    await ambulanceServices.createItem(data);
+  };
+
+  const handleUpdate = async (item: any, data: any) => {
+    await ambulanceServices.updateItem(item.id, data);
+  };
+
   return (
     <div className="p-6">
       <PageHeader 
@@ -42,13 +50,13 @@ export default function AmbulanceManagement() {
         data={ambulanceServices.data}
         columns={columns}
         loading={ambulanceServices.loading}
-        onDelete={ambulanceServices.deleteItem}
+        onDelete={(item) => ambulanceServices.deleteItem(item.id)}
         renderActions={(item) => (
           <FormDialog
             title="Edit Ambulance Service"
             fields={formFields}
             initialData={item}
-            onSubmit={(data) => ambulanceServices.updateItem(item.id, data)}
+            onSubmit={(data) => handleUpdate(item, data)}
             trigger={<button className="text-blue-600 hover:text-blue-800">Edit</button>}
           />
         )}
@@ -57,7 +65,7 @@ export default function AmbulanceManagement() {
       <FormDialog
         title="Add Ambulance Service"
         fields={formFields}
-        onSubmit={ambulanceServices.createItem}
+        onSubmit={handleCreate}
         trigger={<button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Service</button>}
       />
     </div>

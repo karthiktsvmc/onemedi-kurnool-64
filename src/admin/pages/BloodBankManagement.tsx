@@ -32,6 +32,14 @@ export default function BloodBankManagement() {
     { name: 'image_url', label: 'Image URL', type: 'text' as const },
   ];
 
+  const handleCreate = async (data: any) => {
+    await bloodBanks.createItem(data);
+  };
+
+  const handleUpdate = async (item: any, data: any) => {
+    await bloodBanks.updateItem(item.id, data);
+  };
+
   return (
     <div className="p-6">
       <PageHeader 
@@ -44,13 +52,13 @@ export default function BloodBankManagement() {
         data={bloodBanks.data}
         columns={columns}
         loading={bloodBanks.loading}
-        onDelete={bloodBanks.deleteItem}
+        onDelete={(item) => bloodBanks.deleteItem(item.id)}
         renderActions={(item) => (
           <FormDialog
             title="Edit Blood Bank"
             fields={formFields}
             initialData={item}
-            onSubmit={(data) => bloodBanks.updateItem(item.id, data)}
+            onSubmit={(data) => handleUpdate(item, data)}
             trigger={<button className="text-blue-600 hover:text-blue-800">Edit</button>}
           />
         )}
@@ -59,7 +67,7 @@ export default function BloodBankManagement() {
       <FormDialog
         title="Add Blood Bank"
         fields={formFields}
-        onSubmit={bloodBanks.createItem}
+        onSubmit={handleCreate}
         trigger={<button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Blood Bank</button>}
       />
     </div>

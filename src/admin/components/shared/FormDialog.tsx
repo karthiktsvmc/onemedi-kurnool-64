@@ -6,6 +6,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from '@/shared/components/ui/dialog';
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
@@ -36,55 +37,67 @@ export interface FormField {
 }
 
 interface FormDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
   title: string;
   description?: string;
   fields: FormField[];
-  values: Record<string, any>;
-  onChange: (name: string, value: any) => void;
-  onSubmit: () => Promise<void>;
-  onCancel: () => void;
-  loading: boolean;
+  initialData?: Record<string, any>;
+  onSubmit: (data: any) => Promise<void>;
+  trigger: React.ReactNode;
 }
 
 export function FormDialog({
-  open,
-  onOpenChange,
   title,
   description,
   fields,
-  values,
-  onChange,
+  initialData = {},
   onSubmit,
-  onCancel,
-  loading
+  trigger
 }: FormDialogProps) {
+  const [open, setOpen] = useState(false);
+  const [values, setValues] = useState<Record<string, any>>(initialData);
+  const [loading, setLoading] = useState(false);
+
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+    if (newOpen) {
+      setValues(initialData);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await onSubmit();
+      setLoading(true);
+      await onSubmit(values);
+      setOpen(false);
+      setValues({});
     } catch (error) {
       console.error('Form submission error:', error);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleChange = (name: string, value: any) => {
+    setValues(prev => ({ ...prev, [name]: value }));
   };
 
   const renderArrayField = (field: FormField, value: any[]) => {
     const arrayValue = Array.isArray(value) ? value : [];
     
     const addItem = () => {
-      onChange(field.name, [...arrayValue, '']);
+      handleChange(field.name, [...arrayValue, '']);
     };
     
     const removeItem = (index: number) => {
       const newArray = arrayValue.filter((_, i) => i !== index);
-      onChange(field.name, newArray);
+      handleChange(field.name, newArray);
     };
     
     const updateItem = (index: number, newValue: string) => {
       const newArray = [...arrayValue];
       newArray[index] = newValue;
-      onChange(field.name, newArray);
+      handleChange(field.name, newArray);
     };
 
     return (
@@ -127,7 +140,7 @@ export function FormDialog({
         return (
           <Textarea
             value={value || ''}
-            onChange={(e) => onChange(field.name, e.target.value)}
+            onChange={(e) => handleChange(field.name, e.target.value)}
             placeholder={field.placeholder}
             rows={4}
           />
@@ -138,7 +151,7 @@ export function FormDialog({
           <Input
             type="number"
             value={value || ''}
-            onChange={(e) => onChange(field.name, parseFloat(e.target.value) || 0)}
+            onChange={(e) => handleChange(field.name, parseFloat(e.target.value) || 0)}
             placeholder={field.placeholder}
             min={field.min}
             max={field.max}
@@ -148,7 +161,7 @@ export function FormDialog({
 
       case 'select':
         return (
-          <Select value={value || ''} onValueChange={(newValue) => onChange(field.name, newValue)}>
+          <Select value={value || ''} onValueChange={(newValue) => handleChange(field.name, newValue)}>
             <SelectTrigger>
               <SelectValue placeholder={field.placeholder} />
             </SelectTrigger>
@@ -168,7 +181,7 @@ export function FormDialog({
           <div className="flex items-center space-x-2">
             <Switch
               checked={value || false}
-              onCheckedChange={(checked) => onChange(field.name, checked)}
+              onCheckedChange={(checked) => handleChange(field.name, checked)}
             />
             <Label>{value ? 'Yes' : 'No'}</Label>
           </div>
@@ -179,7 +192,7 @@ export function FormDialog({
           <Input
             type="date"
             value={value ? new Date(value).toISOString().split('T')[0] : ''}
-            onChange={(e) => onChange(field.name, e.target.value)}
+            onChange={(e) => handleChange(field.name, e.target.value)}
           />
         );
 
@@ -188,7 +201,7 @@ export function FormDialog({
           <Input
             type="email"
             value={value || ''}
-            onChange={(e) => onChange(field.name, e.target.value)}
+            onChange={(e) => handleChange(field.name, e.target.value)}
             placeholder={field.placeholder}
           />
         );
@@ -198,7 +211,7 @@ export function FormDialog({
           <Input
             type="tel"
             value={value || ''}
-            onChange={(e) => onChange(field.name, e.target.value)}
+            onChange={(e) => handleChange(field.name, e.target.value)}
             placeholder={field.placeholder}
           />
         );
@@ -211,7 +224,7 @@ export function FormDialog({
           <Input
             type="text"
             value={value || ''}
-            onChange={(e) => onChange(field.name, e.target.value)}
+            onChange={(e) => handleChange(field.name, e.target.value)}
             placeholder={field.placeholder}
           />
         );
@@ -219,7 +232,10 @@ export function FormDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      <DialogTrigger asChild>
+        {trigger}
+      </DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
@@ -241,7 +257,7 @@ export function FormDialog({
           ))}
 
           <div className="flex justify-end gap-2 pt-4">
-            <Button type="button" variant="outline" onClick={onCancel} disabled={loading}>
+            <Button type="button" variant="outline" onClick={() => setOpen(false)} disabled={loading}>
               Cancel
             </Button>
             <Button type="submit" disabled={loading}>

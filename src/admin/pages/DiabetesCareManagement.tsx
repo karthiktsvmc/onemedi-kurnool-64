@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useSupabaseTable } from '@/shared/hooks/useSupabaseTable';
 import { SupabaseTable } from '@/shared/lib/supabase-utils';
@@ -138,6 +137,63 @@ export default function DiabetesCareManagement() {
     { name: 'image_url', label: 'Image URL', type: 'text' as const },
   ];
 
+  // Handler functions
+  const handleCategoryCreate = async (data: any) => {
+    await categories.createItem(data);
+  };
+
+  const handleCategoryUpdate = async (item: any, data: any) => {
+    await categories.updateItem(item.id, data);
+  };
+
+  const handleTestCreate = async (data: any) => {
+    await tests.createItem(data);
+  };
+
+  const handleTestUpdate = async (item: any, data: any) => {
+    await tests.updateItem(item.id, data);
+  };
+
+  const handleProductCreate = async (data: any) => {
+    await products.createItem(data);
+  };
+
+  const handleProductUpdate = async (item: any, data: any) => {
+    await products.updateItem(item.id, data);
+  };
+
+  const handleServiceCreate = async (data: any) => {
+    await services.createItem(data);
+  };
+
+  const handleServiceUpdate = async (item: any, data: any) => {
+    await services.updateItem(item.id, data);
+  };
+
+  const handlePlanCreate = async (data: any) => {
+    await plans.createItem(data);
+  };
+
+  const handlePlanUpdate = async (item: any, data: any) => {
+    await plans.updateItem(item.id, data);
+  };
+
+  const handleExpertCreate = async (data: any) => {
+    await experts.createItem(data);
+  };
+
+  const handleExpertUpdate = async (item: any, data: any) => {
+    await experts.updateItem(item.id, data);
+  };
+
+  const handleDietCreate = async (data: any) => {
+    await diets.createItem(data);
+  };
+
+  const handleDietUpdate = async (item: any, data: any) => {
+    await diets.updateItem(item.id, data);
+  };
+
   return (
     <div className="p-6">
       <PageHeader 
@@ -162,13 +218,13 @@ export default function DiabetesCareManagement() {
             data={categories.data}
             columns={categoryColumns}
             loading={categories.loading}
-            onDelete={categories.deleteItem}
+            onDelete={(item) => categories.deleteItem(item.id)}
             renderActions={(item) => (
               <FormDialog
                 title="Edit Category"
                 fields={categoryFormFields}
                 initialData={item}
-                onSubmit={(data) => categories.updateItem(item.id, data)}
+                onSubmit={(data) => handleCategoryUpdate(item, data)}
                 trigger={<button className="text-blue-600 hover:text-blue-800">Edit</button>}
               />
             )}
@@ -176,7 +232,7 @@ export default function DiabetesCareManagement() {
           <FormDialog
             title="Add Category"
             fields={categoryFormFields}
-            onSubmit={categories.createItem}
+            onSubmit={handleCategoryCreate}
             trigger={<button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Category</button>}
           />
         </TabsContent>
@@ -187,13 +243,13 @@ export default function DiabetesCareManagement() {
             data={tests.data}
             columns={testColumns}
             loading={tests.loading}
-            onDelete={tests.deleteItem}
+            onDelete={(item) => tests.deleteItem(item.id)}
             renderActions={(item) => (
               <FormDialog
                 title="Edit Test"
                 fields={testFormFields}
                 initialData={item}
-                onSubmit={(data) => tests.updateItem(item.id, data)}
+                onSubmit={(data) => handleTestUpdate(item, data)}
                 trigger={<button className="text-blue-600 hover:text-blue-800">Edit</button>}
               />
             )}
@@ -201,7 +257,7 @@ export default function DiabetesCareManagement() {
           <FormDialog
             title="Add Test"
             fields={testFormFields}
-            onSubmit={tests.createItem}
+            onSubmit={handleTestCreate}
             trigger={<button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Test</button>}
           />
         </TabsContent>
@@ -212,13 +268,13 @@ export default function DiabetesCareManagement() {
             data={products.data}
             columns={productColumns}
             loading={products.loading}
-            onDelete={products.deleteItem}
+            onDelete={(item) => products.deleteItem(item.id)}
             renderActions={(item) => (
               <FormDialog
                 title="Edit Product"
                 fields={productFormFields}
                 initialData={item}
-                onSubmit={(data) => products.updateItem(item.id, data)}
+                onSubmit={(data) => handleProductUpdate(item, data)}
                 trigger={<button className="text-blue-600 hover:text-blue-800">Edit</button>}
               />
             )}
@@ -226,7 +282,7 @@ export default function DiabetesCareManagement() {
           <FormDialog
             title="Add Product"
             fields={productFormFields}
-            onSubmit={products.createItem}
+            onSubmit={handleProductCreate}
             trigger={<button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Product</button>}
           />
         </TabsContent>
@@ -237,13 +293,13 @@ export default function DiabetesCareManagement() {
             data={services.data}
             columns={serviceColumns}
             loading={services.loading}
-            onDelete={services.deleteItem}
+            onDelete={(item) => services.deleteItem(item.id)}
             renderActions={(item) => (
               <FormDialog
                 title="Edit Service"
                 fields={serviceFormFields}
                 initialData={item}
-                onSubmit={(data) => services.updateItem(item.id, data)}
+                onSubmit={(data) => handleServiceUpdate(item, data)}
                 trigger={<button className="text-blue-600 hover:text-blue-800">Edit</button>}
               />
             )}
@@ -251,7 +307,7 @@ export default function DiabetesCareManagement() {
           <FormDialog
             title="Add Service"
             fields={serviceFormFields}
-            onSubmit={services.createItem}
+            onSubmit={handleServiceCreate}
             trigger={<button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Service</button>}
           />
         </TabsContent>
@@ -262,13 +318,13 @@ export default function DiabetesCareManagement() {
             data={plans.data}
             columns={planColumns}
             loading={plans.loading}
-            onDelete={plans.deleteItem}
+            onDelete={(item) => plans.deleteItem(item.id)}
             renderActions={(item) => (
               <FormDialog
                 title="Edit Plan"
                 fields={planFormFields}
                 initialData={item}
-                onSubmit={(data) => plans.updateItem(item.id, data)}
+                onSubmit={(data) => handlePlanUpdate(item, data)}
                 trigger={<button className="text-blue-600 hover:text-blue-800">Edit</button>}
               />
             )}
@@ -276,7 +332,7 @@ export default function DiabetesCareManagement() {
           <FormDialog
             title="Add Plan"
             fields={planFormFields}
-            onSubmit={plans.createItem}
+            onSubmit={handlePlanCreate}
             trigger={<button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Plan</button>}
           />
         </TabsContent>
@@ -287,13 +343,13 @@ export default function DiabetesCareManagement() {
             data={experts.data}
             columns={expertColumns}
             loading={experts.loading}
-            onDelete={experts.deleteItem}
+            onDelete={(item) => experts.deleteItem(item.id)}
             renderActions={(item) => (
               <FormDialog
                 title="Edit Expert"
                 fields={expertFormFields}
                 initialData={item}
-                onSubmit={(data) => experts.updateItem(item.id, data)}
+                onSubmit={(data) => handleExpertUpdate(item, data)}
                 trigger={<button className="text-blue-600 hover:text-blue-800">Edit</button>}
               />
             )}
@@ -301,7 +357,7 @@ export default function DiabetesCareManagement() {
           <FormDialog
             title="Add Expert"
             fields={expertFormFields}
-            onSubmit={experts.createItem}
+            onSubmit={handleExpertCreate}
             trigger={<button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Expert</button>}
           />
         </TabsContent>
@@ -312,13 +368,13 @@ export default function DiabetesCareManagement() {
             data={diets.data}
             columns={dietColumns}
             loading={diets.loading}
-            onDelete={diets.deleteItem}
+            onDelete={(item) => diets.deleteItem(item.id)}
             renderActions={(item) => (
               <FormDialog
                 title="Edit Diet"
                 fields={dietFormFields}
                 initialData={item}
-                onSubmit={(data) => diets.updateItem(item.id, data)}
+                onSubmit={(data) => handleDietUpdate(item, data)}
                 trigger={<button className="text-blue-600 hover:text-blue-800">Edit</button>}
               />
             )}
@@ -326,7 +382,7 @@ export default function DiabetesCareManagement() {
           <FormDialog
             title="Add Diet"
             fields={dietFormFields}
-            onSubmit={diets.createItem}
+            onSubmit={handleDietCreate}
             trigger={<button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Diet</button>}
           />
         </TabsContent>

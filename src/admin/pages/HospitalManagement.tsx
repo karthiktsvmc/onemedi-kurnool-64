@@ -32,6 +32,14 @@ export default function HospitalManagement() {
     { name: 'image_url', label: 'Image URL', type: 'text' as const },
   ];
 
+  const handleCreate = async (data: any) => {
+    await hospitals.createItem(data);
+  };
+
+  const handleUpdate = async (item: any, data: any) => {
+    await hospitals.updateItem(item.id, data);
+  };
+
   return (
     <div className="p-6">
       <PageHeader 
@@ -44,13 +52,13 @@ export default function HospitalManagement() {
         data={hospitals.data}
         columns={columns}
         loading={hospitals.loading}
-        onDelete={hospitals.deleteItem}
+        onDelete={(item) => hospitals.deleteItem(item.id)}
         renderActions={(item) => (
           <FormDialog
             title="Edit Hospital"
             fields={formFields}
             initialData={item}
-            onSubmit={(data) => hospitals.updateItem(item.id, data)}
+            onSubmit={(data) => handleUpdate(item, data)}
             trigger={<button className="text-blue-600 hover:text-blue-800">Edit</button>}
           />
         )}
@@ -59,7 +67,7 @@ export default function HospitalManagement() {
       <FormDialog
         title="Add Hospital"
         fields={formFields}
-        onSubmit={hospitals.createItem}
+        onSubmit={handleCreate}
         trigger={<button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Hospital</button>}
       />
     </div>

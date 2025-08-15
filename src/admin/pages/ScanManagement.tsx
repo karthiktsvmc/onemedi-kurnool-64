@@ -56,6 +56,30 @@ export default function ScanManagement() {
     { name: 'price', label: 'Price', type: 'number' as const, required: true },
   ];
 
+  const handleCategoryCreate = async (data: any) => {
+    await categories.createItem(data);
+  };
+
+  const handleCategoryUpdate = async (item: any, data: any) => {
+    await categories.updateItem(item.id, data);
+  };
+
+  const handleScanCreate = async (data: any) => {
+    await scans.createItem(data);
+  };
+
+  const handleScanUpdate = async (item: any, data: any) => {
+    await scans.updateItem(item.id, data);
+  };
+
+  const handleVariantCreate = async (data: any) => {
+    await variants.createItem(data);
+  };
+
+  const handleVariantUpdate = async (item: any, data: any) => {
+    await variants.updateItem(item.id, data);
+  };
+
   return (
     <div className="p-6">
       <PageHeader 
@@ -76,13 +100,13 @@ export default function ScanManagement() {
             data={categories.data}
             columns={categoryColumns}
             loading={categories.loading}
-            onDelete={categories.deleteItem}
+            onDelete={(item) => categories.deleteItem(item.id)}
             renderActions={(item) => (
               <FormDialog
                 title="Edit Category"
                 fields={categoryFormFields}
                 initialData={item}
-                onSubmit={(data) => categories.updateItem(item.id, data)}
+                onSubmit={(data) => handleCategoryUpdate(item, data)}
                 trigger={<button className="text-blue-600 hover:text-blue-800">Edit</button>}
               />
             )}
@@ -90,7 +114,7 @@ export default function ScanManagement() {
           <FormDialog
             title="Add Category"
             fields={categoryFormFields}
-            onSubmit={categories.createItem}
+            onSubmit={handleCategoryCreate}
             trigger={<button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Category</button>}
           />
         </TabsContent>
@@ -101,13 +125,13 @@ export default function ScanManagement() {
             data={scans.data}
             columns={scanColumns}
             loading={scans.loading}
-            onDelete={scans.deleteItem}
+            onDelete={(item) => scans.deleteItem(item.id)}
             renderActions={(item) => (
               <FormDialog
                 title="Edit Scan"
                 fields={scanFormFields}
                 initialData={item}
-                onSubmit={(data) => scans.updateItem(item.id, data)}
+                onSubmit={(data) => handleScanUpdate(item, data)}
                 trigger={<button className="text-blue-600 hover:text-blue-800">Edit</button>}
               />
             )}
@@ -115,7 +139,7 @@ export default function ScanManagement() {
           <FormDialog
             title="Add Scan"
             fields={scanFormFields}
-            onSubmit={scans.createItem}
+            onSubmit={handleScanCreate}
             trigger={<button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Scan</button>}
           />
         </TabsContent>
@@ -126,13 +150,13 @@ export default function ScanManagement() {
             data={variants.data}
             columns={variantColumns}
             loading={variants.loading}
-            onDelete={variants.deleteItem}
+            onDelete={(item) => variants.deleteItem(item.id)}
             renderActions={(item) => (
               <FormDialog
                 title="Edit Variant"
                 fields={variantFormFields}
                 initialData={item}
-                onSubmit={(data) => variants.updateItem(item.id, data)}
+                onSubmit={(data) => handleVariantUpdate(item, data)}
                 trigger={<button className="text-blue-600 hover:text-blue-800">Edit</button>}
               />
             )}
@@ -140,7 +164,7 @@ export default function ScanManagement() {
           <FormDialog
             title="Add Variant"
             fields={variantFormFields}
-            onSubmit={variants.createItem}
+            onSubmit={handleVariantCreate}
             trigger={<button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Variant</button>}
           />
         </TabsContent>

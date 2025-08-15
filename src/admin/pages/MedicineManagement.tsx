@@ -52,14 +52,6 @@ export const MedicineManagement = () => {
     refetch: refetchBrands
   } = useSupabaseTable(medicineBrandsTable, { realtime: true });
 
-  // Form states
-  const [medicineDialog, setMedicineDialog] = useState({ open: false, item: null as Medicine | null });
-  const [categoryDialog, setCategoryDialog] = useState({ open: false, item: null as MedicineCategory | null });
-  const [brandDialog, setBrandDialog] = useState({ open: false, item: null as MedicineBrand | null });
-  
-  const [formValues, setFormValues] = useState<Record<string, any>>({});
-  const [formLoading, setFormLoading] = useState(false);
-
   // Medicine columns
   const medicineColumns: DataTableColumn[] = [
     { key: 'name', label: 'Name', sortable: true },
@@ -164,70 +156,28 @@ export const MedicineManagement = () => {
   ];
 
   // Form handlers
-  const handleMedicineSubmit = async () => {
-    setFormLoading(true);
-    try {
-      if (medicineDialog.item) {
-        await updateMedicine(medicineDialog.item.id, formValues as any);
-      } else {
-        await createMedicine(formValues as any);
-      }
-      setMedicineDialog({ open: false, item: null });
-      setFormValues({});
-    } catch (error) {
-      console.error('Failed to save medicine:', error);
-    } finally {
-      setFormLoading(false);
-    }
+  const handleMedicineCreate = async (data: any) => {
+    await createMedicine(data);
   };
 
-  const handleCategorySubmit = async () => {
-    setFormLoading(true);
-    try {
-      if (categoryDialog.item) {
-        await updateCategory(categoryDialog.item.id, formValues as any);
-      } else {
-        await createCategory(formValues as any);
-      }
-      setCategoryDialog({ open: false, item: null });
-      setFormValues({});
-    } catch (error) {
-      console.error('Failed to save category:', error);
-    } finally {
-      setFormLoading(false);
-    }
+  const handleMedicineUpdate = async (item: any, data: any) => {
+    await updateMedicine(item.id, data);
   };
 
-  const handleBrandSubmit = async () => {
-    setFormLoading(true);
-    try {
-      if (brandDialog.item) {
-        await updateBrand(brandDialog.item.id, formValues as any);
-      } else {
-        await createBrand(formValues as any);
-      }
-      setBrandDialog({ open: false, item: null });
-      setFormValues({});
-    } catch (error) {
-      console.error('Failed to save brand:', error);
-    } finally {
-      setFormLoading(false);
-    }
+  const handleCategoryCreate = async (data: any) => {
+    await createCategory(data);
   };
 
-  const openMedicineDialog = (item?: Medicine) => {
-    setFormValues(item || {});
-    setMedicineDialog({ open: true, item: item || null });
+  const handleCategoryUpdate = async (item: any, data: any) => {
+    await updateCategory(item.id, data);
   };
 
-  const openCategoryDialog = (item?: MedicineCategory) => {
-    setFormValues(item || {});
-    setCategoryDialog({ open: true, item: item || null });
+  const handleBrandCreate = async (data: any) => {
+    await createBrand(data);
   };
 
-  const openBrandDialog = (item?: MedicineBrand) => {
-    setFormValues(item || {});
-    setBrandDialog({ open: true, item: item || null });
+  const handleBrandUpdate = async (item: any, data: any) => {
+    await updateBrand(item.id, data);
   };
 
   return (
@@ -274,12 +224,31 @@ export const MedicineManagement = () => {
           columns={medicineColumns}
           loading={medicinesLoading}
           onSearch={(query) => searchMedicines(query, ['name', 'brand', 'description'])}
-          onAdd={() => openMedicineDialog()}
-          onEdit={(item) => openMedicineDialog(item)}
+          onAdd={() => {}}
+          onEdit={(item) => {}}
           onDelete={(item) => deleteMedicine(item.id)}
           onRefresh={refetchMedicines}
           searchPlaceholder="Search medicines..."
           addButtonText="Add Medicine"
+          renderActions={(item) => (
+            <div className="flex gap-2">
+              <FormDialog
+                title="Edit Medicine"
+                fields={medicineFields}
+                initialData={item}
+                onSubmit={(data) => handleMedicineUpdate(item, data)}
+                trigger={<button className="text-blue-600 hover:text-blue-800">Edit</button>}
+              />
+            </div>
+          )}
+          actions={
+            <FormDialog
+              title="Add Medicine"
+              fields={medicineFields}
+              onSubmit={handleMedicineCreate}
+              trigger={<Button size="sm">Add Medicine</Button>}
+            />
+          }
         />
       )}
 
@@ -291,12 +260,31 @@ export const MedicineManagement = () => {
           columns={categoryColumns}
           loading={categoriesLoading}
           onSearch={(query) => searchCategories(query, ['name', 'description'])}
-          onAdd={() => openCategoryDialog()}
-          onEdit={(item) => openCategoryDialog(item)}
+          onAdd={() => {}}
+          onEdit={(item) => {}}
           onDelete={(item) => deleteCategory(item.id)}
           onRefresh={refetchCategories}
           searchPlaceholder="Search categories..."
           addButtonText="Add Category"
+          renderActions={(item) => (
+            <div className="flex gap-2">
+              <FormDialog
+                title="Edit Category"
+                fields={categoryFields}
+                initialData={item}
+                onSubmit={(data) => handleCategoryUpdate(item, data)}
+                trigger={<button className="text-blue-600 hover:text-blue-800">Edit</button>}
+              />
+            </div>
+          )}
+          actions={
+            <FormDialog
+              title="Add Category"
+              fields={categoryFields}
+              onSubmit={handleCategoryCreate}
+              trigger={<Button size="sm">Add Category</Button>}
+            />
+          }
         />
       )}
 
@@ -308,60 +296,33 @@ export const MedicineManagement = () => {
           columns={brandColumns}
           loading={brandsLoading}
           onSearch={(query) => searchBrands(query, ['name', 'description'])}
-          onAdd={() => openBrandDialog()}
-          onEdit={(item) => openBrandDialog(item)}
+          onAdd={() => {}}
+          onEdit={(item) => {}}
           onDelete={(item) => deleteBrand(item.id)}
           onRefresh={refetchBrands}
           searchPlaceholder="Search brands..."
           addButtonText="Add Brand"
+          renderActions={(item) => (
+            <div className="flex gap-2">
+              <FormDialog
+                title="Edit Brand"
+                fields={brandFields}
+                initialData={item}
+                onSubmit={(data) => handleBrandUpdate(item, data)}
+                trigger={<button className="text-blue-600 hover:text-blue-800">Edit</button>}
+              />
+            </div>
+          )}
+          actions={
+            <FormDialog
+              title="Add Brand"
+              fields={brandFields}
+              onSubmit={handleBrandCreate}
+              trigger={<Button size="sm">Add Brand</Button>}
+            />
+          }
         />
       )}
-
-      {/* Form Dialogs */}
-      <FormDialog
-        open={medicineDialog.open}
-        onOpenChange={(open) => setMedicineDialog({ open, item: null })}
-        title={medicineDialog.item ? 'Edit Medicine' : 'Add Medicine'}
-        fields={medicineFields}
-        values={formValues}
-        onChange={(name, value) => setFormValues({ ...formValues, [name]: value })}
-        onSubmit={handleMedicineSubmit}
-        onCancel={() => {
-          setMedicineDialog({ open: false, item: null });
-          setFormValues({});
-        }}
-        loading={formLoading}
-      />
-
-      <FormDialog
-        open={categoryDialog.open}
-        onOpenChange={(open) => setCategoryDialog({ open, item: null })}
-        title={categoryDialog.item ? 'Edit Category' : 'Add Category'}
-        fields={categoryFields}
-        values={formValues}
-        onChange={(name, value) => setFormValues({ ...formValues, [name]: value })}
-        onSubmit={handleCategorySubmit}
-        onCancel={() => {
-          setCategoryDialog({ open: false, item: null });
-          setFormValues({});
-        }}
-        loading={formLoading}
-      />
-
-      <FormDialog
-        open={brandDialog.open}
-        onOpenChange={(open) => setBrandDialog({ open, item: null })}
-        title={brandDialog.item ? 'Edit Brand' : 'Add Brand'}
-        fields={brandFields}
-        values={formValues}
-        onChange={(name, value) => setFormValues({ ...formValues, [name]: value })}
-        onSubmit={handleBrandSubmit}
-        onCancel={() => {
-          setBrandDialog({ open: false, item: null });
-          setFormValues({});
-        }}
-        loading={formLoading}
-      />
     </div>
   );
 };
