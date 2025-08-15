@@ -32,11 +32,11 @@ export default function BloodBankManagement() {
     { name: 'image_url', label: 'Image URL', type: 'text' as const },
   ];
 
-  const handleCreate = async (data: any) => {
+  const handleCreate = async (data: any): Promise<void> => {
     await bloodBanks.createItem(data);
   };
 
-  const handleUpdate = async (item: any, data: any) => {
+  const handleUpdate = async (item: any, data: any): Promise<void> => {
     await bloodBanks.updateItem(item.id, data);
   };
 

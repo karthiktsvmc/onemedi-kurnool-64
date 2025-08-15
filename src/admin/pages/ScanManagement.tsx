@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useSupabaseTable } from '@/shared/hooks/useSupabaseTable';
 import { SupabaseTable } from '@/shared/lib/supabase-utils';
@@ -56,27 +55,27 @@ export default function ScanManagement() {
     { name: 'price', label: 'Price', type: 'number' as const, required: true },
   ];
 
-  const handleCategoryCreate = async (data: any) => {
+  const handleCategoryCreate = async (data: any): Promise<void> => {
     await categories.createItem(data);
   };
 
-  const handleCategoryUpdate = async (item: any, data: any) => {
+  const handleCategoryUpdate = async (item: any, data: any): Promise<void> => {
     await categories.updateItem(item.id, data);
   };
 
-  const handleScanCreate = async (data: any) => {
+  const handleScanCreate = async (data: any): Promise<void> => {
     await scans.createItem(data);
   };
 
-  const handleScanUpdate = async (item: any, data: any) => {
+  const handleScanUpdate = async (item: any, data: any): Promise<void> => {
     await scans.updateItem(item.id, data);
   };
 
-  const handleVariantCreate = async (data: any) => {
+  const handleVariantCreate = async (data: any): Promise<void> => {
     await variants.createItem(data);
   };
 
-  const handleVariantUpdate = async (item: any, data: any) => {
+  const handleVariantUpdate = async (item: any, data: any): Promise<void> => {
     await variants.updateItem(item.id, data);
   };
 

@@ -138,59 +138,59 @@ export default function DiabetesCareManagement() {
   ];
 
   // Handler functions
-  const handleCategoryCreate = async (data: any) => {
+  const handleCategoryCreate = async (data: any): Promise<void> => {
     await categories.createItem(data);
   };
 
-  const handleCategoryUpdate = async (item: any, data: any) => {
+  const handleCategoryUpdate = async (item: any, data: any): Promise<void> => {
     await categories.updateItem(item.id, data);
   };
 
-  const handleTestCreate = async (data: any) => {
+  const handleTestCreate = async (data: any): Promise<void> => {
     await tests.createItem(data);
   };
 
-  const handleTestUpdate = async (item: any, data: any) => {
+  const handleTestUpdate = async (item: any, data: any): Promise<void> => {
     await tests.updateItem(item.id, data);
   };
 
-  const handleProductCreate = async (data: any) => {
+  const handleProductCreate = async (data: any): Promise<void> => {
     await products.createItem(data);
   };
 
-  const handleProductUpdate = async (item: any, data: any) => {
+  const handleProductUpdate = async (item: any, data: any): Promise<void> => {
     await products.updateItem(item.id, data);
   };
 
-  const handleServiceCreate = async (data: any) => {
+  const handleServiceCreate = async (data: any): Promise<void> => {
     await services.createItem(data);
   };
 
-  const handleServiceUpdate = async (item: any, data: any) => {
+  const handleServiceUpdate = async (item: any, data: any): Promise<void> => {
     await services.updateItem(item.id, data);
   };
 
-  const handlePlanCreate = async (data: any) => {
+  const handlePlanCreate = async (data: any): Promise<void> => {
     await plans.createItem(data);
   };
 
-  const handlePlanUpdate = async (item: any, data: any) => {
+  const handlePlanUpdate = async (item: any, data: any): Promise<void> => {
     await plans.updateItem(item.id, data);
   };
 
-  const handleExpertCreate = async (data: any) => {
+  const handleExpertCreate = async (data: any): Promise<void> => {
     await experts.createItem(data);
   };
 
-  const handleExpertUpdate = async (item: any, data: any) => {
+  const handleExpertUpdate = async (item: any, data: any): Promise<void> => {
     await experts.updateItem(item.id, data);
   };
 
-  const handleDietCreate = async (data: any) => {
+  const handleDietCreate = async (data: any): Promise<void> => {
     await diets.createItem(data);
   };
 
-  const handleDietUpdate = async (item: any, data: any) => {
+  const handleDietUpdate = async (item: any, data: any): Promise<void> => {
     await diets.updateItem(item.id, data);
   };
 

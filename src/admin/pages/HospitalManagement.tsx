@@ -32,11 +32,11 @@ export default function HospitalManagement() {
     { name: 'image_url', label: 'Image URL', type: 'text' as const },
   ];
 
-  const handleCreate = async (data: any) => {
+  const handleCreate = async (data: any): Promise<void> => {
     await hospitals.createItem(data);
   };
 
-  const handleUpdate = async (item: any, data: any) => {
+  const handleUpdate = async (item: any, data: any): Promise<void> => {
     await hospitals.updateItem(item.id, data);
   };
 

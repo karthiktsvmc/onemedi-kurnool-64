@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { DataTable, DataTableColumn } from '../components/shared/DataTable';
-import { FormDialog, FormField } from '../components/shared/FormDialog';
+import { DataTable } from '../components/shared/DataTable';
+import { FormDialog } from '../components/shared/FormDialog';
 import { Badge } from '@/shared/components/ui/badge';
 import { Button } from '@/shared/components/ui/button';
 import { useSupabaseTable } from '@/shared/hooks/useSupabaseTable';
@@ -53,12 +53,12 @@ export const MedicineManagement = () => {
   } = useSupabaseTable(medicineBrandsTable, { realtime: true });
 
   // Medicine columns
-  const medicineColumns: DataTableColumn[] = [
+  const medicineColumns = [
     { key: 'name', label: 'Name', sortable: true },
     { 
       key: 'category_id', 
       label: 'Category',
-      render: (value) => {
+      render: (value: any) => {
         const category = categories.find(c => c.id === value);
         return category ? <Badge variant="outline">{category.name}</Badge> : 'N/A';
       }
@@ -67,17 +67,17 @@ export const MedicineManagement = () => {
     { 
       key: 'mrp', 
       label: 'MRP',
-      render: (value) => `₹${value}`
+      render: (value: any) => `₹${value}`
     },
     { 
       key: 'sale_price', 
       label: 'Sale Price',
-      render: (value) => `₹${value}`
+      render: (value: any) => `₹${value}`
     },
     { 
       key: 'stock_qty', 
       label: 'Stock',
-      render: (value) => (
+      render: (value: any) => (
         <Badge variant={value > 10 ? 'default' : value > 0 ? 'secondary' : 'destructive'}>
           {value}
         </Badge>
@@ -86,97 +86,97 @@ export const MedicineManagement = () => {
     { 
       key: 'featured', 
       label: 'Featured',
-      render: (value) => <Badge variant={value ? 'default' : 'secondary'}>{value ? 'Yes' : 'No'}</Badge>
+      render: (value: any) => <Badge variant={value ? 'default' : 'secondary'}>{value ? 'Yes' : 'No'}</Badge>
     },
     { 
       key: 'prescription_required', 
       label: 'Prescription',
-      render: (value) => <Badge variant={value ? 'destructive' : 'default'}>{value ? 'Required' : 'OTC'}</Badge>
+      render: (value: any) => <Badge variant={value ? 'destructive' : 'default'}>{value ? 'Required' : 'OTC'}</Badge>
     }
   ];
 
   // Category columns
-  const categoryColumns: DataTableColumn[] = [
+  const categoryColumns = [
     { key: 'name', label: 'Name', sortable: true },
     { key: 'description', label: 'Description' },
     { 
       key: 'created_at', 
       label: 'Created',
-      render: (value) => new Date(value).toLocaleDateString()
+      render: (value: any) => new Date(value).toLocaleDateString()
     }
   ];
 
   // Brand columns
-  const brandColumns: DataTableColumn[] = [
+  const brandColumns = [
     { key: 'name', label: 'Name', sortable: true },
     { key: 'description', label: 'Description' },
     { 
       key: 'created_at', 
       label: 'Created',
-      render: (value) => new Date(value).toLocaleDateString()
+      render: (value: any) => new Date(value).toLocaleDateString()
     }
   ];
 
   // Medicine form fields
-  const medicineFields: FormField[] = [
-    { name: 'name', label: 'Medicine Name', type: 'text', required: true },
-    { name: 'description', label: 'Description', type: 'textarea' },
+  const medicineFields = [
+    { name: 'name', label: 'Medicine Name', type: 'text' as const, required: true },
+    { name: 'description', label: 'Description', type: 'textarea' as const },
     { 
       name: 'category_id', 
       label: 'Category', 
-      type: 'select', 
+      type: 'select' as const, 
       required: true,
       options: categories.map(c => ({ value: c.id, label: c.name }))
     },
-    { name: 'brand', label: 'Brand', type: 'text' },
-    { name: 'mrp', label: 'MRP (₹)', type: 'number', required: true, min: 0, step: 0.01 },
-    { name: 'sale_price', label: 'Sale Price (₹)', type: 'number', required: true, min: 0, step: 0.01 },
-    { name: 'stock_qty', label: 'Stock Quantity', type: 'number', required: true, min: 0 },
-    { name: 'image_url', label: 'Image URL', type: 'text' },
-    { name: 'tags', label: 'Tags', type: 'array', description: 'Keywords for search' },
-    { name: 'featured', label: 'Featured', type: 'boolean' },
-    { name: 'prescription_required', label: 'Prescription Required', type: 'boolean' },
-    { name: 'expiry_date', label: 'Expiry Date', type: 'date' },
-    { name: 'generic_alternative', label: 'Generic Alternative', type: 'text' },
-    { name: 'branded_alternatives', label: 'Branded Alternatives', type: 'array' }
+    { name: 'brand', label: 'Brand', type: 'text' as const },
+    { name: 'mrp', label: 'MRP (₹)', type: 'number' as const, required: true, min: 0, step: 0.01 },
+    { name: 'sale_price', label: 'Sale Price (₹)', type: 'number' as const, required: true, min: 0, step: 0.01 },
+    { name: 'stock_qty', label: 'Stock Quantity', type: 'number' as const, required: true, min: 0 },
+    { name: 'image_url', label: 'Image URL', type: 'text' as const },
+    { name: 'tags', label: 'Tags', type: 'array' as const, description: 'Keywords for search' },
+    { name: 'featured', label: 'Featured', type: 'boolean' as const },
+    { name: 'prescription_required', label: 'Prescription Required', type: 'boolean' as const },
+    { name: 'expiry_date', label: 'Expiry Date', type: 'date' as const },
+    { name: 'generic_alternative', label: 'Generic Alternative', type: 'text' as const },
+    { name: 'branded_alternatives', label: 'Branded Alternatives', type: 'array' as const }
   ];
 
   // Category form fields
-  const categoryFields: FormField[] = [
-    { name: 'name', label: 'Category Name', type: 'text', required: true },
-    { name: 'description', label: 'Description', type: 'textarea' },
-    { name: 'image_url', label: 'Image URL', type: 'text' }
+  const categoryFields = [
+    { name: 'name', label: 'Category Name', type: 'text' as const, required: true },
+    { name: 'description', label: 'Description', type: 'textarea' as const },
+    { name: 'image_url', label: 'Image URL', type: 'text' as const }
   ];
 
   // Brand form fields
-  const brandFields: FormField[] = [
-    { name: 'name', label: 'Brand Name', type: 'text', required: true },
-    { name: 'description', label: 'Description', type: 'textarea' },
-    { name: 'logo_url', label: 'Logo URL', type: 'text' }
+  const brandFields = [
+    { name: 'name', label: 'Brand Name', type: 'text' as const, required: true },
+    { name: 'description', label: 'Description', type: 'textarea' as const },
+    { name: 'logo_url', label: 'Logo URL', type: 'text' as const }
   ];
 
   // Form handlers
-  const handleMedicineCreate = async (data: any) => {
+  const handleMedicineCreate = async (data: any): Promise<void> => {
     await createMedicine(data);
   };
 
-  const handleMedicineUpdate = async (item: any, data: any) => {
+  const handleMedicineUpdate = async (item: any, data: any): Promise<void> => {
     await updateMedicine(item.id, data);
   };
 
-  const handleCategoryCreate = async (data: any) => {
+  const handleCategoryCreate = async (data: any): Promise<void> => {
     await createCategory(data);
   };
 
-  const handleCategoryUpdate = async (item: any, data: any) => {
+  const handleCategoryUpdate = async (item: any, data: any): Promise<void> => {
     await updateCategory(item.id, data);
   };
 
-  const handleBrandCreate = async (data: any) => {
+  const handleBrandCreate = async (data: any): Promise<void> => {
     await createBrand(data);
   };
 
-  const handleBrandUpdate = async (item: any, data: any) => {
+  const handleBrandUpdate = async (item: any, data: any): Promise<void> => {
     await updateBrand(item.id, data);
   };
 
@@ -224,12 +224,9 @@ export const MedicineManagement = () => {
           columns={medicineColumns}
           loading={medicinesLoading}
           onSearch={(query) => searchMedicines(query, ['name', 'brand', 'description'])}
-          onAdd={() => {}}
-          onEdit={(item) => {}}
           onDelete={(item) => deleteMedicine(item.id)}
           onRefresh={refetchMedicines}
           searchPlaceholder="Search medicines..."
-          addButtonText="Add Medicine"
           renderActions={(item) => (
             <div className="flex gap-2">
               <FormDialog
@@ -260,12 +257,9 @@ export const MedicineManagement = () => {
           columns={categoryColumns}
           loading={categoriesLoading}
           onSearch={(query) => searchCategories(query, ['name', 'description'])}
-          onAdd={() => {}}
-          onEdit={(item) => {}}
           onDelete={(item) => deleteCategory(item.id)}
           onRefresh={refetchCategories}
           searchPlaceholder="Search categories..."
-          addButtonText="Add Category"
           renderActions={(item) => (
             <div className="flex gap-2">
               <FormDialog
@@ -296,12 +290,9 @@ export const MedicineManagement = () => {
           columns={brandColumns}
           loading={brandsLoading}
           onSearch={(query) => searchBrands(query, ['name', 'description'])}
-          onAdd={() => {}}
-          onEdit={(item) => {}}
           onDelete={(item) => deleteBrand(item.id)}
           onRefresh={refetchBrands}
           searchPlaceholder="Search brands..."
-          addButtonText="Add Brand"
           renderActions={(item) => (
             <div className="flex gap-2">
               <FormDialog

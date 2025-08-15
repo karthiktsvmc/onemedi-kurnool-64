@@ -30,11 +30,11 @@ export default function AmbulanceManagement() {
     { name: 'image_url', label: 'Image URL', type: 'text' as const },
   ];
 
-  const handleCreate = async (data: any) => {
+  const handleCreate = async (data: any): Promise<void> => {
     await ambulanceServices.createItem(data);
   };
 
-  const handleUpdate = async (item: any, data: any) => {
+  const handleUpdate = async (item: any, data: any): Promise<void> => {
     await ambulanceServices.updateItem(item.id, data);
   };
 
