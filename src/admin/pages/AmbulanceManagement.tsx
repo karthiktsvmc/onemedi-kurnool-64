@@ -1,0 +1,65 @@
+
+import React from 'react';
+import { useSupabaseTable } from '@/shared/hooks/useSupabaseTable';
+import { SupabaseTable } from '@/shared/lib/supabase-utils';
+import { DataTable } from '@/admin/components/shared/DataTable';
+import { FormDialog } from '@/admin/components/shared/FormDialog';
+import { PageHeader } from '@/admin/components/shared/PageHeader';
+
+const ambulanceServicesTable = new SupabaseTable('ambulance_services');
+
+export default function AmbulanceManagement() {
+  const ambulanceServices = useSupabaseTable(ambulanceServicesTable);
+
+  const columns = [
+    { key: 'name', label: 'Service Name' },
+    { key: 'city', label: 'City' },
+    { key: 'vehicle_type', label: 'Vehicle Type' },
+    { key: 'price', label: 'Price' },
+    { key: 'available_24x7', label: '24x7 Available' },
+  ];
+
+  const formFields = [
+    { name: 'name', label: 'Service Name', type: 'text', required: true },
+    { name: 'description', label: 'Description', type: 'textarea' },
+    { name: 'city', label: 'City', type: 'text', required: true },
+    { name: 'contact', label: 'Contact', type: 'text' },
+    { name: 'vehicle_type', label: 'Vehicle Type', type: 'text' },
+    { name: 'price', label: 'Price', type: 'number', required: true },
+    { name: 'available_24x7', label: '24x7 Available', type: 'checkbox' },
+    { name: 'image_url', label: 'Image URL', type: 'text' },
+  ];
+
+  return (
+    <div className="p-6">
+      <PageHeader 
+        title="Ambulance Management" 
+        description="Manage ambulance services and their details"
+      />
+
+      <DataTable
+        title="Ambulance Services"
+        data={ambulanceServices.data}
+        columns={columns}
+        loading={ambulanceServices.loading}
+        onDelete={ambulanceServices.deleteItem}
+        renderActions={(item) => (
+          <FormDialog
+            title="Edit Ambulance Service"
+            fields={formFields}
+            initialData={item}
+            onSubmit={(data) => ambulanceServices.updateItem(item.id, data)}
+            trigger={<button className="text-blue-600 hover:text-blue-800">Edit</button>}
+          />
+        )}
+      />
+
+      <FormDialog
+        title="Add Ambulance Service"
+        fields={formFields}
+        onSubmit={ambulanceServices.createItem}
+        trigger={<button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Service</button>}
+      />
+    </div>
+  );
+}
