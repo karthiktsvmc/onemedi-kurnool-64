@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useSupabaseTable } from '@/shared/hooks/useSupabaseTable';
 import { SupabaseTable } from '@/shared/lib/supabase-utils';
