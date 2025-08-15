@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   Table,
@@ -54,7 +53,7 @@ interface DataTableProps {
   onSearch?: (query: string) => void;
   onAdd?: () => void;
   onEdit?: (item: any) => void;
-  onDelete?: (id: string) => void;
+  onDelete?: (item: any) => void;
   onRefresh?: () => void;
   searchPlaceholder?: string;
   addButtonText?: string;
@@ -96,7 +95,7 @@ export function DataTable({
 
   const handleDeleteConfirm = () => {
     if (itemToDelete && onDelete) {
-      onDelete(itemToDelete.id);
+      onDelete(itemToDelete);
     }
     setDeleteDialogOpen(false);
     setItemToDelete(null);
