@@ -20,14 +20,14 @@ export default function AmbulanceManagement() {
   ];
 
   const formFields = [
-    { name: 'name', label: 'Service Name', type: 'text', required: true },
-    { name: 'description', label: 'Description', type: 'textarea' },
-    { name: 'city', label: 'City', type: 'text', required: true },
-    { name: 'contact', label: 'Contact', type: 'text' },
-    { name: 'vehicle_type', label: 'Vehicle Type', type: 'text' },
-    { name: 'price', label: 'Price', type: 'number', required: true },
-    { name: 'available_24x7', label: '24x7 Available', type: 'checkbox' },
-    { name: 'image_url', label: 'Image URL', type: 'text' },
+    { name: 'name', label: 'Service Name', type: 'text' as const, required: true },
+    { name: 'description', label: 'Description', type: 'textarea' as const },
+    { name: 'city', label: 'City', type: 'text' as const, required: true },
+    { name: 'contact', label: 'Contact', type: 'text' as const },
+    { name: 'vehicle_type', label: 'Vehicle Type', type: 'text' as const },
+    { name: 'price', label: 'Price', type: 'number' as const, required: true },
+    { name: 'available_24x7', label: '24x7 Available', type: 'checkbox' as const },
+    { name: 'image_url', label: 'Image URL', type: 'text' as const },
   ];
 
   return (

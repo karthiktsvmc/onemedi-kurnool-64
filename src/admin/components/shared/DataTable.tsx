@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import {
   Table,
@@ -36,32 +37,33 @@ import {
 } from 'lucide-react';
 import { AdminCard } from './AdminCard';
 
-export interface DataTableColumn<T> {
-  key: keyof T | string;
+export interface DataTableColumn {
+  key: string;
   label: string;
-  render?: (value: any, row: T) => React.ReactNode;
+  render?: (value: any, row: any) => React.ReactNode;
   sortable?: boolean;
   searchable?: boolean;
 }
 
-interface DataTableProps<T> {
+interface DataTableProps {
   title: string;
   description?: string;
-  data: T[];
-  columns: DataTableColumn<T>[];
+  data: any[];
+  columns: DataTableColumn[];
   loading?: boolean;
   onSearch?: (query: string) => void;
   onAdd?: () => void;
-  onEdit?: (item: T) => void;
-  onDelete?: (item: T) => void;
+  onEdit?: (item: any) => void;
+  onDelete?: (id: string) => void;
   onRefresh?: () => void;
   searchPlaceholder?: string;
   addButtonText?: string;
   emptyMessage?: string;
   actions?: React.ReactNode;
+  renderActions?: (item: any) => React.ReactNode;
 }
 
-export function DataTable<T extends { id: string }>({
+export function DataTable({
   title,
   description,
   data,
@@ -75,35 +77,36 @@ export function DataTable<T extends { id: string }>({
   searchPlaceholder = "Search...",
   addButtonText = "Add New",
   emptyMessage = "No data found",
-  actions
-}: DataTableProps<T>) {
+  actions,
+  renderActions
+}: DataTableProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [itemToDelete, setItemToDelete] = useState<T | null>(null);
+  const [itemToDelete, setItemToDelete] = useState<any | null>(null);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     onSearch?.(query);
   };
 
-  const handleDeleteClick = (item: T) => {
+  const handleDeleteClick = (item: any) => {
     setItemToDelete(item);
     setDeleteDialogOpen(true);
   };
 
   const handleDeleteConfirm = () => {
     if (itemToDelete && onDelete) {
-      onDelete(itemToDelete);
+      onDelete(itemToDelete.id);
     }
     setDeleteDialogOpen(false);
     setItemToDelete(null);
   };
 
-  const renderCellValue = (column: DataTableColumn<T>, row: T) => {
+  const renderCellValue = (column: DataTableColumn, row: any) => {
     const keyStr = String(column.key);
     const value = keyStr.includes('.') 
       ? keyStr.split('.').reduce((obj: any, key) => obj?.[key], row)
-      : (row as any)[column.key];
+      : row[column.key];
 
     if (column.render) {
       return column.render(value, row);
@@ -182,7 +185,7 @@ export function DataTable<T extends { id: string }>({
               {columns.map((column, index) => (
                 <TableHead key={index}>{column.label}</TableHead>
               ))}
-              {(onEdit || onDelete) && (
+              {(onEdit || onDelete || renderActions) && (
                 <TableHead className="w-[100px]">Actions</TableHead>
               )}
             </TableRow>
@@ -190,7 +193,7 @@ export function DataTable<T extends { id: string }>({
           <TableBody>
             {loading ? (
               <TableRow>
-                <TableCell colSpan={columns.length + (onEdit || onDelete ? 1 : 0)} className="text-center py-8">
+                <TableCell colSpan={columns.length + (onEdit || onDelete || renderActions ? 1 : 0)} className="text-center py-8">
                   <div className="flex items-center justify-center">
                     <RefreshCw className="h-4 w-4 animate-spin mr-2" />
                     Loading...
@@ -199,7 +202,7 @@ export function DataTable<T extends { id: string }>({
               </TableRow>
             ) : data.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={columns.length + (onEdit || onDelete ? 1 : 0)} className="text-center py-8 text-muted-foreground">
+                <TableCell colSpan={columns.length + (onEdit || onDelete || renderActions ? 1 : 0)} className="text-center py-8 text-muted-foreground">
                   {emptyMessage}
                 </TableCell>
               </TableRow>
@@ -211,32 +214,34 @@ export function DataTable<T extends { id: string }>({
                       {renderCellValue(column, row)}
                     </TableCell>
                   ))}
-                  {(onEdit || onDelete) && (
+                  {(onEdit || onDelete || renderActions) && (
                     <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="sm">
-                            <MoreHorizontal className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          {onEdit && (
-                            <DropdownMenuItem onClick={() => onEdit(row)}>
-                              <Edit className="h-4 w-4 mr-2" />
-                              Edit
-                            </DropdownMenuItem>
-                          )}
-                          {onDelete && (
-                            <DropdownMenuItem 
-                              onClick={() => handleDeleteClick(row)}
-                              className="text-destructive"
-                            >
-                              <Trash2 className="h-4 w-4 mr-2" />
-                              Delete
-                            </DropdownMenuItem>
-                          )}
-                        </DropdownMenuContent>
-                      </DropdownMenu>
+                      {renderActions ? renderActions(row) : (
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="sm">
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            {onEdit && (
+                              <DropdownMenuItem onClick={() => onEdit(row)}>
+                                <Edit className="h-4 w-4 mr-2" />
+                                Edit
+                              </DropdownMenuItem>
+                            )}
+                            {onDelete && (
+                              <DropdownMenuItem 
+                                onClick={() => handleDeleteClick(row)}
+                                className="text-destructive"
+                              >
+                                <Trash2 className="h-4 w-4 mr-2" />
+                                Delete
+                              </DropdownMenuItem>
+                            )}
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      )}
                     </TableCell>
                   )}
                 </TableRow>

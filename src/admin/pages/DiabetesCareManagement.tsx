@@ -70,72 +70,72 @@ export default function DiabetesCareManagement() {
   ];
 
   const categoryFormFields = [
-    { name: 'name', label: 'Name', type: 'text', required: true },
-    { name: 'description', label: 'Description', type: 'textarea' },
-    { name: 'type', label: 'Type', type: 'select', options: [
+    { name: 'name', label: 'Name', type: 'text' as const, required: true },
+    { name: 'description', label: 'Description', type: 'textarea' as const },
+    { name: 'type', label: 'Type', type: 'select' as const, options: [
       { value: 'test', label: 'Test' },
       { value: 'product', label: 'Product' },
       { value: 'service', label: 'Service' }
     ], required: true },
-    { name: 'image_url', label: 'Image URL', type: 'text' },
+    { name: 'image_url', label: 'Image URL', type: 'text' as const },
   ];
 
   const testFormFields = [
-    { name: 'name', label: 'Test Name', type: 'text', required: true },
-    { name: 'description', label: 'Description', type: 'textarea' },
-    { name: 'category_id', label: 'Category', type: 'select', options: categories.data.map(cat => ({ value: cat.id, label: cat.name })), required: true },
-    { name: 'mrp', label: 'MRP', type: 'number', required: true },
-    { name: 'home_collection_available', label: 'Home Collection Available', type: 'checkbox' },
-    { name: 'fasting_required', label: 'Fasting Required', type: 'checkbox' },
-    { name: 'featured', label: 'Featured', type: 'checkbox' },
-    { name: 'instructions', label: 'Instructions', type: 'textarea' },
-    { name: 'image_url', label: 'Image URL', type: 'text' },
+    { name: 'name', label: 'Test Name', type: 'text' as const, required: true },
+    { name: 'description', label: 'Description', type: 'textarea' as const },
+    { name: 'category_id', label: 'Category', type: 'select' as const, options: categories.data.map(cat => ({ value: cat.id, label: cat.name })), required: true },
+    { name: 'mrp', label: 'MRP', type: 'number' as const, required: true },
+    { name: 'home_collection_available', label: 'Home Collection Available', type: 'checkbox' as const },
+    { name: 'fasting_required', label: 'Fasting Required', type: 'checkbox' as const },
+    { name: 'featured', label: 'Featured', type: 'checkbox' as const },
+    { name: 'instructions', label: 'Instructions', type: 'textarea' as const },
+    { name: 'image_url', label: 'Image URL', type: 'text' as const },
   ];
 
   const productFormFields = [
-    { name: 'name', label: 'Product Name', type: 'text', required: true },
-    { name: 'description', label: 'Description', type: 'textarea' },
-    { name: 'category_id', label: 'Category', type: 'select', options: categories.data.map(cat => ({ value: cat.id, label: cat.name })), required: true },
-    { name: 'price', label: 'Price', type: 'number', required: true },
-    { name: 'image_url', label: 'Image URL', type: 'text' },
+    { name: 'name', label: 'Product Name', type: 'text' as const, required: true },
+    { name: 'description', label: 'Description', type: 'textarea' as const },
+    { name: 'category_id', label: 'Category', type: 'select' as const, options: categories.data.map(cat => ({ value: cat.id, label: cat.name })), required: true },
+    { name: 'price', label: 'Price', type: 'number' as const, required: true },
+    { name: 'image_url', label: 'Image URL', type: 'text' as const },
   ];
 
   const serviceFormFields = [
-    { name: 'name', label: 'Service Name', type: 'text', required: true },
-    { name: 'description', label: 'Description', type: 'textarea' },
-    { name: 'category_id', label: 'Category', type: 'select', options: categories.data.map(cat => ({ value: cat.id, label: cat.name })), required: true },
-    { name: 'price', label: 'Price', type: 'number', required: true },
-    { name: 'expert_id', label: 'Expert', type: 'select', options: experts.data.map(expert => ({ value: expert.id, label: expert.name })) },
-    { name: 'image_url', label: 'Image URL', type: 'text' },
+    { name: 'name', label: 'Service Name', type: 'text' as const, required: true },
+    { name: 'description', label: 'Description', type: 'textarea' as const },
+    { name: 'category_id', label: 'Category', type: 'select' as const, options: categories.data.map(cat => ({ value: cat.id, label: cat.name })), required: true },
+    { name: 'price', label: 'Price', type: 'number' as const, required: true },
+    { name: 'expert_id', label: 'Expert', type: 'select' as const, options: experts.data.map(expert => ({ value: expert.id, label: expert.name })) },
+    { name: 'image_url', label: 'Image URL', type: 'text' as const },
   ];
 
   const planFormFields = [
-    { name: 'name', label: 'Plan Name', type: 'text', required: true },
-    { name: 'description', label: 'Description', type: 'textarea' },
-    { name: 'price', label: 'Price', type: 'number', required: true },
-    { name: 'duration', label: 'Duration (Days)', type: 'number' },
-    { name: 'sessions', label: 'Sessions', type: 'number' },
-    { name: 'expert_id', label: 'Expert', type: 'select', options: experts.data.map(expert => ({ value: expert.id, label: expert.name })) },
-    { name: 'image_url', label: 'Image URL', type: 'text' },
+    { name: 'name', label: 'Plan Name', type: 'text' as const, required: true },
+    { name: 'description', label: 'Description', type: 'textarea' as const },
+    { name: 'price', label: 'Price', type: 'number' as const, required: true },
+    { name: 'duration', label: 'Duration (Days)', type: 'number' as const },
+    { name: 'sessions', label: 'Sessions', type: 'number' as const },
+    { name: 'expert_id', label: 'Expert', type: 'select' as const, options: experts.data.map(expert => ({ value: expert.id, label: expert.name })) },
+    { name: 'image_url', label: 'Image URL', type: 'text' as const },
   ];
 
   const expertFormFields = [
-    { name: 'name', label: 'Expert Name', type: 'text', required: true },
-    { name: 'speciality', label: 'Speciality', type: 'text' },
-    { name: 'qualification', label: 'Qualification', type: 'text' },
-    { name: 'experience', label: 'Experience (Years)', type: 'number' },
-    { name: 'bio', label: 'Bio', type: 'textarea' },
-    { name: 'contact', label: 'Contact', type: 'text' },
-    { name: 'image_url', label: 'Image URL', type: 'text' },
+    { name: 'name', label: 'Expert Name', type: 'text' as const, required: true },
+    { name: 'speciality', label: 'Speciality', type: 'text' as const },
+    { name: 'qualification', label: 'Qualification', type: 'text' as const },
+    { name: 'experience', label: 'Experience (Years)', type: 'number' as const },
+    { name: 'bio', label: 'Bio', type: 'textarea' as const },
+    { name: 'contact', label: 'Contact', type: 'text' as const },
+    { name: 'image_url', label: 'Image URL', type: 'text' as const },
   ];
 
   const dietFormFields = [
-    { name: 'name', label: 'Diet Name', type: 'text', required: true },
-    { name: 'description', label: 'Description', type: 'textarea' },
-    { name: 'plan_id', label: 'Plan', type: 'select', options: plans.data.map(plan => ({ value: plan.id, label: plan.name })), required: true },
-    { name: 'calories', label: 'Calories', type: 'number' },
-    { name: 'instructions', label: 'Instructions', type: 'textarea' },
-    { name: 'image_url', label: 'Image URL', type: 'text' },
+    { name: 'name', label: 'Diet Name', type: 'text' as const, required: true },
+    { name: 'description', label: 'Description', type: 'textarea' as const },
+    { name: 'plan_id', label: 'Plan', type: 'select' as const, options: plans.data.map(plan => ({ value: plan.id, label: plan.name })), required: true },
+    { name: 'calories', label: 'Calories', type: 'number' as const },
+    { name: 'instructions', label: 'Instructions', type: 'textarea' as const },
+    { name: 'image_url', label: 'Image URL', type: 'text' as const },
   ];
 
   return (

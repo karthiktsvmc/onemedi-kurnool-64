@@ -35,25 +35,25 @@ export default function ScanManagement() {
   ];
 
   const categoryFormFields = [
-    { name: 'name', label: 'Name', type: 'text', required: true },
-    { name: 'description', label: 'Description', type: 'textarea' },
-    { name: 'image_url', label: 'Image URL', type: 'text' },
+    { name: 'name', label: 'Name', type: 'text' as const, required: true },
+    { name: 'description', label: 'Description', type: 'textarea' as const },
+    { name: 'image_url', label: 'Image URL', type: 'text' as const },
   ];
 
   const scanFormFields = [
-    { name: 'name', label: 'Scan Name', type: 'text', required: true },
-    { name: 'description', label: 'Description', type: 'textarea' },
-    { name: 'category_id', label: 'Category', type: 'select', options: categories.data.map(cat => ({ value: cat.id, label: cat.name })), required: true },
-    { name: 'mrp', label: 'MRP', type: 'number', required: true },
-    { name: 'featured', label: 'Featured', type: 'checkbox' },
-    { name: 'instructions', label: 'Instructions', type: 'textarea' },
-    { name: 'image_url', label: 'Image URL', type: 'text' },
+    { name: 'name', label: 'Scan Name', type: 'text' as const, required: true },
+    { name: 'description', label: 'Description', type: 'textarea' as const },
+    { name: 'category_id', label: 'Category', type: 'select' as const, options: categories.data.map(cat => ({ value: cat.id, label: cat.name })), required: true },
+    { name: 'mrp', label: 'MRP', type: 'number' as const, required: true },
+    { name: 'featured', label: 'Featured', type: 'checkbox' as const },
+    { name: 'instructions', label: 'Instructions', type: 'textarea' as const },
+    { name: 'image_url', label: 'Image URL', type: 'text' as const },
   ];
 
   const variantFormFields = [
-    { name: 'scan_id', label: 'Scan', type: 'select', options: scans.data.map(scan => ({ value: scan.id, label: scan.name })), required: true },
-    { name: 'diagnostic_centre_id', label: 'Diagnostic Centre', type: 'text', required: true },
-    { name: 'price', label: 'Price', type: 'number', required: true },
+    { name: 'scan_id', label: 'Scan', type: 'select' as const, options: scans.data.map(scan => ({ value: scan.id, label: scan.name })), required: true },
+    { name: 'diagnostic_centre_id', label: 'Diagnostic Centre', type: 'text' as const, required: true },
+    { name: 'price', label: 'Price', type: 'number' as const, required: true },
   ];
 
   return (

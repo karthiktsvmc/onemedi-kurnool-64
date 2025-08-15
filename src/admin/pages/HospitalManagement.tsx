@@ -20,16 +20,16 @@ export default function HospitalManagement() {
   ];
 
   const formFields = [
-    { name: 'name', label: 'Hospital Name', type: 'text', required: true },
-    { name: 'address', label: 'Address', type: 'textarea', required: true },
-    { name: 'city', label: 'City', type: 'text', required: true },
-    { name: 'state', label: 'State', type: 'text', required: true },
-    { name: 'pincode', label: 'Pincode', type: 'text', required: true },
-    { name: 'contact', label: 'Contact', type: 'text' },
-    { name: 'lat', label: 'Latitude', type: 'number' },
-    { name: 'lng', label: 'Longitude', type: 'number' },
-    { name: 'emergency_services', label: 'Emergency Services', type: 'checkbox' },
-    { name: 'image_url', label: 'Image URL', type: 'text' },
+    { name: 'name', label: 'Hospital Name', type: 'text' as const, required: true },
+    { name: 'address', label: 'Address', type: 'textarea' as const, required: true },
+    { name: 'city', label: 'City', type: 'text' as const, required: true },
+    { name: 'state', label: 'State', type: 'text' as const, required: true },
+    { name: 'pincode', label: 'Pincode', type: 'text' as const, required: true },
+    { name: 'contact', label: 'Contact', type: 'text' as const },
+    { name: 'lat', label: 'Latitude', type: 'number' as const },
+    { name: 'lng', label: 'Longitude', type: 'number' as const },
+    { name: 'emergency_services', label: 'Emergency Services', type: 'checkbox' as const },
+    { name: 'image_url', label: 'Image URL', type: 'text' as const },
   ];
 
   return (
