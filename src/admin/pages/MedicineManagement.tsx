@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { DataTable, DataTableColumn } from '../components/shared/DataTable';
 import { FormDialog, FormField } from '../components/shared/FormDialog';
@@ -60,7 +61,7 @@ export const MedicineManagement = () => {
   const [formLoading, setFormLoading] = useState(false);
 
   // Medicine columns
-  const medicineColumns: DataTableColumn<Medicine>[] = [
+  const medicineColumns: DataTableColumn[] = [
     { key: 'name', label: 'Name', sortable: true },
     { 
       key: 'category_id', 
@@ -103,7 +104,7 @@ export const MedicineManagement = () => {
   ];
 
   // Category columns
-  const categoryColumns: DataTableColumn<MedicineCategory>[] = [
+  const categoryColumns: DataTableColumn[] = [
     { key: 'name', label: 'Name', sortable: true },
     { key: 'description', label: 'Description' },
     { 
@@ -114,7 +115,7 @@ export const MedicineManagement = () => {
   ];
 
   // Brand columns
-  const brandColumns: DataTableColumn<MedicineBrand>[] = [
+  const brandColumns: DataTableColumn[] = [
     { key: 'name', label: 'Name', sortable: true },
     { key: 'description', label: 'Description' },
     { 
@@ -274,7 +275,7 @@ export const MedicineManagement = () => {
           loading={medicinesLoading}
           onSearch={(query) => searchMedicines(query, ['name', 'brand', 'description'])}
           onAdd={() => openMedicineDialog()}
-          onEdit={openMedicineDialog}
+          onEdit={(item) => openMedicineDialog(item)}
           onDelete={(item) => deleteMedicine(item.id)}
           onRefresh={refetchMedicines}
           searchPlaceholder="Search medicines..."
@@ -291,7 +292,7 @@ export const MedicineManagement = () => {
           loading={categoriesLoading}
           onSearch={(query) => searchCategories(query, ['name', 'description'])}
           onAdd={() => openCategoryDialog()}
-          onEdit={openCategoryDialog}
+          onEdit={(item) => openCategoryDialog(item)}
           onDelete={(item) => deleteCategory(item.id)}
           onRefresh={refetchCategories}
           searchPlaceholder="Search categories..."
@@ -308,7 +309,7 @@ export const MedicineManagement = () => {
           loading={brandsLoading}
           onSearch={(query) => searchBrands(query, ['name', 'description'])}
           onAdd={() => openBrandDialog()}
-          onEdit={openBrandDialog}
+          onEdit={(item) => openBrandDialog(item)}
           onDelete={(item) => deleteBrand(item.id)}
           onRefresh={refetchBrands}
           searchPlaceholder="Search brands..."
