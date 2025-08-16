@@ -244,8 +244,8 @@ export function FormDialog({
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {(fields || []).filter(Boolean).map((field) => (
-            <div key={(field as any).name || Math.random()} className="space-y-2">
+          {(fields || []).map((field, index) => (
+            <div key={index} className="space-y-2">
               {field && (
                 <>
                   <Label htmlFor={(field as any).name}>

@@ -40,19 +40,19 @@ export const ScanCategories = () => {
     {
       key: 'name',
       label: 'Category',
-      render: (category: any) => (
+      render: (_: any, row: any) => (
         <div className="flex items-center gap-3">
-          {category.image_url && (
+          {row?.image_url && (
             <img 
-              src={category.image_url} 
-              alt={category.name}
+              src={row.image_url} 
+              alt={row.name}
               className="w-10 h-10 rounded object-cover"
             />
           )}
           <div>
-            <div className="font-medium">{category.name}</div>
+            <div className="font-medium">{row?.name}</div>
             <div className="text-sm text-muted-foreground line-clamp-2">
-              {category.description}
+              {row?.description}
             </div>
           </div>
         </div>
@@ -61,12 +61,17 @@ export const ScanCategories = () => {
     {
       key: 'scan_count',
       label: 'Scans Count',
-      render: (category: any) => category.scans?.length || 0
+      render: (_: any, row: any) => {
+        const count = Array.isArray(row?.scans)
+          ? row.scans.length
+          : (row?.scans?.[0]?.count ?? row?.scans?.count ?? 0);
+        return count;
+      }
     },
     {
       key: 'created_at',
       label: 'Created',
-      render: (category: any) => new Date(category.created_at).toLocaleDateString()
+      render: (value: any) => new Date(value).toLocaleDateString()
     }
   ];
 
