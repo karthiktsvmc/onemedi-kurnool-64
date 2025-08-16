@@ -132,7 +132,8 @@ export function FormDialog({
     );
   };
 
-  const renderField = (field: FormField) => {
+  const renderField = (field: FormField | null | undefined) => {
+    if (!field || !field.name) return null;
     const value = values[field.name];
 
     switch (field.type) {
@@ -243,15 +244,19 @@ export function FormDialog({
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {fields.map((field) => (
-            <div key={field.name} className="space-y-2">
-              <Label htmlFor={field.name}>
-                {field.label}
-                {field.required && <span className="text-destructive ml-1">*</span>}
-              </Label>
-              {renderField(field)}
-              {field.description && (
-                <p className="text-sm text-muted-foreground">{field.description}</p>
+          {(fields || []).filter(Boolean).map((field) => (
+            <div key={(field as any).name || Math.random()} className="space-y-2">
+              {field && (
+                <>
+                  <Label htmlFor={(field as any).name}>
+                    {(field as any).label}
+                    {(field as any).required && <span className="text-destructive ml-1">*</span>}
+                  </Label>
+                  {renderField(field as any)}
+                  {(field as any).description && (
+                    <p className="text-sm text-muted-foreground">{(field as any).description}</p>
+                  )}
+                </>
               )}
             </div>
           ))}
