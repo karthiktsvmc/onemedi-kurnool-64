@@ -2,9 +2,10 @@
 import { useState, useCallback } from 'react';
 import { supabaseClient } from '@/shared/lib/supabase-client';
 import { useToast } from '@/shared/hooks/use-toast';
+import type { Database } from '@/integrations/supabase/types';
 
 interface UseSupabaseMutationOptions<T> {
-  table: string;
+  table: keyof Database['public']['Tables'];
   onSuccess?: (data: T) => void;
   onError?: (error: Error) => void;
 }
@@ -23,23 +24,24 @@ export function useSupabaseMutation<T = any>({
       setLoading(true);
       setError(null);
 
-      const { data: result, error } = await supabaseClient
+      // Cast payload to any so this generic hook works for all tables without per-table typing
+      const { data: result, error } = await (supabaseClient
         .from(table)
-        .insert(data)
+        .insert(data as any)
         .select()
-        .single();
+        .single() as any);
 
       if (error) {
         throw new Error(error.message);
       }
 
-      onSuccess?.(result);
+      onSuccess?.(result as T);
       toast({
         title: "Success",
         description: "Item created successfully",
       });
 
-      return result;
+      return result as T;
     } catch (err) {
       const errorMessage = err instanceof Error ? err : new Error('Failed to create item');
       setError(errorMessage);
@@ -60,24 +62,24 @@ export function useSupabaseMutation<T = any>({
       setLoading(true);
       setError(null);
 
-      const { data: result, error } = await supabaseClient
+      const { data: result, error } = await (supabaseClient
         .from(table)
-        .update(data)
+        .update(data as any)
         .eq('id', id)
         .select()
-        .single();
+        .single() as any);
 
       if (error) {
         throw new Error(error.message);
       }
 
-      onSuccess?.(result);
+      onSuccess?.(result as T);
       toast({
         title: "Success",
         description: "Item updated successfully",
       });
 
-      return result;
+      return result as T;
     } catch (err) {
       const errorMessage = err instanceof Error ? err : new Error('Failed to update item');
       setError(errorMessage);
@@ -134,3 +136,4 @@ export function useSupabaseMutation<T = any>({
     error,
   };
 }
+

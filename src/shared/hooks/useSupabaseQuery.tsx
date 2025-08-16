@@ -1,12 +1,13 @@
 
 import { useState, useEffect, useCallback } from 'react';
-import { PostgrestFilterBuilder } from '@supabase/postgrest-js';
+// Removed PostgrestFilterBuilder import to avoid over-constraining generics
 import { supabaseClient } from '@/shared/lib/supabase-client';
 import { useToast } from '@/shared/hooks/use-toast';
 import type { QueryOptions, LocationFilterOptions } from '@/shared/types/database';
+import type { Database } from '@/integrations/supabase/types';
 
 interface UseSupabaseQueryOptions<T> extends QueryOptions {
-  table: string;
+  table: keyof Database['public']['Tables'];
   select?: string;
   autoFetch?: boolean;
   onSuccess?: (data: T[]) => void;
@@ -32,7 +33,8 @@ export function useSupabaseQuery<T = any>({
   const { toast } = useToast();
 
   const buildQuery = useCallback(() => {
-    let query = supabaseClient.from(table).select(select) as PostgrestFilterBuilder<any, T[], any>;
+    // Use 'any' to avoid deep type instantiation issues with PostgrestFilterBuilder generics
+    let query: any = supabaseClient.from(table).select(select);
 
     // Apply filters
     if (filters) {
@@ -66,11 +68,12 @@ export function useSupabaseQuery<T = any>({
     }
 
     // Apply pagination
-    if (limit) {
+    if (typeof limit === 'number') {
       query = query.limit(limit);
     }
-    if (offset) {
-      query = query.range(offset, offset + (limit || 10) - 1);
+    if (typeof offset === 'number') {
+      const pageSize = typeof limit === 'number' ? limit : 10;
+      query = query.range(offset, offset + pageSize - 1);
     }
 
     return query;
@@ -122,3 +125,4 @@ export function useSupabaseQuery<T = any>({
     fetchData,
   };
 }
+

@@ -4,6 +4,7 @@ import { useSupabaseQuery } from '@/shared/hooks/useSupabaseQuery';
 import { useSupabaseMutation } from '@/shared/hooks/useSupabaseMutation';
 import { useRealtimeSubscription } from '@/shared/hooks/useRealtimeSubscription';
 import { useLocation } from '@/shared/contexts/LocationContext';
+import { supabaseClient } from '@/shared/lib/supabase-client';
 import type { AmbulanceService, AmbulanceServiceInsert, AmbulanceServiceUpdate, QueryOptions } from '@/shared/types/database';
 
 export function useAmbulanceServices(options: QueryOptions = {}) {
@@ -66,3 +67,4 @@ export function useAmbulanceServices(options: QueryOptions = {}) {
     mutationError: mutation.error,
   };
 }
+
