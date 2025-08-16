@@ -1,9 +1,9 @@
 
 import { useEffect } from 'react';
-import { useLocation } from '@/shared/contexts/LocationContext';
+import { useLocation, LocationData } from '@/shared/contexts/LocationContext';
 
 interface UseLocationAwareDataOptions {
-  onLocationChange?: (location: string | null) => void;
+  onLocationChange?: (location: LocationData | null) => void;
   refetchOnLocationChange?: boolean;
 }
 
@@ -11,7 +11,7 @@ export function useLocationAwareData({
   onLocationChange,
   refetchOnLocationChange = true,
 }: UseLocationAwareDataOptions = {}) {
-  const { currentLocation, isLocationSet } = useLocation();
+  const { currentLocation, isLocationSet, isLocationLoading } = useLocation();
 
   useEffect(() => {
     if (refetchOnLocationChange && onLocationChange) {
@@ -22,5 +22,6 @@ export function useLocationAwareData({
   return {
     currentLocation,
     isLocationSet,
+    isLocationLoading,
   };
 }
