@@ -54,13 +54,13 @@ export function FormDialog({
   trigger
 }: FormDialogProps) {
   const [open, setOpen] = useState(false);
-  const [values, setValues] = useState<Record<string, any>>(initialData);
+  const [values, setValues] = useState<Record<string, any>>(initialData ?? {});
   const [loading, setLoading] = useState(false);
 
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
     if (newOpen) {
-      setValues(initialData);
+      setValues(initialData ?? {});
     }
   };
 
