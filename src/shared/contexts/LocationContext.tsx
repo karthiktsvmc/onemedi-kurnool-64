@@ -1,24 +1,28 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface LocationContextType {
-  currentLocation: GeolocationPosition | null;
-  setManualLocation: (location: GeolocationPosition) => void;
+  currentLocation: string | null;
+  setManualLocation: (location: string) => void;
   isLocationSet: boolean;
 }
 
 const LocationContext = createContext<LocationContextType | undefined>(undefined);
 
 export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentLocation, setCurrentLocation] = useState<GeolocationPosition | null>(null);
+  const [currentLocation, setCurrentLocation] = useState<string | null>(null);
 
   useEffect(() => {
     if ("geolocation" in navigator) {
       // Watch the position continuously
       const watcher = navigator.geolocation.watchPosition(
-        (position) => {
-          setCurrentLocation(position);
+        async (position) => {
+          // For now, we'll use a placeholder city name
+          // In a real app, you would reverse geocode the coordinates to get the city name
+          const cityName = "Current Location"; // This should be replaced with actual reverse geocoding
+          setCurrentLocation(cityName);
           // Save to localStorage if needed (optional)
-          localStorage.setItem("currentLocation", JSON.stringify(position.coords));
+          localStorage.setItem("currentLocation", cityName);
         },
         (error) => {
           console.error("Error fetching location:", error);
@@ -37,10 +41,10 @@ export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }, []);
 
-  // Allow manual override (optional for testing / fallback)
-  const setManualLocation = (location: GeolocationPosition) => {
+  // Allow manual override (for user-selected cities)
+  const setManualLocation = (location: string) => {
     setCurrentLocation(location);
-    localStorage.setItem("currentLocation", JSON.stringify(location.coords));
+    localStorage.setItem("currentLocation", location);
   };
 
   const isLocationSet = currentLocation !== null;
