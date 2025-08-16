@@ -132,16 +132,18 @@ export function FormDialog({
     );
   };
 
-  const renderField = (field: FormField | null | undefined) => {
-    if (!field || !field.name) return null;
-    const value = values[field.name];
+  const renderField = (rawField: any) => {
+    const field = rawField && typeof rawField === 'object' ? rawField : null;
+    const name: string | undefined = field?.name;
+    if (!field || !name) return null;
+    const value = values[name];
 
     switch (field.type) {
       case 'textarea':
         return (
           <Textarea
             value={value || ''}
-            onChange={(e) => handleChange(field.name, e.target.value)}
+            onChange={(e) => handleChange(name, e.target.value)}
             placeholder={field.placeholder}
             rows={4}
           />
@@ -151,8 +153,8 @@ export function FormDialog({
         return (
           <Input
             type="number"
-            value={value || ''}
-            onChange={(e) => handleChange(field.name, parseFloat(e.target.value) || 0)}
+            value={value ?? ''}
+            onChange={(e) => handleChange(name, parseFloat(e.target.value) || 0)}
             placeholder={field.placeholder}
             min={field.min}
             max={field.max}
@@ -162,16 +164,18 @@ export function FormDialog({
 
       case 'select':
         return (
-          <Select value={value || ''} onValueChange={(newValue) => handleChange(field.name, newValue)}>
+          <Select value={value || ''} onValueChange={(newValue) => handleChange(name, newValue)}>
             <SelectTrigger>
               <SelectValue placeholder={field.placeholder} />
             </SelectTrigger>
             <SelectContent>
-              {(field.options || []).filter(option => option && option.value && option.label).map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
+              {(field.options || [])
+                .filter((option: any) => option && option.value != null && option.label != null)
+                .map((option: any) => (
+                  <SelectItem key={String(option.value)} value={String(option.value)}>
+                    {String(option.label)}
+                  </SelectItem>
+                ))}
             </SelectContent>
           </Select>
         );
@@ -181,8 +185,8 @@ export function FormDialog({
         return (
           <div className="flex items-center space-x-2">
             <Switch
-              checked={value || false}
-              onCheckedChange={(checked) => handleChange(field.name, checked)}
+              checked={!!value}
+              onCheckedChange={(checked) => handleChange(name, checked)}
             />
             <Label>{value ? 'Yes' : 'No'}</Label>
           </div>
@@ -193,7 +197,7 @@ export function FormDialog({
           <Input
             type="date"
             value={value ? new Date(value).toISOString().split('T')[0] : ''}
-            onChange={(e) => handleChange(field.name, e.target.value)}
+            onChange={(e) => handleChange(name, e.target.value)}
           />
         );
 
@@ -202,7 +206,7 @@ export function FormDialog({
           <Input
             type="email"
             value={value || ''}
-            onChange={(e) => handleChange(field.name, e.target.value)}
+            onChange={(e) => handleChange(name, e.target.value)}
             placeholder={field.placeholder}
           />
         );
@@ -212,7 +216,7 @@ export function FormDialog({
           <Input
             type="tel"
             value={value || ''}
-            onChange={(e) => handleChange(field.name, e.target.value)}
+            onChange={(e) => handleChange(name, e.target.value)}
             placeholder={field.placeholder}
           />
         );
@@ -225,7 +229,7 @@ export function FormDialog({
           <Input
             type="text"
             value={value || ''}
-            onChange={(e) => handleChange(field.name, e.target.value)}
+            onChange={(e) => handleChange(name, e.target.value)}
             placeholder={field.placeholder}
           />
         );
