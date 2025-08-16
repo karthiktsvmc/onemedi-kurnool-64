@@ -48,20 +48,20 @@ export const ScanDiagnosticCentres = () => {
     {
       key: 'name',
       label: 'Centre Details',
-      render: (centre: any) => (
+      render: (_: any, row: any) => (
         <div className="flex items-center gap-3">
-          {centre.image_url && (
+          {row?.image_url && (
             <img 
-              src={centre.image_url} 
-              alt={centre.name}
+              src={row.image_url} 
+              alt={row.name}
               className="w-10 h-10 rounded object-cover"
             />
           )}
           <div>
-            <div className="font-medium">{centre.name}</div>
+            <div className="font-medium">{row?.name}</div>
             <div className="text-sm text-muted-foreground flex items-center gap-1">
               <MapPin className="h-3 w-3" />
-              {centre.city}, {centre.state}
+              {row?.city}, {row?.state}
             </div>
           </div>
         </div>
@@ -70,11 +70,11 @@ export const ScanDiagnosticCentres = () => {
     {
       key: 'address',
       label: 'Address',
-      render: (centre: any) => (
+      render: (_: any, row: any) => (
         <div className="max-w-xs">
-          <div className="text-sm line-clamp-2">{centre.address}</div>
+          <div className="text-sm line-clamp-2">{row?.address}</div>
           <div className="text-xs text-muted-foreground mt-1">
-            {centre.pincode}
+            {row?.pincode}
           </div>
         </div>
       )
@@ -82,26 +82,31 @@ export const ScanDiagnosticCentres = () => {
     {
       key: 'contact',
       label: 'Contact',
-      render: (centre: any) => centre.contact || 'N/A'
+      render: (_: any, row: any) => row?.contact || 'N/A'
     },
     {
       key: 'scan_count',
       label: 'Available Scans',
-      render: (centre: any) => centre.scan_variants?.length || 0
+      render: (_: any, row: any) => {
+        const count = Array.isArray(row?.scan_variants)
+          ? row.scan_variants.length
+          : (row?.scan_variants?.[0]?.count ?? row?.scan_variants?.count ?? 0);
+        return count;
+      }
     },
     {
       key: 'active',
       label: 'Status',
-      render: (centre: any) => (
-        <Badge variant={centre.active ? 'default' : 'secondary'}>
-          {centre.active ? 'Active' : 'Inactive'}
+      render: (_: any, row: any) => (
+        <Badge variant={row?.active ? 'default' : 'secondary'}>
+          {row?.active ? 'Active' : 'Inactive'}
         </Badge>
       )
     },
     {
       key: 'created_at',
       label: 'Created',
-      render: (centre: any) => new Date(centre.created_at).toLocaleDateString()
+      render: (value: any) => new Date(value).toLocaleDateString()
     }
   ];
 
