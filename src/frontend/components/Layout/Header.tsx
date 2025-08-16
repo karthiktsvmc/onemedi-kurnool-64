@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'lucide-react';
@@ -10,6 +11,11 @@ import { EnhancedLocationPicker } from './EnhancedLocationPicker';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleSearch = (query: string) => {
+    console.log('Search query:', query);
+    // TODO: Implement search functionality
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -50,7 +56,7 @@ const Header = () => {
 
         {/* Search Bar */}
         <div className="flex-1 max-w-lg mx-4">
-          <SmartSearchBar />
+          <SmartSearchBar onSearch={handleSearch} />
         </div>
 
         {/* Action buttons */}
@@ -70,3 +76,4 @@ const Header = () => {
 };
 
 export default Header;
+export { Header };
