@@ -19,7 +19,7 @@ export function useBloodBanks(options: QueryOptions = {}) {
   } = useSupabaseQuery<BloodBank>({
     table: 'blood_banks',
     select: '*',
-    locationFilter: currentLocation ? { city: currentLocation.city } : undefined,
+    locationFilter: currentLocation ? { city: currentLocation } : undefined,
     onSuccess: (data) => setBloodBanks(data),
     ...options,
   });
@@ -67,3 +67,4 @@ export function useBloodBanks(options: QueryOptions = {}) {
     mutationError: mutation.error,
   };
 }
+

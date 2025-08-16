@@ -24,14 +24,8 @@ export type Database = {
           equipment: string[] | null
           id: string
           image_url: string | null
-          latitude: number | null
-          location_restricted: boolean | null
-          longitude: number | null
           name: string
-          pincode: string | null
           price: number
-          service_radius_km: number | null
-          state: string | null
           updated_at: string
           vehicle_type: string | null
         }
@@ -44,14 +38,8 @@ export type Database = {
           equipment?: string[] | null
           id?: string
           image_url?: string | null
-          latitude?: number | null
-          location_restricted?: boolean | null
-          longitude?: number | null
           name: string
-          pincode?: string | null
           price: number
-          service_radius_km?: number | null
-          state?: string | null
           updated_at?: string
           vehicle_type?: string | null
         }
@@ -64,14 +52,8 @@ export type Database = {
           equipment?: string[] | null
           id?: string
           image_url?: string | null
-          latitude?: number | null
-          location_restricted?: boolean | null
-          longitude?: number | null
           name?: string
-          pincode?: string | null
           price?: number
-          service_radius_km?: number | null
-          state?: string | null
           updated_at?: string
           vehicle_type?: string | null
         }
@@ -89,10 +71,8 @@ export type Database = {
           image_url: string | null
           lat: number | null
           lng: number | null
-          location_restricted: boolean | null
           name: string
           pincode: string
-          service_radius_km: number | null
           state: string
           updated_at: string
         }
@@ -107,10 +87,8 @@ export type Database = {
           image_url?: string | null
           lat?: number | null
           lng?: number | null
-          location_restricted?: boolean | null
           name: string
           pincode: string
-          service_radius_km?: number | null
           state: string
           updated_at?: string
         }
@@ -125,10 +103,8 @@ export type Database = {
           image_url?: string | null
           lat?: number | null
           lng?: number | null
-          location_restricted?: boolean | null
           name?: string
           pincode?: string
-          service_radius_km?: number | null
           state?: string
           updated_at?: string
         }
@@ -442,56 +418,35 @@ export type Database = {
       diabetes_services: {
         Row: {
           category_id: string
-          city: string | null
           created_at: string
           description: string | null
           expert_id: string | null
           id: string
           image_url: string | null
-          latitude: number | null
-          location_restricted: boolean | null
-          longitude: number | null
           name: string
-          pincode: string | null
           price: number
-          service_radius_km: number | null
-          state: string | null
           updated_at: string
         }
         Insert: {
           category_id: string
-          city?: string | null
           created_at?: string
           description?: string | null
           expert_id?: string | null
           id?: string
           image_url?: string | null
-          latitude?: number | null
-          location_restricted?: boolean | null
-          longitude?: number | null
           name: string
-          pincode?: string | null
           price: number
-          service_radius_km?: number | null
-          state?: string | null
           updated_at?: string
         }
         Update: {
           category_id?: string
-          city?: string | null
           created_at?: string
           description?: string | null
           expert_id?: string | null
           id?: string
           image_url?: string | null
-          latitude?: number | null
-          location_restricted?: boolean | null
-          longitude?: number | null
           name?: string
-          pincode?: string | null
           price?: number
-          service_radius_km?: number | null
-          state?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -717,59 +672,38 @@ export type Database = {
       homecare_services: {
         Row: {
           category_id: string
-          city: string | null
           created_at: string
           description: string | null
           duration: number | null
           id: string
           image_url: string | null
-          latitude: number | null
-          location_restricted: boolean | null
-          longitude: number | null
           name: string
-          pincode: string | null
           price: number
-          service_radius_km: number | null
           sessions: number | null
-          state: string | null
           updated_at: string
         }
         Insert: {
           category_id: string
-          city?: string | null
           created_at?: string
           description?: string | null
           duration?: number | null
           id?: string
           image_url?: string | null
-          latitude?: number | null
-          location_restricted?: boolean | null
-          longitude?: number | null
           name: string
-          pincode?: string | null
           price: number
-          service_radius_km?: number | null
           sessions?: number | null
-          state?: string | null
           updated_at?: string
         }
         Update: {
           category_id?: string
-          city?: string | null
           created_at?: string
           description?: string | null
           duration?: number | null
           id?: string
           image_url?: string | null
-          latitude?: number | null
-          location_restricted?: boolean | null
-          longitude?: number | null
           name?: string
-          pincode?: string | null
           price?: number
-          service_radius_km?: number | null
           sessions?: number | null
-          state?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -793,10 +727,8 @@ export type Database = {
           image_url: string | null
           lat: number | null
           lng: number | null
-          location_restricted: boolean | null
           name: string
           pincode: string
-          service_radius_km: number | null
           specialities: string[] | null
           state: string
           updated_at: string
@@ -811,10 +743,8 @@ export type Database = {
           image_url?: string | null
           lat?: number | null
           lng?: number | null
-          location_restricted?: boolean | null
           name: string
           pincode: string
-          service_radius_km?: number | null
           specialities?: string[] | null
           state: string
           updated_at?: string
@@ -829,10 +759,8 @@ export type Database = {
           image_url?: string | null
           lat?: number | null
           lng?: number | null
-          location_restricted?: boolean | null
           name?: string
           pincode?: string
-          service_radius_km?: number | null
           specialities?: string[] | null
           state?: string
           updated_at?: string
@@ -1056,48 +984,6 @@ export type Database = {
           },
         ]
       }
-      location_analytics: {
-        Row: {
-          action: string
-          city: string | null
-          created_at: string | null
-          id: string
-          latitude: number
-          longitude: number
-          pincode: string | null
-          service_id: string | null
-          service_type: string | null
-          state: string | null
-          user_id: string | null
-        }
-        Insert: {
-          action: string
-          city?: string | null
-          created_at?: string | null
-          id?: string
-          latitude: number
-          longitude: number
-          pincode?: string | null
-          service_id?: string | null
-          service_type?: string | null
-          state?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          action?: string
-          city?: string | null
-          created_at?: string | null
-          id?: string
-          latitude?: number
-          longitude?: number
-          pincode?: string | null
-          service_id?: string | null
-          service_type?: string | null
-          state?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
       medicine_brands: {
         Row: {
           created_at: string
@@ -1169,7 +1055,6 @@ export type Database = {
           brand_id: string | null
           branded_alternatives: string[] | null
           category_id: string
-          city: string | null
           created_at: string
           description: string | null
           expiry_date: string | null
@@ -1177,16 +1062,10 @@ export type Database = {
           generic_alternative: string | null
           id: string
           image_url: string | null
-          latitude: number | null
-          location_restricted: boolean | null
-          longitude: number | null
           mrp: number
           name: string
-          pharmacy_name: string | null
-          pincode: string | null
           prescription_required: boolean | null
           sale_price: number
-          state: string | null
           stock_qty: number
           tags: string[] | null
           updated_at: string
@@ -1196,7 +1075,6 @@ export type Database = {
           brand_id?: string | null
           branded_alternatives?: string[] | null
           category_id: string
-          city?: string | null
           created_at?: string
           description?: string | null
           expiry_date?: string | null
@@ -1204,16 +1082,10 @@ export type Database = {
           generic_alternative?: string | null
           id?: string
           image_url?: string | null
-          latitude?: number | null
-          location_restricted?: boolean | null
-          longitude?: number | null
           mrp: number
           name: string
-          pharmacy_name?: string | null
-          pincode?: string | null
           prescription_required?: boolean | null
           sale_price: number
-          state?: string | null
           stock_qty?: number
           tags?: string[] | null
           updated_at?: string
@@ -1223,7 +1095,6 @@ export type Database = {
           brand_id?: string | null
           branded_alternatives?: string[] | null
           category_id?: string
-          city?: string | null
           created_at?: string
           description?: string | null
           expiry_date?: string | null
@@ -1231,16 +1102,10 @@ export type Database = {
           generic_alternative?: string | null
           id?: string
           image_url?: string | null
-          latitude?: number | null
-          location_restricted?: boolean | null
-          longitude?: number | null
           mrp?: number
           name?: string
-          pharmacy_name?: string | null
-          pincode?: string | null
           prescription_required?: boolean | null
           sale_price?: number
-          state?: string | null
           stock_qty?: number
           tags?: string[] | null
           updated_at?: string
@@ -2091,25 +1956,9 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      calculate_distance: {
-        Args: { lat1: number; lat2: number; lng1: number; lng2: number }
-        Returns: number
-      }
       get_current_user_role: {
         Args: Record<PropertyKey, never>
         Returns: string
-      }
-      get_nearby_services: {
-        Args: {
-          radius_km?: number
-          table_name: string
-          user_lat: number
-          user_lng: number
-        }
-        Returns: {
-          distance_km: number
-          service_data: Json
-        }[]
       }
       gtrgm_compress: {
         Args: { "": unknown }

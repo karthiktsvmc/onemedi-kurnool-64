@@ -19,7 +19,7 @@ export function useHospitals(options: QueryOptions = {}) {
   } = useSupabaseQuery<Hospital>({
     table: 'hospitals',
     select: '*',
-    locationFilter: currentLocation ? { city: currentLocation.city } : undefined,
+    locationFilter: currentLocation ? { city: currentLocation } : undefined,
     onSuccess: (data) => setHospitals(data),
     ...options,
   });
@@ -88,3 +88,4 @@ export function useHospitals(options: QueryOptions = {}) {
     mutationError: mutation.error,
   };
 }
+
