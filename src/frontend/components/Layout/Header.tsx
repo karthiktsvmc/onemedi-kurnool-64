@@ -3,7 +3,7 @@ import { Menu, Search, ShoppingCart, MapPin, User, ChevronDown, Pill, TestTube, 
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
 import { cn } from '@/shared/lib/utils';
-import { LocationPicker } from './LocationPicker';
+import { LocationDisplay } from './LocationDisplay';
 import { SmartSearchBar } from './SmartSearchBar';
 import { MobileMenu } from './MobileMenu';
 import { OffersStrip } from '@/frontend/components/Home/OffersStrip';
@@ -171,13 +171,8 @@ export const Header = () => {
             </div>
           </div>
 
-          {/* Location Picker */}
-          <div className="bg-primary-light rounded-lg py-2 px-2 my-0 mx-0">
-            <div className="text-xs">
-              <p className="font-medium text-primary mb-0.5">Deliver to</p>
-              <LocationPicker onLocationSelect={handleLocationSelect} />
-            </div>
-          </div>
+          {/* Location Display */}
+          <LocationDisplay />
 
           {/* Action Buttons */}
           <div className="flex items-center space-x-2">

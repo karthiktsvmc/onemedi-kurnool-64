@@ -1,9 +1,9 @@
 
 import { useEffect } from 'react';
-import { useLocation } from '@/shared/contexts/LocationContext';
+import { useLocation, type LocationData } from '@/shared/contexts/LocationContext';
 
 interface UseLocationAwareDataOptions {
-  onLocationChange?: (location: string | null) => void;
+  onLocationChange?: (location: LocationData | null) => void;
   refetchOnLocationChange?: boolean;
 }
 

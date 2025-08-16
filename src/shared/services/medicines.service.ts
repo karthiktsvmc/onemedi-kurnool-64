@@ -23,7 +23,11 @@ export function useMedicines(options: QueryOptions = {}) {
       category:medicine_categories(id, name, image_url),
       brand:medicine_brands(id, name, logo_url)
     `,
-    locationFilter: currentLocation ? { city: currentLocation } : undefined,
+    locationFilter: currentLocation ? { 
+      city: currentLocation.city,
+      state: currentLocation.state,
+      pincode: currentLocation.pincode 
+    } : undefined,
     onSuccess: (data) => setMedicines(data),
     ...options,
   });

@@ -152,7 +152,9 @@ export const Doctors: React.FC = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-              <LocationPicker onLocationSelect={handleLocationSelect} />
+              <div className="hidden sm:block">
+                {/* Location will be handled by header */}
+              </div>
               <div className="flex items-center gap-2">
                 {getActiveFiltersCount() > 0 && (
                   <Badge variant="secondary" className="hidden sm:inline-flex">

@@ -27,7 +27,11 @@ export function useLabTests(options: QueryOptions = {}) {
         diagnostic_centre:diagnostics_centres(id, name, address, city)
       )
     `,
-    locationFilter: currentLocation ? { city: currentLocation } : undefined,
+    locationFilter: currentLocation ? { 
+      city: currentLocation.city,
+      state: currentLocation.state,
+      pincode: currentLocation.pincode 
+    } : undefined,
     onSuccess: (data) => setLabTests(data),
     ...options,
   });

@@ -19,7 +19,11 @@ export function useHospitals(options: QueryOptions = {}) {
   } = useSupabaseQuery<Hospital>({
     table: 'hospitals',
     select: '*',
-    locationFilter: currentLocation ? { city: currentLocation } : undefined,
+    locationFilter: currentLocation ? { 
+      city: currentLocation.city,
+      state: currentLocation.state,
+      pincode: currentLocation.pincode 
+    } : undefined,
     onSuccess: (data) => setHospitals(data),
     ...options,
   });

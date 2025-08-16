@@ -177,7 +177,7 @@ export const Scans = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Location Picker */}
-      <LocationPicker onLocationSelect={handleLocationSelect} />
+      {/* Location handled by header */}
       
       <div className="container mx-auto px-4 py-6 space-y-6">
         {/* Breadcrumb Navigation */}

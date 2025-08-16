@@ -19,7 +19,11 @@ export function useBloodBanks(options: QueryOptions = {}) {
   } = useSupabaseQuery<BloodBank>({
     table: 'blood_banks',
     select: '*',
-    locationFilter: currentLocation ? { city: currentLocation } : undefined,
+    locationFilter: currentLocation ? { 
+      city: currentLocation.city,
+      state: currentLocation.state,
+      pincode: currentLocation.pincode 
+    } : undefined,
     onSuccess: (data) => setBloodBanks(data),
     ...options,
   });

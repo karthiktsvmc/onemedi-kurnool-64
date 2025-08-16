@@ -19,7 +19,11 @@ export function useAmbulanceServices(options: QueryOptions = {}) {
   } = useSupabaseQuery<AmbulanceService>({
     table: 'ambulance_services',
     select: '*',
-    locationFilter: currentLocation ? { city: currentLocation } : undefined,
+    locationFilter: currentLocation ? { 
+      city: currentLocation.city,
+      state: currentLocation.state,
+      pincode: currentLocation.pincode 
+    } : undefined,
     onSuccess: (data) => setAmbulanceServices(data),
     ...options,
   });
