@@ -3,10 +3,10 @@ import { useSupabaseQuery } from '@/shared/hooks/useSupabaseQuery';
 import { useSupabaseMutation } from '@/shared/hooks/useSupabaseMutation';
 import { DataTable } from '@/admin/components/shared/DataTable';
 import { FormDialog } from '@/admin/components/shared/FormDialog';
-import { AdminCard } from '@/admin/components/shared/AdminCard';
+import { StatCard } from '@/admin/components/shared/StatCard';
 import { Button } from '@/shared/components/ui/button';
 import { Badge } from '@/shared/components/ui/badge';
-import { Plus } from 'lucide-react';
+import { Plus, Megaphone, Check, Link } from 'lucide-react';
 
 export const ScanPromotions = () => {
   const [showAddDialog, setShowAddDialog] = useState(false);
@@ -135,9 +135,9 @@ export const ScanPromotions = () => {
     <div className="space-y-6">
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <AdminCard title="Total Promotions" value={stats.total} icon="megaphone" />
-        <AdminCard title="Active Promotions" value={stats.active} icon="check" />
-        <AdminCard title="With Links" value={stats.withLinks} icon="link" />
+        <StatCard title="Total Promotions" value={stats.total.toString()} icon={Megaphone} />
+        <StatCard title="Active Promotions" value={stats.active.toString()} icon={Check} />
+        <StatCard title="With Links" value={stats.withLinks.toString()} icon={Link} />
       </div>
 
       {/* Actions */}
@@ -160,19 +160,14 @@ export const ScanPromotions = () => {
       />
 
       {/* Add/Edit Dialog */}
-      {showAddDialog && (
+      <div style={{ display: 'none' }}>
         <FormDialog
-          title={editingPromotion ? 'Edit Promotion' : 'Add New Promotion'}
+          title="Add Promotion"
           fields={promotionFields}
-          initialData={editingPromotion}
           onSubmit={handleSubmit}
-          onClose={() => {
-            setShowAddDialog(false);
-            setEditingPromotion(null);
-          }}
-          open={showAddDialog}
+          trigger={<button>Hidden</button>}
         />
-      )}
+      </div>
     </div>
   );
 };

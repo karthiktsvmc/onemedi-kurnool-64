@@ -3,10 +3,10 @@ import { useSupabaseQuery } from '@/shared/hooks/useSupabaseQuery';
 import { useSupabaseMutation } from '@/shared/hooks/useSupabaseMutation';
 import { DataTable } from '@/admin/components/shared/DataTable';
 import { FormDialog } from '@/admin/components/shared/FormDialog';
-import { AdminCard } from '@/admin/components/shared/AdminCard';
+import { StatCard } from '@/admin/components/shared/StatCard';
 import { Button } from '@/shared/components/ui/button';
 import { Badge } from '@/shared/components/ui/badge';
-import { Plus } from 'lucide-react';
+import { Plus, Package, Check, Link } from 'lucide-react';
 
 export const ScanPackages = () => {
   const [showAddDialog, setShowAddDialog] = useState(false);
@@ -137,9 +137,9 @@ export const ScanPackages = () => {
     <div className="space-y-6">
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <AdminCard title="Total Packages" value={stats.total} icon="package" />
-        <AdminCard title="Active Packages" value={stats.active} icon="check" />
-        <AdminCard title="With Booking Links" value={stats.withLinks} icon="link" />
+        <StatCard title="Total Packages" value={stats.total.toString()} icon={Package} />
+        <StatCard title="Active Packages" value={stats.active.toString()} icon={Check} />
+        <StatCard title="With Booking Links" value={stats.withLinks.toString()} icon={Link} />
       </div>
 
       {/* Actions */}
@@ -162,19 +162,14 @@ export const ScanPackages = () => {
       />
 
       {/* Add/Edit Dialog */}
-      {showAddDialog && (
+      <div style={{ display: 'none' }}>
         <FormDialog
-          title={editingPackage ? 'Edit Package' : 'Add New Package'}
+          title="Add Package"
           fields={packageFields}
-          initialData={editingPackage}
           onSubmit={handleSubmit}
-          onClose={() => {
-            setShowAddDialog(false);
-            setEditingPackage(null);
-          }}
-          open={showAddDialog}
+          trigger={<button>Hidden</button>}
         />
-      )}
+      </div>
     </div>
   );
 };

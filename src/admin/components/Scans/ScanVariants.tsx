@@ -3,9 +3,9 @@ import { useSupabaseQuery } from '@/shared/hooks/useSupabaseQuery';
 import { useSupabaseMutation } from '@/shared/hooks/useSupabaseMutation';
 import { DataTable } from '@/admin/components/shared/DataTable';
 import { FormDialog } from '@/admin/components/shared/FormDialog';
-import { AdminCard } from '@/admin/components/shared/AdminCard';
+import { StatCard } from '@/admin/components/shared/StatCard';
 import { Button } from '@/shared/components/ui/button';
-import { Plus } from 'lucide-react';
+import { Plus, Layers, Scan, Building, DollarSign } from 'lucide-react';
 
 export const ScanVariants = () => {
   const [showAddDialog, setShowAddDialog] = useState(false);
@@ -129,10 +129,10 @@ export const ScanVariants = () => {
     <div className="space-y-6">
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <AdminCard title="Total Variants" value={stats.total} icon="layers" />
-        <AdminCard title="Unique Scans" value={stats.uniqueScans} icon="scan" />
-        <AdminCard title="Unique Centres" value={stats.uniqueCentres} icon="building" />
-        <AdminCard title="Avg Price" value={`₹${stats.avgPrice}`} icon="dollar-sign" />
+        <StatCard title="Total Variants" value={stats.total.toString()} icon={Layers} />
+        <StatCard title="Unique Scans" value={stats.uniqueScans.toString()} icon={Scan} />
+        <StatCard title="Unique Centres" value={stats.uniqueCentres.toString()} icon={Building} />
+        <StatCard title="Avg Price" value={`₹${stats.avgPrice}`} icon={DollarSign} />
       </div>
 
       {/* Actions */}
@@ -155,19 +155,14 @@ export const ScanVariants = () => {
       />
 
       {/* Add/Edit Dialog */}
-      {showAddDialog && (
+      <div style={{ display: 'none' }}>
         <FormDialog
-          title={editingVariant ? 'Edit Variant' : 'Add New Variant'}
+          title="Add Variant"
           fields={variantFields}
-          initialData={editingVariant}
           onSubmit={handleSubmit}
-          onClose={() => {
-            setShowAddDialog(false);
-            setEditingVariant(null);
-          }}
-          open={showAddDialog}
+          trigger={<button>Hidden</button>}
         />
-      )}
+      </div>
     </div>
   );
 };

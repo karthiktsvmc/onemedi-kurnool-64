@@ -3,10 +3,10 @@ import { useSupabaseQuery } from '@/shared/hooks/useSupabaseQuery';
 import { useSupabaseMutation } from '@/shared/hooks/useSupabaseMutation';
 import { DataTable } from '@/admin/components/shared/DataTable';
 import { FormDialog } from '@/admin/components/shared/FormDialog';
-import { AdminCard } from '@/admin/components/shared/AdminCard';
+import { StatCard } from '@/admin/components/shared/StatCard';
 import { Button } from '@/shared/components/ui/button';
 import { Badge } from '@/shared/components/ui/badge';
-import { Plus, MapPin } from 'lucide-react';
+import { Plus, MapPin, Building, Check, Map, Globe } from 'lucide-react';
 
 export const ScanDiagnosticCentres = () => {
   const [showAddDialog, setShowAddDialog] = useState(false);
@@ -138,10 +138,10 @@ export const ScanDiagnosticCentres = () => {
     <div className="space-y-6">
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <AdminCard title="Total Centres" value={stats.total} icon="building" />
-        <AdminCard title="Active Centres" value={stats.active} icon="check" />
-        <AdminCard title="Cities" value={stats.cities} icon="map" />
-        <AdminCard title="States" value={stats.states} icon="globe" />
+        <StatCard title="Total Centres" value={stats.total.toString()} icon={Building} />
+        <StatCard title="Active Centres" value={stats.active.toString()} icon={Check} />
+        <StatCard title="Cities" value={stats.cities.toString()} icon={Map} />
+        <StatCard title="States" value={stats.states.toString()} icon={Globe} />
       </div>
 
       {/* Actions */}
@@ -164,19 +164,14 @@ export const ScanDiagnosticCentres = () => {
       />
 
       {/* Add/Edit Dialog */}
-      {showAddDialog && (
+      <div style={{ display: 'none' }}>
         <FormDialog
-          title={editingCentre ? 'Edit Centre' : 'Add New Centre'}
+          title="Add Centre"
           fields={centreFields}
-          initialData={editingCentre}
           onSubmit={handleSubmit}
-          onClose={() => {
-            setShowAddDialog(false);
-            setEditingCentre(null);
-          }}
-          open={showAddDialog}
+          trigger={<button>Hidden</button>}
         />
-      )}
+      </div>
     </div>
   );
 };

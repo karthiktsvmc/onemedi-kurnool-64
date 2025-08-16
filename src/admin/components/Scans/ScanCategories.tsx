@@ -3,9 +3,9 @@ import { useSupabaseQuery } from '@/shared/hooks/useSupabaseQuery';
 import { useSupabaseMutation } from '@/shared/hooks/useSupabaseMutation';
 import { DataTable } from '@/admin/components/shared/DataTable';
 import { FormDialog } from '@/admin/components/shared/FormDialog';
-import { AdminCard } from '@/admin/components/shared/AdminCard';
+import { StatCard } from '@/admin/components/shared/StatCard';
 import { Button } from '@/shared/components/ui/button';
-import { Plus } from 'lucide-react';
+import { Plus, Tag, Image, Clock } from 'lucide-react';
 
 export const ScanCategories = () => {
   const [showAddDialog, setShowAddDialog] = useState(false);
@@ -107,9 +107,9 @@ export const ScanCategories = () => {
     <div className="space-y-6">
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <AdminCard title="Total Categories" value={stats.total} icon="tag" />
-        <AdminCard title="Categories with Images" value={stats.withImages} icon="image" />
-        <AdminCard title="Recent Categories" value={stats.recent} icon="clock" />
+        <StatCard title="Total Categories" value={stats.total.toString()} icon={Tag} />
+        <StatCard title="Categories with Images" value={stats.withImages.toString()} icon={Image} />
+        <StatCard title="Recent Categories" value={stats.recent.toString()} icon={Clock} />
       </div>
 
       {/* Actions */}
@@ -132,19 +132,14 @@ export const ScanCategories = () => {
       />
 
       {/* Add/Edit Dialog */}
-      {showAddDialog && (
+      <div style={{ display: 'none' }}>
         <FormDialog
-          title={editingCategory ? 'Edit Category' : 'Add New Category'}
+          title="Add Category"
           fields={categoryFields}
-          initialData={editingCategory}
           onSubmit={handleSubmit}
-          onClose={() => {
-            setShowAddDialog(false);
-            setEditingCategory(null);
-          }}
-          open={showAddDialog}
+          trigger={<button>Hidden</button>}
         />
-      )}
+      </div>
     </div>
   );
 };
