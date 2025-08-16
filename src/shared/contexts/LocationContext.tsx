@@ -193,7 +193,16 @@ export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 export const useLocation = () => {
   const context = useContext(LocationContext);
   if (context === undefined) {
-    throw new Error("useLocation must be used within a LocationProvider");
+    console.error("useLocation called outside of LocationProvider. Falling back to no-op context.");
+    return {
+      currentLocation: null,
+      isLocationLoading: false,
+      locationError: 'LocationProvider is missing',
+      isLocationSet: false,
+      getCurrentLocation: async () => {},
+      setManualLocation: () => {},
+      searchLocations: async () => [],
+    } as LocationContextType;
   }
   return context;
 };
