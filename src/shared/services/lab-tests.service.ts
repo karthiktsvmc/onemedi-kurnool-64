@@ -32,8 +32,8 @@ export function useLabTests(options: QueryOptions = {}) {
       state: currentLocation.state,
       pincode: currentLocation.pincode 
     } : undefined,
-    onSuccess: (data) => setLabTests(data),
-    ...options,
+    onSuccess: (data) => setLabTests(data || []),
+    autoFetch: true,
   });
 
   const mutation = useSupabaseMutation<LabTest>({

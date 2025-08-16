@@ -36,7 +36,7 @@ export const LabPackageManagement = () => {
       label: 'Category', 
       type: 'select' as const, 
       required: true,
-      options: categories?.map(cat => ({ value: cat.id, label: cat.name })) || []
+      options: (categories || []).map(cat => ({ value: cat.id, label: cat.name }))
     },
     { name: 'mrp', label: 'MRP (₹)', type: 'number' as const, required: true, min: 0 },
     { name: 'image_url', label: 'Image URL', type: 'text' as const },
