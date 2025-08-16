@@ -1,4 +1,3 @@
-
 import { useState, useCallback } from 'react';
 import { useSupabaseQuery } from '@/shared/hooks/useSupabaseQuery';
 import { useSupabaseMutation } from '@/shared/hooks/useSupabaseMutation';
@@ -27,7 +26,7 @@ export function useLabTests(options: QueryOptions = {}) {
         diagnostic_centre:diagnostics_centres(id, name, address, city)
       )
     `,
-    locationFilter: currentLocation ? { city: currentLocation } : undefined,
+    locationFilter: currentLocation ? { city: currentLocation.city } : undefined,
     onSuccess: (data) => setLabTests(data),
     ...options,
   });
@@ -125,4 +124,3 @@ export function useLabCategories() {
     refetch,
   };
 }
-
