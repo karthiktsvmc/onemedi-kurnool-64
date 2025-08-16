@@ -1,7 +1,5 @@
 
-import { useSupabaseQuery } from '@/shared/hooks/useSupabaseQuery';
 import { useSupabaseMutation } from '@/shared/hooks/useSupabaseMutation';
-import { useRealtimeSubscription } from '@/shared/hooks/useRealtimeSubscription';
 import { useLocationAwareData } from '@/shared/hooks/useLocationAwareData';
 import type { Database } from '@/integrations/supabase/types';
 
@@ -10,19 +8,19 @@ type DiabetesService = Database['public']['Tables']['diabetes_services']['Row'];
 type DiabetesExpert = Database['public']['Tables']['diabetes_experts']['Row'];
 
 export function useDiabetesProducts() {
-  return useLocationAwareData<DiabetesProduct>('diabetes_products', {
+  return useLocationAwareData('diabetes_products', {
     searchFields: ['name', 'description', 'brand']
   });
 }
 
 export function useDiabetesServices() {
-  return useLocationAwareData<DiabetesService>('diabetes_services', {
+  return useLocationAwareData('diabetes_services', {
     searchFields: ['name', 'description']
   });
 }
 
 export function useDiabetesExperts() {
-  return useLocationAwareData<DiabetesExpert>('diabetes_experts', {
+  return useLocationAwareData('diabetes_experts', {
     searchFields: ['name', 'specialization', 'qualification']
   });
 }
