@@ -16,12 +16,12 @@ export const ScanCatalogue = () => {
   const { data: scans, loading, refetch } = useSupabaseQuery({
     table: 'scans',
     select: `
-      *,
-      scan_categories(name),
-      scan_variants(
+      id, name, description, image_url, created_at, mrp, featured, category_id,
+      scan_categories!left(name),
+      scan_variants!left(
         id,
         price,
-        diagnostics_centres(name)
+        diagnostics_centres!left(name)
       )
     `,
     orderBy: 'created_at',
@@ -65,15 +65,15 @@ export const ScanCatalogue = () => {
     {
       key: 'name',
       label: 'Scan Name',
-      render: (scan: any) => (
+      render: (_value: any, row: any) => (
         <div className="flex items-center gap-3">
-          {scan.image_url && (
-            <img src={scan.image_url} alt={scan.name} className="w-10 h-10 rounded object-cover" />
+          {row?.image_url && (
+            <img src={row.image_url} alt={row.name} className="w-10 h-10 rounded object-cover" />
           )}
           <div>
-            <div className="font-medium">{scan.name}</div>
+            <div className="font-medium">{row?.name}</div>
             <div className="text-sm text-muted-foreground line-clamp-1">
-              {scan.description}
+              {row?.description}
             </div>
           </div>
         </div>
@@ -82,26 +82,26 @@ export const ScanCatalogue = () => {
     {
       key: 'category',
       label: 'Category',
-      render: (scan: any) => scan.scan_categories?.name || 'N/A'
+      render: (_: any, row: any) => row?.scan_categories?.name || 'N/A'
     },
     {
       key: 'mrp',
       label: 'MRP Price',
-      render: (scan: any) => `₹${scan.mrp}`
+      render: (value: number) => `₹${value ?? 0}`
     },
     {
       key: 'variants',
       label: 'Available At',
-      render: (scan: any) => (
+      render: (_: any, row: any) => (
         <div className="space-y-1">
-          {scan.scan_variants?.slice(0, 2).map((variant: any) => (
+          {row?.scan_variants?.slice(0, 2).map((variant: any) => (
             <div key={variant.id} className="text-sm">
-              {variant.diagnostics_centres?.name} - ₹{variant.price}
+              {variant?.diagnostics_centres?.name} - ₹{variant?.price}
             </div>
           ))}
-          {scan.scan_variants?.length > 2 && (
+          {(row?.scan_variants?.length || 0) > 2 && (
             <div className="text-xs text-muted-foreground">
-              +{scan.scan_variants.length - 2} more centers
+              +{(row.scan_variants.length - 2)} more centers
             </div>
           )}
         </div>
@@ -110,16 +110,16 @@ export const ScanCatalogue = () => {
     {
       key: 'featured',
       label: 'Featured',
-      render: (scan: any) => (
-        <Badge variant={scan.featured ? 'default' : 'secondary'}>
-          {scan.featured ? 'Yes' : 'No'}
+      render: (value: boolean) => (
+        <Badge variant={value ? 'default' : 'secondary'}>
+          {value ? 'Yes' : 'No'}
         </Badge>
       )
     },
     {
       key: 'created_at',
       label: 'Created',
-      render: (scan: any) => new Date(scan.created_at).toLocaleDateString()
+      render: (value: any) => new Date(value).toLocaleDateString()
     }
   ];
 
