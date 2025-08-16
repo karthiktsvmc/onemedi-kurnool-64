@@ -19,8 +19,8 @@ export function ConsultationTypes() {
   const { data: consultationTypes, loading, refetch } = useSupabaseQuery({
     table: 'consultation_types',
     select: `
-      id, type, available, fee, duration_minutes, created_at,
-      doctors(name, clinic_name)
+      id, type, available, fee, duration_minutes, created_at, doctor_id,
+      doctors!inner(name, clinic_name)
     `,
     orderBy: 'created_at',
   });

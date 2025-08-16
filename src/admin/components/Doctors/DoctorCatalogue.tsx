@@ -22,8 +22,8 @@ export function DoctorCatalogue() {
       id, name, email, phone, qualification, experience, age, about,
       verified, active, languages, expertise, procedures, gender,
       registration_number, clinic_name, clinic_address, clinic_city,
-      clinic_state, clinic_pincode, rating, review_count, created_at,
-      doctor_specialties(name)
+      clinic_state, clinic_pincode, rating, review_count, created_at, specialty_id,
+      doctor_specialties!left(name)
     `,
     orderBy: 'name',
   });
@@ -55,9 +55,10 @@ export function DoctorCatalogue() {
   });
 
   const filteredDoctors = doctors?.filter(doctor =>
-    doctor.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    doctor.qualification?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    doctor.clinic_name?.toLowerCase().includes(searchQuery.toLowerCase())
+    doctor?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    doctor?.qualification?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    doctor?.clinic_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    doctor?.doctor_specialties?.name?.toLowerCase().includes(searchQuery.toLowerCase())
   ) || [];
 
   const totalDoctors = doctors?.length || 0;
@@ -113,7 +114,7 @@ export function DoctorCatalogue() {
     { 
       key: 'specialty',
       label: 'Specialty', 
-      render: (_: any, row: any) => row.doctor_specialties?.name || '-'
+      render: (_: any, row: any) => row?.doctor_specialties?.name || '-'
     },
     { 
       key: 'experience', 
