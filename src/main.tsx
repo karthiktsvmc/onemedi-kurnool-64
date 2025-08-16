@@ -3,3 +3,10 @@ import App from './App.tsx'
 import './index.css'
 
 createRoot(document.getElementById("root")!).render(<App />);
+import { AppProviders } from '@/shared/providers/AppProviders';
+
+createRoot(document.getElementById("root")!).render(
+  <AppProviders>
+    <App />
+  </AppProviders>
+);
