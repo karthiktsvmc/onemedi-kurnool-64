@@ -179,25 +179,25 @@ export function ConsultationTypes() {
         <StatCard
           title="Total Consultations"
           value={totalConsultations}
-          icon="clock"
+          icon={Clock}
           iconColor="text-blue-600"
         />
         <StatCard
           title="Online"
           value={onlineConsultations}
-          icon="video"
+          icon={Video}
           iconColor="text-green-600"
         />
         <StatCard
           title="Clinic"
           value={clinicConsultations}
-          icon="building"
+          icon={Building}
           iconColor="text-purple-600"
         />
         <StatCard
           title="Home Visit"
           value={homeConsultations}
-          icon="home"
+          icon={Home}
           iconColor="text-orange-600"
         />
       </div>

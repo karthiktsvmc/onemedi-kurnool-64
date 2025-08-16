@@ -54,25 +54,25 @@ export default function DoctorManagement() {
         <StatCard
           title="Total Doctors"
           value={totalDoctors}
-          icon="users"
+          icon={Users}
           iconColor="text-blue-600"
         />
         <StatCard
           title="Verified Doctors"
           value={verifiedDoctors}
-          icon="star"
+          icon={Star}
           iconColor="text-green-600"
         />
         <StatCard
           title="Specialties"
           value={totalSpecialties}
-          icon="stethoscope"
+          icon={Stethoscope}
           iconColor="text-purple-600"
         />
         <StatCard
           title="Active Consultations"
           value={activeConsultations}
-          icon="clock"
+          icon={Clock}
           iconColor="text-orange-600"
         />
       </div>

@@ -122,19 +122,19 @@ export function DoctorSpecialties() {
         <StatCard
           title="Total Specialties"
           value={totalSpecialties}
-          icon="users"
+          icon={Users}
           iconColor="text-blue-600"
         />
         <StatCard
           title="Active Specialties"
           value={activeSpecialties}
-          icon="eye"
+          icon={Eye}
           iconColor="text-green-600"
         />
         <StatCard
           title="Total Doctors"
           value={totalDoctors}
-          icon="users"
+          icon={Users}
           iconColor="text-purple-600"
         />
       </div>

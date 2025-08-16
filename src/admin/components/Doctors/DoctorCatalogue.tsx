@@ -176,25 +176,25 @@ export function DoctorCatalogue() {
         <StatCard
           title="Total Doctors"
           value={totalDoctors}
-          icon="user"
+          icon={User}
           iconColor="text-blue-600"
         />
         <StatCard
           title="Active Doctors"
           value={activeDoctors}
-          icon="user"
+          icon={User}
           iconColor="text-green-600"
         />
         <StatCard
           title="Verified Doctors"
           value={verifiedDoctors}
-          icon="star"
+          icon={Star}
           iconColor="text-yellow-600"
         />
         <StatCard
           title="Avg Rating"
           value={avgRating.toFixed(1)}
-          icon="star"
+          icon={Star}
           iconColor="text-purple-600"
         />
       </div>

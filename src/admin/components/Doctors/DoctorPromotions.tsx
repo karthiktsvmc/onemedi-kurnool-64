@@ -155,19 +155,19 @@ export function DoctorPromotions() {
         <StatCard
           title="Total Promotions"
           value={totalPromotions}
-          icon="megaphone"
+          icon={Megaphone}
           iconColor="text-blue-600"
         />
         <StatCard
           title="Active Promotions"
           value={activePromotions}
-          icon="eye"
+          icon={Eye}
           iconColor="text-green-600"
         />
         <StatCard
           title="Specialty Promotions"
           value={specialtyPromotions}
-          icon="star"
+          icon={Star}
           iconColor="text-purple-600"
         />
       </div>

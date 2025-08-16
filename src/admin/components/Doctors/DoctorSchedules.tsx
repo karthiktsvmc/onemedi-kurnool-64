@@ -199,25 +199,25 @@ export function DoctorSchedules() {
         <StatCard
           title="Total Schedules"
           value={totalSchedules}
-          icon="calendar"
+          icon={Calendar}
           iconColor="text-blue-600"
         />
         <StatCard
           title="Active Schedules"
           value={activeSchedules}
-          icon="clock"
+          icon={Clock}
           iconColor="text-green-600"
         />
         <StatCard
           title="Online Schedules"
           value={onlineSchedules}
-          icon="user"
+          icon={User}
           iconColor="text-purple-600"
         />
         <StatCard
           title="Clinic Schedules"
           value={clinicSchedules}
-          icon="user"
+          icon={User}
           iconColor="text-orange-600"
         />
       </div>
