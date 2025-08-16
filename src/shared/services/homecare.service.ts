@@ -6,8 +6,11 @@ import type { Database } from '@/integrations/supabase/types';
 type HomecareService = Database['public']['Tables']['homecare_services']['Row'];
 
 export function useHomecareServices() {
-  return useLocationAwareData('homecare_services', {
-    searchFields: ['name', 'description', 'service_type']
+  return useLocationAwareData({
+    onLocationChange: (location) => {
+      // Handle location changes for homecare services
+      console.log('Location changed for homecare services:', location);
+    }
   });
 }
 

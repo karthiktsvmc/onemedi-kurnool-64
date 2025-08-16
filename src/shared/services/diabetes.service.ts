@@ -8,20 +8,29 @@ type DiabetesService = Database['public']['Tables']['diabetes_services']['Row'];
 type DiabetesExpert = Database['public']['Tables']['diabetes_experts']['Row'];
 
 export function useDiabetesProducts() {
-  return useLocationAwareData('diabetes_products', {
-    searchFields: ['name', 'description', 'brand']
+  return useLocationAwareData({
+    onLocationChange: (location) => {
+      // Handle location changes for diabetes products
+      console.log('Location changed for diabetes products:', location);
+    }
   });
 }
 
 export function useDiabetesServices() {
-  return useLocationAwareData('diabetes_services', {
-    searchFields: ['name', 'description']
+  return useLocationAwareData({
+    onLocationChange: (location) => {
+      // Handle location changes for diabetes services
+      console.log('Location changed for diabetes services:', location);
+    }
   });
 }
 
 export function useDiabetesExperts() {
-  return useLocationAwareData('diabetes_experts', {
-    searchFields: ['name', 'specialization', 'qualification']
+  return useLocationAwareData({
+    onLocationChange: (location) => {
+      // Handle location changes for diabetes experts
+      console.log('Location changed for diabetes experts:', location);
+    }
   });
 }
 

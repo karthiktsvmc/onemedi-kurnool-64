@@ -6,8 +6,11 @@ import type { Database } from '@/integrations/supabase/types';
 type InsurancePlan = Database['public']['Tables']['insurance_plans']['Row'];
 
 export function useInsurancePlans() {
-  return useLocationAwareData('insurance_plans', {
-    searchFields: ['plan_name', 'insurer_name', 'description']
+  return useLocationAwareData({
+    onLocationChange: (location) => {
+      // Handle location changes for insurance plans
+      console.log('Location changed for insurance plans:', location);
+    }
   });
 }
 

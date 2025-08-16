@@ -6,8 +6,11 @@ import type { Database } from '@/integrations/supabase/types';
 type DietGuide = Database['public']['Tables']['diet_guides']['Row'];
 
 export function useDietGuides() {
-  return useLocationAwareData('diet_guides', {
-    searchFields: ['title', 'description', 'category']
+  return useLocationAwareData({
+    onLocationChange: (location) => {
+      // Handle location changes for diet guides
+      console.log('Location changed for diet guides:', location);
+    }
   });
 }
 

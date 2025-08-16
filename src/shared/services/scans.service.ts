@@ -6,8 +6,11 @@ import type { Database } from '@/integrations/supabase/types';
 type Scan = Database['public']['Tables']['scans']['Row'];
 
 export function useScans() {
-  return useLocationAwareData('scans', {
-    searchFields: ['name', 'description', 'body_part']
+  return useLocationAwareData({
+    onLocationChange: (location) => {
+      // Handle location changes for scans
+      console.log('Location changed for scans:', location);
+    }
   });
 }
 
