@@ -33,6 +33,7 @@ import { AdminLayout } from "./admin/components/AdminLayout";
 import { PageDesignControl } from "./admin/pages/PageDesignControl";
 import { UserManagement } from "./admin/pages/UserManagement";
 import { ProductServiceManagement } from "./admin/pages/ProductServiceManagement";
+import { LabTestManagement } from "./admin/pages/LabTestManagement";
 import { MedicineDetails } from "./frontend/pages/MedicineDetails";
 import { Hospitals } from "./frontend/pages/Hospitals";
 import { DietPlans } from "./frontend/pages/DietPlans";
@@ -86,7 +87,7 @@ const App = () => (
           {/* Service Modules */}
           <Route path="orders" element={<div>Orders Management (Coming Soon)</div>} />
           <Route path="medicines" element={<div>Medicines Management (Coming Soon)</div>} />
-          <Route path="lab-tests" element={<div>Lab Tests Management (Coming Soon)</div>} />
+          <Route path="lab-tests" element={<LabTestManagement />} />
           <Route path="scans" element={<div>Scans Management (Coming Soon)</div>} />
           <Route path="doctors" element={<div>Doctors Management (Coming Soon)</div>} />
           <Route path="home-care" element={<div>Home Care Management (Coming Soon)</div>} />
