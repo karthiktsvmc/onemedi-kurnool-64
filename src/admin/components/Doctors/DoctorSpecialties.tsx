@@ -169,16 +169,21 @@ export function DoctorSpecialties() {
       />
 
       {/* Form Dialog */}
-      {/* Form Dialog */}
-      {isDialogOpen && (
-        <FormDialog
-          title={editingItem ? "Edit Specialty" : "Add New Specialty"}
-          fields={formFields}
-          initialData={editingItem}
-          onSubmit={handleSubmit}
-          trigger={<Button style={{ display: 'none' }}>Hidden</Button>}
-        />
-      )}
+      <FormDialog
+        title={editingItem ? "Edit Specialty" : "Add New Specialty"}
+        fields={formFields}
+        initialData={editingItem}
+        onSubmit={handleSubmit}
+        trigger={
+          <Button 
+            onClick={() => setIsDialogOpen(true)}
+            className={isDialogOpen ? "hidden" : ""}
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            Add Specialty (Dialog)
+          </Button>
+        }
+      />
     </div>
   );
 }

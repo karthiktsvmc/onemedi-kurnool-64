@@ -132,10 +132,13 @@ export function FormDialog({
     );
   };
 
-  const renderField = (rawField: any) => {
+  const renderField = (rawField: any, index: number) => {
     const field = rawField && typeof rawField === 'object' ? rawField : null;
     const name: string | undefined = field?.name;
-    if (!field || !name) return null;
+    if (!field || !name) {
+      console.warn(`Invalid field at index ${index}:`, rawField);
+      return null;
+    }
     const value = values[name];
 
     switch (field.type) {
@@ -256,7 +259,7 @@ export function FormDialog({
                     {(field as any).label}
                     {(field as any).required && <span className="text-destructive ml-1">*</span>}
                   </Label>
-                  {renderField(field as any)}
+                  {renderField(field as any, index)}
                   {(field as any).description && (
                     <p className="text-sm text-muted-foreground">{(field as any).description}</p>
                   )}
