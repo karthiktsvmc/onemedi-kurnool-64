@@ -103,20 +103,7 @@ export const Home = () => {
             </h1>
             
             {/* Trust Indicators */}
-            <div className="flex flex-wrap justify-center gap-2 md:gap-6 text-xs md:text-sm text-muted-foreground mb-4 md:mb-6">
-              <div className="flex items-center gap-2 bg-white/80 rounded-lg px-2 md:px-3 py-1 md:py-2">
-                <CheckCircle className="h-3 w-3 md:h-4 md:w-4 text-health-green" />
-                <span className="font-medium">Licensed Pharmacy</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white/80 rounded-lg px-2 md:px-3 py-1 md:py-2">
-                <CheckCircle className="h-3 w-3 md:h-4 md:w-4 text-health-green" />
-                <span className="font-medium">NABL LABS</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white/80 rounded-lg px-2 md:px-3 py-1 md:py-2">
-                <CheckCircle className="h-3 w-3 md:h-4 md:w-4 text-health-green" />
-                <span className="font-medium">Free Delivery</span>
-              </div>
-            </div>
+            
           </div>
         </section>
 

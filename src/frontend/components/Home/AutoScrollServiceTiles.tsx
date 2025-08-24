@@ -3,7 +3,6 @@ import { LucideIcon } from 'lucide-react';
 import { ServiceTile } from '@/frontend/components/Layout/ServiceTile';
 import { Button } from '@/shared/components/ui/button';
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
-
 interface Service {
   icon: LucideIcon;
   title: string;
@@ -12,17 +11,14 @@ interface Service {
   gradient: string;
   badge?: string;
 }
-
 interface AutoScrollServiceTilesProps {
   services: Service[];
   autoScrollInterval?: number;
 }
-
 export const AutoScrollServiceTiles: React.FC<AutoScrollServiceTilesProps> = ({
   services
 }) => {
-  return (
-    <section className="py-6 px-4">
+  return <section className="py-0 px-[2px]">
       <div className="container mx-auto px-0">
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-foreground">Our Services</h2>
@@ -30,17 +26,12 @@ export const AutoScrollServiceTiles: React.FC<AutoScrollServiceTilesProps> = ({
 
         {/* 6x2 Grid Layout for all screen sizes */}
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 md:gap-4">
-          {services.map((service, index) => (
-            <div
-              key={service.title}
-              className="animate-fade-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
+          {services.map((service, index) => <div key={service.title} className="animate-fade-in" style={{
+          animationDelay: `${index * 0.1}s`
+        }}>
               <ServiceTile {...service} />
-            </div>
-          ))}
+            </div>)}
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
