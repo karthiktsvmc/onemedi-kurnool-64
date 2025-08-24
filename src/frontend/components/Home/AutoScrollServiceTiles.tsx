@@ -18,16 +18,16 @@ interface AutoScrollServiceTilesProps {
 export const AutoScrollServiceTiles: React.FC<AutoScrollServiceTilesProps> = ({
   services
 }) => {
-  return <section className="py-0 px-[2px]">
-      <div className="container mx-auto px-0 py-0">
-        <div className="mb-6">
-          <h2 className="text-foreground py-0 text-center font-bold text-lg">Our Services</h2>
+  return <section className="py-4 px-2">
+      <div className="container mx-auto px-2">
+        <div className="mb-4">
+          <h2 className="text-foreground text-center font-bold text-lg md:text-xl">Our Services</h2>
         </div>
 
-        {/* 6x2 Grid Layout for all screen sizes */}
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 md:gap-4">
+        {/* 6x2 Grid Layout - Responsive: 3x4 on mobile, 6x2 on tablet+ */}
+        <div className="grid grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3 lg:gap-4 max-w-6xl mx-auto">
           {services.map((service, index) => <div key={service.title} className="animate-fade-in" style={{
-          animationDelay: `${index * 0.1}s`
+          animationDelay: `${index * 0.05}s`
         }}>
               <ServiceTile {...service} />
             </div>)}
