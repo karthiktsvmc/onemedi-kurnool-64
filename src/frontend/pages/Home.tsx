@@ -96,24 +96,24 @@ export const Home = () => {
         <HeroBanners banners={heroBannersData} />
 
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-primary-light via-primary/5 to-health-green-light py-6 px-4">
+        <section className="bg-gradient-to-br from-primary-light via-primary/5 to-health-green-light py-4 md:py-6 px-4">
           <div className="container mx-auto text-center">
-            <h1 className="text-2xl md:text-4xl text-primary mb-6 animate-fade-in font-extrabold">
+            <h1 className="text-xl md:text-4xl text-primary mb-4 md:mb-6 animate-fade-in font-extrabold">
               ONE STOP FOR YOUR MEDICAL NEEDS
             </h1>
             
             {/* Trust Indicators */}
-            <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm text-muted-foreground mb-6">
-              <div className="flex items-center gap-2 bg-white/80 rounded-lg px-3 py-2">
-                <CheckCircle className="h-4 w-4 text-health-green" />
+            <div className="flex flex-wrap justify-center gap-2 md:gap-6 text-xs md:text-sm text-muted-foreground mb-4 md:mb-6">
+              <div className="flex items-center gap-2 bg-white/80 rounded-lg px-2 md:px-3 py-1 md:py-2">
+                <CheckCircle className="h-3 w-3 md:h-4 md:w-4 text-health-green" />
                 <span className="font-medium">Licensed Pharmacy</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/80 rounded-lg px-3 py-2">
-                <CheckCircle className="h-4 w-4 text-health-green" />
+              <div className="flex items-center gap-2 bg-white/80 rounded-lg px-2 md:px-3 py-1 md:py-2">
+                <CheckCircle className="h-3 w-3 md:h-4 md:w-4 text-health-green" />
                 <span className="font-medium">NABL LABS</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/80 rounded-lg px-3 py-2">
-                <CheckCircle className="h-4 w-4 text-health-green" />
+              <div className="flex items-center gap-2 bg-white/80 rounded-lg px-2 md:px-3 py-1 md:py-2">
+                <CheckCircle className="h-3 w-3 md:h-4 md:w-4 text-health-green" />
                 <span className="font-medium">Free Delivery</span>
               </div>
             </div>

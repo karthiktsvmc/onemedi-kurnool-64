@@ -44,8 +44,6 @@ export const ServiceCarousel: React.FC<ServiceCarouselProps> = ({
   onToggleFavorite
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
   const categoryScrollRef = useRef<HTMLDivElement>(null);
   const productScrollRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -67,51 +65,24 @@ export const ServiceCarousel: React.FC<ServiceCarouselProps> = ({
     }
   }, []);
 
-  // Auto-scroll functionality
-  useEffect(() => {
-    if (!isAutoScrolling) return;
-
-    const interval = setInterval(() => {
-      setCurrentIndex(prev => {
-        const maxIndex = Math.max(0, filteredProducts.length - 3);
-        return prev >= maxIndex ? 0 : prev + 1;
-      });
-    }, 3500);
-
-    return () => clearInterval(interval);
-  }, [isAutoScrolling, filteredProducts.length]);
-
   const scrollLeft = (containerRef: React.RefObject<HTMLDivElement>) => {
     if (containerRef.current) {
       gsap.to(containerRef.current, {
-        scrollLeft: containerRef.current.scrollLeft - 200,
+        scrollLeft: containerRef.current.scrollLeft - 250,
         duration: 0.3,
         ease: "power2.out"
       });
     }
   };
+  
   const scrollRight = (containerRef: React.RefObject<HTMLDivElement>) => {
     if (containerRef.current) {
       gsap.to(containerRef.current, {
-        scrollLeft: containerRef.current.scrollLeft + 200,
+        scrollLeft: containerRef.current.scrollLeft + 250,
         duration: 0.3,
         ease: "power2.out"
       });
     }
-  };
-
-  const handleManualScroll = (direction: 'left' | 'right') => {
-    setIsAutoScrolling(false);
-    if (direction === 'left') {
-      setCurrentIndex(prev => prev === 0 ? Math.max(0, filteredProducts.length - 3) : prev - 1);
-    } else {
-      setCurrentIndex(prev => {
-        const maxIndex = Math.max(0, filteredProducts.length - 3);
-        return prev >= maxIndex ? 0 : prev + 1;
-      });
-    }
-    // Resume auto-scroll after manual interaction
-    setTimeout(() => setIsAutoScrolling(true), 8000);
   };
 
   return <section ref={sectionRef} className="py-6 px-4">
@@ -127,11 +98,11 @@ export const ServiceCarousel: React.FC<ServiceCarouselProps> = ({
         {/* Category Tiles */}
         <div className="relative mb-6">
           <div className="flex items-center">
-            <Button variant="ghost" size="sm" className="absolute left-0 z-10 bg-white/80 shadow-md hover:bg-white" onClick={() => scrollLeft(categoryScrollRef)}>
+            <Button variant="ghost" size="sm" className="absolute left-0 z-10 bg-white/80 shadow-md hover:bg-white hidden md:flex" onClick={() => scrollLeft(categoryScrollRef)}>
               <ChevronLeft className="h-4 w-4" />
             </Button>
             
-            <div ref={categoryScrollRef} className="flex gap-4 overflow-x-auto scrollbar-hide px-8 scroll-smooth snap-x snap-mandatory" style={{
+            <div ref={categoryScrollRef} className="flex gap-2 md:gap-4 overflow-x-auto scrollbar-hide px-0 md:px-8 scroll-smooth snap-x snap-mandatory" style={{
             scrollbarWidth: 'none',
             msOverflowStyle: 'none'
           }}>
@@ -139,7 +110,7 @@ export const ServiceCarousel: React.FC<ServiceCarouselProps> = ({
               {categories.map(category => <CategoryTile key={category.id} id={category.id} name={category.name} image={category.image} isSelected={selectedCategory === category.id} onClick={() => setSelectedCategory(category.id)} />)}
             </div>
             
-            <Button variant="ghost" size="sm" className="absolute right-0 z-10 bg-white/80 shadow-md hover:bg-white" onClick={() => scrollRight(categoryScrollRef)}>
+            <Button variant="ghost" size="sm" className="absolute right-0 z-10 bg-white/80 shadow-md hover:bg-white hidden md:flex" onClick={() => scrollRight(categoryScrollRef)}>
               <ChevronRight className="h-4 w-4" />
             </Button>
           </div>
@@ -148,19 +119,20 @@ export const ServiceCarousel: React.FC<ServiceCarouselProps> = ({
         {/* Product Cards */}
         <div className="relative">
           <div className="flex items-center">
-            <Button variant="ghost" size="sm" className="absolute left-0 z-10 bg-white/80 shadow-md hover:bg-white" onClick={() => handleManualScroll('left')}>
+            <Button variant="ghost" size="sm" className="absolute left-0 z-10 bg-white/80 shadow-md hover:bg-white hidden md:flex" onClick={() => scrollLeft(productScrollRef)}>
               <ChevronLeft className="h-4 w-4" />
             </Button>
             
             <div 
               ref={productScrollRef} 
-              className="flex transition-transform duration-500 ease-in-out gap-4 px-8 pb-2"
+              className="flex gap-2 md:gap-4 overflow-x-auto scrollbar-hide px-0 md:px-8 pb-2 scroll-smooth snap-x snap-mandatory"
               style={{
-                transform: `translateX(-${currentIndex * (100 / 3)}%)`
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none'
               }}
             >
               {filteredProducts.slice(0, 10).map(product => (
-                <div key={product.id} className="flex-shrink-0 w-64 snap-start">
+                <div key={product.id} className="flex-shrink-0 w-52 md:w-64 snap-start">
                   {title.toLowerCase().includes('doctor') ? (
                     <DoctorServiceCard {...product} onAddToCart={onAddToCart} onToggleFavorite={onToggleFavorite} />
                   ) : (
@@ -170,7 +142,7 @@ export const ServiceCarousel: React.FC<ServiceCarouselProps> = ({
               ))}
             </div>
             
-            <Button variant="ghost" size="sm" className="absolute right-0 z-10 bg-white/80 shadow-md hover:bg-white" onClick={() => handleManualScroll('right')}>
+            <Button variant="ghost" size="sm" className="absolute right-0 z-10 bg-white/80 shadow-md hover:bg-white hidden md:flex" onClick={() => scrollRight(productScrollRef)}>
               <ChevronRight className="h-4 w-4" />
             </Button>
           </div>

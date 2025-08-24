@@ -44,7 +44,7 @@ export const HeroBanners: React.FC<HeroBannersProps> = ({ banners }) => {
   const banner = banners[currentBanner];
 
   return (
-    <section className="relative h-52 md:h-68 overflow-hidden rounded-2xl mx-4 my-6 shadow-elevated">
+    <section className="relative h-48 md:h-68 overflow-hidden rounded-xl md:rounded-2xl mx-2 md:mx-4 my-4 md:my-6 shadow-elevated">
       {/* Background */}
       <div className={`absolute inset-0 bg-gradient-to-r ${banner.bgGradient} opacity-90`} />
       
@@ -57,21 +57,21 @@ export const HeroBanners: React.FC<HeroBannersProps> = ({ banners }) => {
       
       {/* Content Overlay */}
       <div className="absolute inset-0 bg-black/30 flex items-center">
-        <div className="container mx-auto px-6">
-          <div className="max-w-lg text-white">
-            <h2 className="text-2xl md:text-3xl font-bold mb-2 animate-fade-in">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="max-w-xs md:max-w-lg text-white">
+            <h2 className="text-lg md:text-3xl font-bold mb-2 animate-fade-in">
               {banner.title}
             </h2>
-            <h3 className="text-lg md:text-xl mb-3 opacity-90 animate-slide-up">
+            <h3 className="text-sm md:text-xl mb-2 md:mb-3 opacity-90 animate-slide-up">
               {banner.subtitle}
             </h3>
-            <p className="text-sm md:text-base mb-6 opacity-80 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+            <p className="text-xs md:text-base mb-4 md:mb-6 opacity-80 animate-slide-up hidden md:block" style={{ animationDelay: '0.2s' }}>
               {banner.description}
             </p>
             <Link to={banner.ctaLink}>
               <Button 
-                size="lg" 
-                className="bg-white text-primary hover:bg-white/90 font-semibold animate-scale-in"
+                size="sm"
+                className="bg-white text-primary hover:bg-white/90 font-semibold animate-scale-in md:text-base text-sm"
                 style={{ animationDelay: '0.4s' }}
               >
                 {banner.cta}
@@ -85,23 +85,23 @@ export const HeroBanners: React.FC<HeroBannersProps> = ({ banners }) => {
       <Button
         variant="ghost"
         size="sm"
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white border-0"
+        className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white border-0 h-8 w-8 md:h-10 md:w-10"
         onClick={goToPrevious}
       >
-        <ChevronLeft className="h-5 w-5" />
+        <ChevronLeft className="h-4 w-4 md:h-5 md:w-5" />
       </Button>
       
       <Button
         variant="ghost"
         size="sm"
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white border-0"
+        className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white border-0 h-8 w-8 md:h-10 md:w-10"
         onClick={goToNext}
       >
-        <ChevronRight className="h-5 w-5" />
+        <ChevronRight className="h-4 w-4 md:h-5 md:w-5" />
       </Button>
 
       {/* Dots Indicator */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+      <div className="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
         {banners.map((_, index) => (
           <button
             key={index}

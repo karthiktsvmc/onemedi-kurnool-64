@@ -33,7 +33,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
   return <section className="py-8 px-4 bg-primary-light">
       <div className="container mx-auto px-0">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold text-foreground">What Our Customers Say</h2>
+          <h2 className="text-xl md:text-2xl font-bold text-foreground">What Our Customers Say</h2>
           <div className="flex gap-2">
             <Button variant="outline" size="sm" onClick={goToPrevious} className="h-8 w-8 p-0">
               <ChevronLeft className="h-4 w-4" />
@@ -46,16 +46,16 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
         
         <div className="relative overflow-hidden">
           <div className="flex transition-transform duration-500 ease-in-out" style={{
-          transform: `translateX(-${currentIndex * (100 / Math.min(3, testimonials.length))}%)`
+          transform: `translateX(-${currentIndex * 100}%)`
         }}>
-            {testimonials.map((testimonial, index) => <div key={testimonial.id} className="flex-shrink-0 w-full md:w-1/3 px-2">
-                <div className="bg-card p-6 rounded-xl shadow-card hover:shadow-elevated transition-shadow h-full">
+            {testimonials.map((testimonial, index) => <div key={testimonial.id} className="flex-shrink-0 w-full px-2">
+                <div className="bg-card p-4 md:p-6 rounded-xl shadow-card hover:shadow-elevated transition-shadow h-full">
                   <div className="flex items-center mb-4">
-                    <img src={testimonial.avatar} alt={testimonial.name} className="w-12 h-12 rounded-full mr-4 object-cover" />
+                    <img src={testimonial.avatar} alt={testimonial.name} className="w-10 h-10 md:w-12 md:h-12 rounded-full mr-3 md:mr-4 object-cover" />
                     <div className="flex-1">
-                      <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
-                      <p className="text-sm text-muted-foreground">{testimonial.location}</p>
-                      <span className="text-xs bg-primary-light text-primary px-2 py-1 rounded-full font-medium">
+                      <h4 className="font-semibold text-foreground text-sm md:text-base">{testimonial.name}</h4>
+                      <p className="text-xs md:text-sm text-muted-foreground">{testimonial.location}</p>
+                      <span className="text-xs bg-primary-light text-primary px-2 py-1 rounded-full font-medium mt-1 inline-block">
                         {testimonial.service}
                       </span>
                     </div>
