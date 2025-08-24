@@ -21,7 +21,7 @@ export const AutoScrollServiceTiles: React.FC<AutoScrollServiceTilesProps> = ({
   return <section className="py-0 px-[2px]">
       <div className="container mx-auto px-0">
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-foreground">Our Services</h2>
+          <h2 className="text-foreground py-0 text-center font-bold text-lg">Our Services</h2>
         </div>
 
         {/* 6x2 Grid Layout for all screen sizes */}
