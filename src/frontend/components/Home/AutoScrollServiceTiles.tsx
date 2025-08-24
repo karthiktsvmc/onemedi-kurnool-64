@@ -19,7 +19,7 @@ export const AutoScrollServiceTiles: React.FC<AutoScrollServiceTilesProps> = ({
   services
 }) => {
   return <section className="py-0 px-[2px]">
-      <div className="container mx-auto px-0">
+      <div className="container mx-auto px-0 py-0">
         <div className="mb-6">
           <h2 className="text-foreground py-0 text-center font-bold text-lg">Our Services</h2>
         </div>
