@@ -14,7 +14,7 @@ export const ServiceTile = ({ icon: Icon, title, subtitle, link, gradient, badge
   return (
     <Link 
       to={link}
-      className="flex flex-col items-center group min-w-[85px] snap-start animate-scale-in hover:scale-105 transition-all duration-300 ease-out"
+      className="flex flex-col items-center group min-w-[65px] snap-start animate-scale-in hover:scale-105 transition-all duration-300 ease-out"
     >
       <div className="relative">
         {badge && (
