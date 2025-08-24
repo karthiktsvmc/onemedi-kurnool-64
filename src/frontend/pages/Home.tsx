@@ -96,7 +96,7 @@ export const Home = () => {
         <HeroBanners banners={heroBannersData} />
 
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-primary-light via-primary/5 to-health-green-light py-4 md:py-6 px-4">
+        <section className="bg-gradient-to-br from-primary-light via-primary/5 to-health-green-light md:py-6 px-0 py-0">
           <div className="container mx-auto text-center">
             <h1 className="text-xl md:text-4xl text-primary mb-4 md:mb-6 animate-fade-in font-extrabold">
               ONE STOP FOR YOUR MEDICAL NEEDS
