@@ -31,7 +31,7 @@ export const ServiceTile = ({
       
       <div className="text-center group-hover:translate-y-[-2px] transition-transform duration-300">
         <h3 className="font-semibold text-foreground text-[10px] sm:text-xs lg:text-sm mb-0.5 sm:mb-1 group-hover:text-primary transition-colors duration-300 leading-tight">{title}</h3>
-        <p className="text-[8px] sm:text-[10px] lg:text-xs text-muted-foreground group-hover:text-foreground transition-colors duration-300 leading-tight">{subtitle}</p>
+        <p className="text-[8px] sm:text-[10px] lg:text-xs text-muted-foreground group-hover:text-foreground transition-colors duration-300 leading-tight py-0 px-0">{subtitle}</p>
       </div>
     </Link>;
 };
