@@ -16,7 +16,7 @@ export const ServiceTile = ({
   gradient,
   badge
 }: ServiceTileProps) => {
-  return <Link to={link} className="flex flex-col items-center group snap-start animate-scale-in hover:scale-105 transition-all duration-300 ease-out p-2 px-0 py-0">
+  return <Link to={link} className="flex flex-col items-center group snap-start animate-scale-in hover:scale-105 transition-all duration-300 ease-out p-2 px-0 py-0 my-0 mx-0">
       <div className="relative">
         {badge && <div className="absolute -top-1 -right-1 bg-emergency text-white text-[8px] sm:text-xs px-1 sm:px-2 py-0.5 sm:py-1 rounded-full font-medium z-10 animate-pulse">
             {badge}
