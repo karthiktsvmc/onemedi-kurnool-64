@@ -2,6 +2,7 @@
 import { Toaster as Sonner } from "@/shared/components/ui/sonner";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home } from "./frontend/pages/Home";
+import Auth from "./frontend/pages/Auth";
 import { Medicines } from "./frontend/pages/Medicines";
 import { MedicineHome } from "./frontend/pages/MedicineHome";
 import { CategoryListing } from "./frontend/pages/CategoryListing";
@@ -41,43 +42,50 @@ import { Hospitals } from "./frontend/pages/Hospitals";
 import { DietPlans } from "./frontend/pages/DietPlans";
 import NotFound from "./shared/pages/NotFound";
 import { FloatingHelp } from "./frontend/components/Common/FloatingHelp";
+import { ProtectedRoute } from "./shared/components/ProtectedRoute";
 
 const App = () => (
   <>
     <Sonner />
     <BrowserRouter>
       <Routes>
+        {/* Public Routes */}
+        <Route path="/auth" element={<Auth />} />
+        
+        {/* Protected Frontend Routes */}
         <Route path="/" element={<Home />} />
-        <Route path="/medicines" element={<MedicineHome />} />
-        <Route path="/medicines/category/:categoryId" element={<CategoryListing />} />
-        <Route path="/medicines/old" element={<Medicines />} />
-        <Route path="/lab-tests" element={<LabTests />} />
-        <Route path="/lab-tests/:testId" element={<LabTestDetails />} />
-        <Route path="/scans" element={<Scans />} />
-        <Route path="/scans/:scanId" element={<ScanDetails />} />
-        <Route path="/doctors" element={<Doctors />} />
-        <Route path="/doctors/:doctorId" element={<DoctorDetails />} />
-        <Route path="/blood-banks" element={<BloodBanks />} />
-        <Route path="/home-care" element={<HomeCare />} />
-        <Route path="/home-care/:serviceId" element={<HomeCareDetails />} />
-        <Route path="/ambulance" element={<Ambulance />} />
-        <Route path="/insurance" element={<Insurance />} />
-        <Route path="/diabetes-care" element={<DiabetesCare />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/order-confirmation" element={<OrderConfirmation />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/my-orders" element={<MyOrders />} />
-        <Route path="/wishlist" element={<Wishlist />} />
-        <Route path="/saved-addresses" element={<SavedAddresses />} />
-        <Route path="/family-members" element={<FamilyMembers />} />
-        <Route path="/health-records" element={<HealthRecords />} />
-        <Route path="/wallet" element={<Wallet />} />
-        <Route path="/support" element={<Support />} />
-        <Route path="/hospitals" element={<Hospitals />} />
-        <Route path="/diet-plans" element={<DietPlans />} />
-        <Route path="/medicine/:id" element={<MedicineDetails />} />
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route path="/medicines" element={<ProtectedRoute><MedicineHome /></ProtectedRoute>} />
+        <Route path="/medicines/category/:categoryId" element={<ProtectedRoute><CategoryListing /></ProtectedRoute>} />
+        <Route path="/medicines/old" element={<ProtectedRoute><Medicines /></ProtectedRoute>} />
+        <Route path="/medicine/:id" element={<ProtectedRoute><MedicineDetails /></ProtectedRoute>} />
+        <Route path="/lab-tests" element={<ProtectedRoute><LabTests /></ProtectedRoute>} />
+        <Route path="/lab-tests/:testId" element={<ProtectedRoute><LabTestDetails /></ProtectedRoute>} />
+        <Route path="/scans" element={<ProtectedRoute><Scans /></ProtectedRoute>} />
+        <Route path="/scans/:scanId" element={<ProtectedRoute><ScanDetails /></ProtectedRoute>} />
+        <Route path="/doctors" element={<ProtectedRoute><Doctors /></ProtectedRoute>} />
+        <Route path="/doctors/:doctorId" element={<ProtectedRoute><DoctorDetails /></ProtectedRoute>} />
+        <Route path="/blood-banks" element={<ProtectedRoute><BloodBanks /></ProtectedRoute>} />
+        <Route path="/home-care" element={<ProtectedRoute><HomeCare /></ProtectedRoute>} />
+        <Route path="/home-care/:serviceId" element={<ProtectedRoute><HomeCareDetails /></ProtectedRoute>} />
+        <Route path="/ambulance" element={<ProtectedRoute><Ambulance /></ProtectedRoute>} />
+        <Route path="/insurance" element={<ProtectedRoute><Insurance /></ProtectedRoute>} />
+        <Route path="/diabetes-care" element={<ProtectedRoute><DiabetesCare /></ProtectedRoute>} />
+        <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+        <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+        <Route path="/order-confirmation" element={<ProtectedRoute><OrderConfirmation /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/my-orders" element={<ProtectedRoute><MyOrders /></ProtectedRoute>} />
+        <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+        <Route path="/saved-addresses" element={<ProtectedRoute><SavedAddresses /></ProtectedRoute>} />
+        <Route path="/family-members" element={<ProtectedRoute><FamilyMembers /></ProtectedRoute>} />
+        <Route path="/health-records" element={<ProtectedRoute><HealthRecords /></ProtectedRoute>} />
+        <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
+        <Route path="/support" element={<ProtectedRoute><Support /></ProtectedRoute>} />
+        <Route path="/hospitals" element={<ProtectedRoute><Hospitals /></ProtectedRoute>} />
+        <Route path="/diet-plans" element={<ProtectedRoute><DietPlans /></ProtectedRoute>} />
+        
+        {/* Admin Routes - Require Admin Access */}
+        <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminLayout /></ProtectedRoute>}>
           <Route index element={<AdminDashboard />} />
           
           {/* Core Management */}
