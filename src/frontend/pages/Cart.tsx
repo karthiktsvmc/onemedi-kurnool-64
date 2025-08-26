@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { AuthGuard } from '@/shared/components/AuthGuard';
 import { Header } from '@/frontend/components/Layout/Header';
 import { BottomNav } from '@/frontend/components/Layout/BottomNav';
 import { FloatingHelp } from '@/frontend/components/Common/FloatingHelp';
@@ -103,10 +104,11 @@ export const Cart = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      <main className="pb-20 md:pb-8">
+    <AuthGuard requireAuth>
+      <div className="min-h-screen bg-background">
+        <Header />
+        
+        <main className="pb-20 md:pb-8">
         {/* Breadcrumb */}
         <div className="bg-secondary/30 py-3 px-4 border-b border-border">
           <div className="container mx-auto">
@@ -448,8 +450,9 @@ export const Cart = () => {
         </div>
       </main>
 
-      <BottomNav />
-      <FloatingHelp />
-    </div>
+        <BottomNav />
+        <FloatingHelp />
+      </div>
+    </AuthGuard>
   );
 };

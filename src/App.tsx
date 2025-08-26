@@ -52,37 +52,39 @@ const App = () => (
         {/* Public Routes */}
         <Route path="/auth" element={<Auth />} />
         
-        {/* Protected Frontend Routes */}
+        {/* Public Browsing Routes - No auth required */}
         <Route path="/" element={<Home />} />
-        <Route path="/medicines" element={<ProtectedRoute><MedicineHome /></ProtectedRoute>} />
-        <Route path="/medicines/category/:categoryId" element={<ProtectedRoute><CategoryListing /></ProtectedRoute>} />
-        <Route path="/medicines/old" element={<ProtectedRoute><Medicines /></ProtectedRoute>} />
-        <Route path="/medicine/:id" element={<ProtectedRoute><MedicineDetails /></ProtectedRoute>} />
-        <Route path="/lab-tests" element={<ProtectedRoute><LabTests /></ProtectedRoute>} />
-        <Route path="/lab-tests/:testId" element={<ProtectedRoute><LabTestDetails /></ProtectedRoute>} />
-        <Route path="/scans" element={<ProtectedRoute><Scans /></ProtectedRoute>} />
-        <Route path="/scans/:scanId" element={<ProtectedRoute><ScanDetails /></ProtectedRoute>} />
-        <Route path="/doctors" element={<ProtectedRoute><Doctors /></ProtectedRoute>} />
-        <Route path="/doctors/:doctorId" element={<ProtectedRoute><DoctorDetails /></ProtectedRoute>} />
-        <Route path="/blood-banks" element={<ProtectedRoute><BloodBanks /></ProtectedRoute>} />
-        <Route path="/home-care" element={<ProtectedRoute><HomeCare /></ProtectedRoute>} />
-        <Route path="/home-care/:serviceId" element={<ProtectedRoute><HomeCareDetails /></ProtectedRoute>} />
-        <Route path="/ambulance" element={<ProtectedRoute><Ambulance /></ProtectedRoute>} />
-        <Route path="/insurance" element={<ProtectedRoute><Insurance /></ProtectedRoute>} />
-        <Route path="/diabetes-care" element={<ProtectedRoute><DiabetesCare /></ProtectedRoute>} />
+        <Route path="/medicines" element={<MedicineHome />} />
+        <Route path="/medicines/category/:categoryId" element={<CategoryListing />} />
+        <Route path="/medicines/old" element={<Medicines />} />
+        <Route path="/medicine/:id" element={<MedicineDetails />} />
+        <Route path="/lab-tests" element={<LabTests />} />
+        <Route path="/lab-tests/:testId" element={<LabTestDetails />} />
+        <Route path="/scans" element={<Scans />} />
+        <Route path="/scans/:scanId" element={<ScanDetails />} />
+        <Route path="/doctors" element={<Doctors />} />
+        <Route path="/doctors/:doctorId" element={<DoctorDetails />} />
+        <Route path="/blood-banks" element={<BloodBanks />} />
+        <Route path="/home-care" element={<HomeCare />} />
+        <Route path="/home-care/:serviceId" element={<HomeCareDetails />} />
+        <Route path="/ambulance" element={<Ambulance />} />
+        <Route path="/insurance" element={<Insurance />} />
+        <Route path="/diabetes-care" element={<DiabetesCare />} />
+        <Route path="/hospitals" element={<Hospitals />} />
+        <Route path="/diet-plans" element={<DietPlans />} />
+        <Route path="/support" element={<Support />} />
+        
+        {/* Auth Required Routes - Cart, Orders, Profile */}
         <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
         <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
         <Route path="/order-confirmation" element={<ProtectedRoute><OrderConfirmation /></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/my-orders" element={<ProtectedRoute><MyOrders /></ProtectedRoute>} />
         <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
         <Route path="/saved-addresses" element={<ProtectedRoute><SavedAddresses /></ProtectedRoute>} />
         <Route path="/family-members" element={<ProtectedRoute><FamilyMembers /></ProtectedRoute>} />
         <Route path="/health-records" element={<ProtectedRoute><HealthRecords /></ProtectedRoute>} />
         <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
-        <Route path="/support" element={<ProtectedRoute><Support /></ProtectedRoute>} />
-        <Route path="/hospitals" element={<ProtectedRoute><Hospitals /></ProtectedRoute>} />
-        <Route path="/diet-plans" element={<ProtectedRoute><DietPlans /></ProtectedRoute>} />
         
         {/* Admin Routes - Require Admin Access */}
         <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminLayout /></ProtectedRoute>}>

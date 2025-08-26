@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Menu, Search, ShoppingCart, MapPin, User, ChevronDown, Pill, TestTube, Scan, Stethoscope, Home, Activity, MoreHorizontal, Heart, Building, Ambulance, Droplets, Shield, Utensils, BookOpen, Tag, LogOut } from 'lucide-react';
+import { AuthStatusButton } from './AuthStatusButton';
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
 import { cn } from '@/shared/lib/utils';
@@ -194,10 +195,7 @@ export const Header = () => {
                   </span>
                 </Button>
                 
-                <Button variant="ghost" size="sm" className="mx-0 my-0 px-[6px]" onClick={() => window.location.href = '/profile'}>
-                  <User className="h-5 w-5" />
-                  <span className="hidden sm:inline ml-2">Profile</span>
-                </Button>
+                <AuthStatusButton />
 
                 {isAdmin() && (
                   <Button variant="outline" size="sm" onClick={() => window.location.href = '/admin'}>
@@ -205,14 +203,14 @@ export const Header = () => {
                   </Button>
                 )}
 
-                <Button variant="ghost" size="sm" onClick={signOut} className="hidden md:flex">
-                  <LogOut className="h-5 w-5" />
-                </Button>
+                {user && (
+                  <Button variant="ghost" size="sm" onClick={signOut} className="hidden md:flex">
+                    <LogOut className="h-5 w-5" />
+                  </Button>
+                )}
               </>
             ) : (
-              <Button size="sm" onClick={() => window.location.href = '/auth'}>
-                Sign In
-              </Button>
+              <AuthStatusButton />
             )}
 
             <Button 
