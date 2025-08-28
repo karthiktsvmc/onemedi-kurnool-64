@@ -18,7 +18,8 @@ import {
   LayoutDashboard,
   MapPin,
   Megaphone,
-  Tag
+  Tag,
+  FileText
 } from "lucide-react";
 import {
   Sidebar,
@@ -38,6 +39,7 @@ import { Separator } from "@/shared/components/ui/separator";
 const coreModules = [
   { title: "Dashboard", url: "/admin", icon: LayoutDashboard, exact: true },
   { title: "Orders", url: "/admin/orders", icon: ShoppingCart, badge: "12" },
+  { title: "Prescriptions", url: "/admin/prescriptions", icon: FileText, badge: "5" },
   { title: "Users", url: "/admin/users", icon: Users, badge: "new" },
 ];
 
