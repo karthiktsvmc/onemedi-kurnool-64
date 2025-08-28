@@ -40,6 +40,10 @@ import ScanManagement from "./admin/pages/ScanManagement";
 import { MedicineDetails } from "./frontend/pages/MedicineDetails";
 import { Hospitals } from "./frontend/pages/Hospitals";
 import { DietPlans } from "./frontend/pages/DietPlans";
+import { PrivacyPolicy } from "./frontend/pages/PrivacyPolicy";
+import { TermsConditions } from "./frontend/pages/TermsConditions";
+import { AboutUs } from "./frontend/pages/AboutUs";
+import { ReturnsRefunds } from "./frontend/pages/ReturnsRefunds";
 import NotFound from "./shared/pages/NotFound";
 import { FloatingHelp } from "./frontend/components/Common/FloatingHelp";
 import { ProtectedRoute } from "./shared/components/ProtectedRoute";
@@ -73,6 +77,10 @@ const App = () => (
         <Route path="/hospitals" element={<Hospitals />} />
         <Route path="/diet-plans" element={<DietPlans />} />
         <Route path="/support" element={<Support />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsConditions />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/returns" element={<ReturnsRefunds />} />
         
         {/* Auth Required Routes - Cart, Orders, Profile */}
         <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />

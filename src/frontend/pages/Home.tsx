@@ -69,7 +69,7 @@ export const Home = () => {
     icon: Heart,
     title: 'Blood Bank',
     subtitle: 'Find donors',
-    link: '/blood-bank',
+    link: '/blood-banks',
     gradient: 'bg-gradient-to-br from-red-400 to-pink-500'
   }, {
     icon: Shield,
@@ -81,7 +81,7 @@ export const Home = () => {
     icon: Apple,
     title: 'Diet Guide',
     subtitle: 'Nutrition plans',
-    link: '/diet',
+    link: '/diet-plans',
     gradient: 'bg-gradient-to-br from-green-400 to-green-500'
   }];
   const handleAddToCart = (id: string) => {
