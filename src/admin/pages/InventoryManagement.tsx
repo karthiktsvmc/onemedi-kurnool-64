@@ -9,6 +9,7 @@ import { Button } from '@/shared/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import { Alert, AlertDescription } from '@/shared/components/ui/alert';
+import { BulkImportExport } from '@/admin/components/shared/BulkImportExport';
 import { Package, AlertTriangle, TrendingDown, TrendingUp } from 'lucide-react';
 
 // Initialize inventory tables
@@ -298,6 +299,7 @@ export default function InventoryManagement() {
           <TabsTrigger value="medicines">Medicine Inventory</TabsTrigger>
           <TabsTrigger value="movements">Stock Movements</TabsTrigger>
           <TabsTrigger value="alerts">Alerts</TabsTrigger>
+          <TabsTrigger value="bulk-ops">Bulk Operations</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-4">
@@ -406,6 +408,10 @@ export default function InventoryManagement() {
               </div>
             )}
           />
+        </TabsContent>
+
+        <TabsContent value="bulk-ops" className="space-y-4">
+          <BulkImportExport onDataUpdate={() => medicines.fetchData()} />
         </TabsContent>
       </Tabs>
     </div>

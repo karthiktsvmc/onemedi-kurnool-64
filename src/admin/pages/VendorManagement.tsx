@@ -8,6 +8,7 @@ import { Badge } from '@/shared/components/ui/badge';
 import { Button } from '@/shared/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
+import { ServiceAvailability } from '@/admin/components/shared/ServiceAvailability';
 import { Building2, Users, Package, TrendingUp } from 'lucide-react';
 
 // Initialize vendor tables
@@ -15,7 +16,7 @@ const vendorsTable = new SupabaseTable('vendors');
 const vendorLocationsTable = new SupabaseTable('vendor_locations');
 
 export default function VendorManagement() {
-  const [activeTab, setActiveTab] = useState<'vendors' | 'locations' | 'analytics'>('vendors');
+  const [activeTab, setActiveTab] = useState<'vendors' | 'locations' | 'scheduling' | 'analytics'>('vendors');
 
   // Hooks for data management
   const vendors = useSupabaseTable(vendorsTable, { realtime: true });
@@ -278,6 +279,7 @@ export default function VendorManagement() {
         <TabsList>
           <TabsTrigger value="vendors">Vendors</TabsTrigger>
           <TabsTrigger value="locations">Locations</TabsTrigger>
+          <TabsTrigger value="scheduling">Scheduling</TabsTrigger>
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
         </TabsList>
 
@@ -351,6 +353,10 @@ export default function VendorManagement() {
               />
             }
           />
+        </TabsContent>
+
+        <TabsContent value="scheduling" className="space-y-4">
+          <ServiceAvailability onScheduleUpdate={() => console.log('Schedule updated')} />
         </TabsContent>
 
         <TabsContent value="analytics" className="space-y-4">
