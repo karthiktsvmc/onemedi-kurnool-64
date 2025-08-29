@@ -1359,6 +1359,45 @@ export type Database = {
         }
         Relationships: []
       }
+      inventory_alerts: {
+        Row: {
+          alert_type: string
+          created_at: string
+          current_stock: number | null
+          id: string
+          medicine_id: string | null
+          medicine_name: string | null
+          message: string
+          status: string | null
+          threshold: number | null
+          updated_at: string
+        }
+        Insert: {
+          alert_type: string
+          created_at?: string
+          current_stock?: number | null
+          id?: string
+          medicine_id?: string | null
+          medicine_name?: string | null
+          message: string
+          status?: string | null
+          threshold?: number | null
+          updated_at?: string
+        }
+        Update: {
+          alert_type?: string
+          created_at?: string
+          current_stock?: number | null
+          id?: string
+          medicine_id?: string | null
+          medicine_name?: string | null
+          message?: string
+          status?: string | null
+          threshold?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       lab_categories: {
         Row: {
           created_at: string
@@ -2596,6 +2635,45 @@ export type Database = {
         }
         Relationships: []
       }
+      stock_movements: {
+        Row: {
+          created_at: string
+          id: string
+          medicine_id: string | null
+          medicine_name: string | null
+          movement_type: string
+          notes: string | null
+          quantity: number
+          reason: string
+          reference_number: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          medicine_id?: string | null
+          medicine_name?: string | null
+          movement_type: string
+          notes?: string | null
+          quantity: number
+          reason: string
+          reference_number?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          medicine_id?: string | null
+          medicine_name?: string | null
+          movement_type?: string
+          notes?: string | null
+          quantity?: number
+          reason?: string
+          reference_number?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       surgeons: {
         Row: {
           bio: string | null
@@ -2848,6 +2926,60 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      vendor_locations: {
+        Row: {
+          address: string
+          city: string
+          contact_phone: string | null
+          created_at: string
+          id: string
+          is_primary: boolean | null
+          latitude: number | null
+          longitude: number | null
+          manager_name: string | null
+          pincode: string
+          state: string
+          status: string | null
+          updated_at: string
+          vendor_id: string
+          vendor_name: string | null
+        }
+        Insert: {
+          address: string
+          city: string
+          contact_phone?: string | null
+          created_at?: string
+          id?: string
+          is_primary?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          manager_name?: string | null
+          pincode: string
+          state: string
+          status?: string | null
+          updated_at?: string
+          vendor_id: string
+          vendor_name?: string | null
+        }
+        Update: {
+          address?: string
+          city?: string
+          contact_phone?: string | null
+          created_at?: string
+          id?: string
+          is_primary?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          manager_name?: string | null
+          pincode?: string
+          state?: string
+          status?: string | null
+          updated_at?: string
+          vendor_id?: string
+          vendor_name?: string | null
         }
         Relationships: []
       }

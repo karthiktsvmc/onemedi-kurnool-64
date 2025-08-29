@@ -205,6 +205,12 @@ export const trustedPartnersTable = new SupabaseTable<TrustedPartner>('trusted_p
 export const profilesTable = new SupabaseTable<Profile>('profiles');
 export const userRolesTable = new SupabaseTable<UserRole>('user_roles');
 
+// Additional service management tables
+export const vendorsTable = new SupabaseTable('vendors');
+export const vendorLocationsTable = new SupabaseTable('vendor_locations');
+export const inventoryAlertsTable = new SupabaseTable('inventory_alerts');
+export const stockMovementsTable = new SupabaseTable('stock_movements');
+
 // Auth utilities
 export const getCurrentUser = async () => {
   const { data: { user }, error } = await supabase.auth.getUser();

@@ -55,6 +55,8 @@ const serviceModules = [
 ];
 
 const managementModules = [
+  { title: "Vendors", url: "/admin/vendors", icon: Building2, badge: undefined },
+  { title: "Inventory", url: "/admin/inventory", icon: Package, badge: undefined },
   { title: "Categories", url: "/admin/categories", icon: PlusCircle, badge: undefined },
   { title: "Settings", url: "/admin/settings", icon: Settings, badge: undefined },
 ];
