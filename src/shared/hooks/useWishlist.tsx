@@ -6,15 +6,10 @@ import { useToast } from '@/shared/hooks/use-toast';
 export interface WishlistItem {
   id: string;
   user_id: string;
-  family_member_id?: string;
   item_type: string;
   item_id: string;
-  item_name: string;
-  item_description?: string;
-  item_image_url?: string;
-  item_price?: number;
   created_at: string;
-  updated_at: string;
+  family_member_id?: string;
   family_member?: {
     name: string;
     relationship: string;
@@ -24,10 +19,6 @@ export interface WishlistItem {
 export interface AddToWishlistData {
   item_type: string;
   item_id: string;
-  item_name: string;
-  item_description?: string;
-  item_image_url?: string;
-  item_price?: number;
   family_member_id?: string;
 }
 
@@ -50,15 +41,10 @@ export const useWishlist = () => {
         .select(`
           id,
           user_id,
-          family_member_id,
           item_type,
           item_id,
-          item_name,
-          item_description,
-          item_image_url,
-          item_price,
           created_at,
-          updated_at,
+          family_member_id,
           family_member:family_members(name, relationship)
         `)
         .eq('user_id', user.id)
@@ -121,7 +107,7 @@ export const useWishlist = () => {
 
       toast({
         title: "Added to Wishlist",
-        description: `${itemData.item_name} has been added to your wishlist.`,
+        description: "Item has been added to your wishlist.",
       });
 
       await fetchWishlistItems();
@@ -189,7 +175,7 @@ export const useWishlist = () => {
       if (success) {
         toast({
           title: "Moved to Cart",
-          description: `${wishlistItem.item_name} has been moved to your cart.`,
+          description: "Item has been moved to your cart.",
         });
       }
       

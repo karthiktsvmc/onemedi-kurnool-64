@@ -6,16 +6,21 @@ import { useToast } from '@/shared/hooks/use-toast';
 export interface Prescription {
   id: string;
   user_id: string;
-  family_member_id?: string;
+  order_id?: string;
+  doctor_name?: string;
+  patient_name: string;
   file_url: string;
   file_type: string;
-  prescription_date?: string;
-  doctor_name?: string;
-  hospital_name?: string;
-  diagnosis?: string;
+  verification_status?: string;
+  verified_by?: string;
+  verified_at?: string;
   notes?: string;
   created_at: string;
   updated_at: string;
+  prescription_date?: string;
+  hospital_name?: string;
+  diagnosis?: string;
+  family_member_id?: string;
   family_member?: {
     name: string;
     relationship: string;
@@ -24,6 +29,7 @@ export interface Prescription {
 
 export interface UploadPrescriptionData {
   file: File;
+  patient_name: string;
   family_member_id?: string;
   prescription_date?: string;
   doctor_name?: string;
@@ -100,6 +106,7 @@ export const usePrescriptions = () => {
         .from('prescriptions')
         .insert({
           user_id: user.id,
+          patient_name: prescriptionData.patient_name,
           family_member_id: prescriptionData.family_member_id,
           file_url: urlData.publicUrl,
           file_type: fileExt || 'pdf',
