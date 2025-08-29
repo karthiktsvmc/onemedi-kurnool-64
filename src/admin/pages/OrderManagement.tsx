@@ -5,6 +5,8 @@ import { useToast } from '@/shared/hooks/use-toast';
 import { OrdersAnalytics } from '@/admin/components/Orders/OrdersAnalytics';
 import { OrdersTable } from '@/admin/components/Orders/OrdersTable';
 import { PaymentTracker } from '@/admin/components/Orders/PaymentTracker';
+import { FulfillmentWorkflow } from '@/admin/components/Orders/FulfillmentWorkflow';
+import { RefundManagement } from '@/admin/components/Orders/RefundManagement';
 import { PageHeader } from '@/admin/components/shared/PageHeader';
 import { supabase } from '@/integrations/supabase/client';
 import { RefreshCw, Download, Settings } from 'lucide-react';
@@ -242,6 +244,11 @@ export const OrderManagement: React.FC = () => {
     });
   };
 
+  const handleRefundUpdate = async (refundId: string, updates: any) => {
+    // Implement refund update logic here
+    console.log('Refund update:', refundId, updates);
+  };
+
   // Calculate analytics
   const ordersAnalytics = {
     totalOrders: orders.length,
@@ -321,6 +328,7 @@ export const OrderManagement: React.FC = () => {
           <TabsTrigger value="orders">Orders</TabsTrigger>
           <TabsTrigger value="payments">Payments</TabsTrigger>
           <TabsTrigger value="fulfillment">Fulfillment</TabsTrigger>
+          <TabsTrigger value="refunds">Refunds</TabsTrigger>
         </TabsList>
 
         <TabsContent value="orders">
@@ -342,9 +350,16 @@ export const OrderManagement: React.FC = () => {
         </TabsContent>
 
         <TabsContent value="fulfillment">
-          <div className="text-center py-12 text-muted-foreground">
-            Fulfillment workflow management coming soon...
-          </div>
+          <FulfillmentWorkflow
+            orders={tableOrders}
+            onOrderUpdate={handleStatusUpdate}
+          />
+        </TabsContent>
+
+        <TabsContent value="refunds">
+          <RefundManagement
+            onRefundUpdate={handleRefundUpdate}
+          />
         </TabsContent>
       </Tabs>
     </div>
