@@ -38,7 +38,7 @@ const getStatusColor = (status: string) => {
   }
 };
 
-export const MyOrders = () => {
+const MyOrders = () => {
   const [activeTab, setActiveTab] = useState('active');
   const { toast } = useToast();
 
@@ -303,3 +303,5 @@ export const MyOrders = () => {
     </div>
   );
 };
+
+export default MyOrders;

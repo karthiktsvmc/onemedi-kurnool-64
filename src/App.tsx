@@ -23,7 +23,7 @@ import { DiabetesCare } from "./frontend/pages/DiabetesCare";
 import { Checkout } from "./frontend/pages/Checkout";
 import { OrderConfirmation } from "./frontend/pages/OrderConfirmation";
 import { Profile } from "./frontend/pages/Profile";
-import { MyOrders } from "./frontend/pages/MyOrders";
+import MyOrders from "./frontend/pages/MyOrders";
 import { Wishlist } from "./frontend/pages/Wishlist";
 import { SavedAddresses } from "./frontend/pages/SavedAddresses";
 import { FamilyMembers } from "./frontend/pages/FamilyMembers";
