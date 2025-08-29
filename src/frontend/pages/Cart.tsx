@@ -5,8 +5,8 @@ import { FloatingHelp } from '@/frontend/components/Common/FloatingHelp';
 import { Button } from '@/shared/components/ui/button';
 import { Badge } from '@/shared/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
-import { CartItemCard } from '@/frontend/components/Cart/CartItemCard';
-import { PriceBreakdown } from '@/frontend/components/Cart/PriceBreakdown';
+import { RealCartItemCard } from '@/frontend/components/Cart/RealCartItemCard';
+import { RealPriceBreakdown } from '@/frontend/components/Cart/RealPriceBreakdown';
 import { CrossSellGrid } from '@/frontend/components/Cart/CrossSellGrid';
 import { TrustBadgeRow } from '@/frontend/components/Cart/TrustBadgeRow';
 import { 
@@ -66,14 +66,22 @@ export const Cart = () => {
     const itemToSave = cartItems.find(item => item.id === id);
     if (itemToSave) {
       setSavedItems(prev => [...prev, itemToSave]);
-      setCartItems(items => items.filter(item => item.id !== id));
+      removeFromCart(id);
     }
   };
 
   const moveToCart = (id: string) => {
     const itemToMove = savedItems.find(item => item.id === id);
     if (itemToMove) {
-      setCartItems(prev => [...prev, itemToMove]);
+      addToCart({
+        item_type: itemToMove.item_type,
+        item_id: itemToMove.item_id,
+        vendor_id: itemToMove.vendor_id,
+        quantity: itemToMove.quantity,
+        unit_price: itemToMove.unit_price,
+        total_price: itemToMove.total_price,
+        prescription_required: itemToMove.prescription_required
+      });
       setSavedItems(items => items.filter(item => item.id !== id));
     }
   };
@@ -88,18 +96,18 @@ export const Cart = () => {
     console.log('Editing item:', id);
   };
 
-  // Group items by type
+  // Group items by type with proper mapping
   const groupedItems = useMemo(() => {
     const groups = {
-      services: cartItems.filter(item => item.type === 'service'),
-      products: cartItems.filter(item => item.type === 'product'),
-      subscriptions: cartItems.filter(item => item.type === 'subscription' || item.type === 'package')
+      services: cartItems.filter(item => item.item_type?.includes('service') || item.item_type === 'lab_test'),
+      products: cartItems.filter(item => item.item_type === 'medicine'),
+      subscriptions: cartItems.filter(item => item.item_type?.includes('package') || item.item_type?.includes('plan'))
     };
     return groups;
   }, [cartItems]);
 
-  const hasPrescriptionItems = cartItems.some(item => item.prescriptionRequired);
-  const hasServices = cartItems.some(item => item.type === 'service');
+  const hasPrescriptionItems = cartItems.some(item => item.prescription_required);
+  const hasServices = cartItems.some(item => item.item_type?.includes('service') || item.item_type === 'lab_test');
 
   // Handle page exit (for abandonment reduction)
   const handlePageExit = () => {
@@ -245,7 +253,7 @@ export const Cart = () => {
                           </h3>
                           <div className="space-y-3">
                             {groupedItems.services.map((item) => (
-                              <CartItemCard
+                              <RealCartItemCard
                                 key={item.id}
                                 item={item}
                                 onUpdateQuantity={updateQuantity}
@@ -268,7 +276,7 @@ export const Cart = () => {
                           </h3>
                           <div className="space-y-3">
                             {groupedItems.products.map((item) => (
-                              <CartItemCard
+                              <RealCartItemCard
                                 key={item.id}
                                 item={item}
                                 onUpdateQuantity={updateQuantity}
@@ -291,7 +299,7 @@ export const Cart = () => {
                           </h3>
                           <div className="space-y-3">
                             {groupedItems.subscriptions.map((item) => (
-                              <CartItemCard
+                              <RealCartItemCard
                                 key={item.id}
                                 item={item}
                                 onUpdateQuantity={updateQuantity}
@@ -308,7 +316,7 @@ export const Cart = () => {
                   <TabsContent value="services" className="mt-6">
                     <div className="space-y-3">
                       {groupedItems.services.map((item) => (
-                        <CartItemCard
+                        <RealCartItemCard
                           key={item.id}
                           item={item}
                           onUpdateQuantity={updateQuantity}
@@ -322,7 +330,7 @@ export const Cart = () => {
                   <TabsContent value="products" className="mt-6">
                     <div className="space-y-3">
                       {groupedItems.products.map((item) => (
-                        <CartItemCard
+                        <RealCartItemCard
                           key={item.id}
                           item={item}
                           onUpdateQuantity={updateQuantity}
@@ -336,7 +344,7 @@ export const Cart = () => {
                   <TabsContent value="subscriptions" className="mt-6">
                     <div className="space-y-3">
                       {groupedItems.subscriptions.map((item) => (
-                        <CartItemCard
+                        <RealCartItemCard
                           key={item.id}
                           item={item}
                           onUpdateQuantity={updateQuantity}
@@ -359,12 +367,12 @@ export const Cart = () => {
                       {savedItems.map((item) => (
                         <div key={item.id} className="bg-card border border-border rounded-lg p-4">
                           <img 
-                            src={item.image} 
-                            alt={item.name}
+                            src={item.item_image || '/placeholder-medical.jpg'} 
+                            alt={item.item_name || 'Saved Item'}
                             className="w-full h-24 object-cover rounded-lg mb-3"
                           />
-                          <h4 className="font-medium text-sm mb-2">{item.name}</h4>
-                          <p className="font-bold text-primary text-sm mb-3">₹{item.price}</p>
+                          <h4 className="font-medium text-sm mb-2">{item.item_name || 'Unknown Item'}</h4>
+                          <p className="font-bold text-primary text-sm mb-3">₹{item.unit_price?.toFixed(2) || '0.00'}</p>
                           <Button size="sm" className="w-full" onClick={() => moveToCart(item.id)}>
                             Move to Cart
                           </Button>
@@ -406,7 +414,7 @@ export const Cart = () => {
                   <h2 className="text-xl font-bold text-foreground">Order Summary</h2>
 
                   {/* Price Breakdown */}
-                  <PriceBreakdown items={cartItems} />
+                  <RealPriceBreakdown items={cartItems} />
 
                   {/* Trust Badges */}
                   <TrustBadgeRow badges={trustBadges} />
