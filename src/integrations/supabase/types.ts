@@ -1126,6 +1126,51 @@ export type Database = {
           },
         ]
       }
+      family_members: {
+        Row: {
+          allergies: string[] | null
+          chronic_conditions: string[] | null
+          created_at: string
+          date_of_birth: string | null
+          email: string | null
+          gender: string | null
+          id: string
+          name: string
+          phone: string | null
+          relationship: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          allergies?: string[] | null
+          chronic_conditions?: string[] | null
+          created_at?: string
+          date_of_birth?: string | null
+          email?: string | null
+          gender?: string | null
+          id?: string
+          name: string
+          phone?: string | null
+          relationship: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          allergies?: string[] | null
+          chronic_conditions?: string[] | null
+          created_at?: string
+          date_of_birth?: string | null
+          email?: string | null
+          gender?: string | null
+          id?: string
+          name?: string
+          phone?: string | null
+          relationship?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       hero_banners: {
         Row: {
           active: boolean | null
@@ -2251,13 +2296,17 @@ export type Database = {
       prescriptions: {
         Row: {
           created_at: string
+          diagnosis: string | null
           doctor_name: string | null
+          family_member_id: string | null
           file_type: string
           file_url: string
+          hospital_name: string | null
           id: string
           notes: string | null
           order_id: string | null
           patient_name: string
+          prescription_date: string | null
           updated_at: string
           user_id: string
           verification_status: string | null
@@ -2266,13 +2315,17 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          diagnosis?: string | null
           doctor_name?: string | null
+          family_member_id?: string | null
           file_type: string
           file_url: string
+          hospital_name?: string | null
           id?: string
           notes?: string | null
           order_id?: string | null
           patient_name: string
+          prescription_date?: string | null
           updated_at?: string
           user_id: string
           verification_status?: string | null
@@ -2281,13 +2334,17 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          diagnosis?: string | null
           doctor_name?: string | null
+          family_member_id?: string | null
           file_type?: string
           file_url?: string
+          hospital_name?: string | null
           id?: string
           notes?: string | null
           order_id?: string | null
           patient_name?: string
+          prescription_date?: string | null
           updated_at?: string
           user_id?: string
           verification_status?: string | null
@@ -2295,6 +2352,13 @@ export type Database = {
           verified_by?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "prescriptions_family_member_id_fkey"
+            columns: ["family_member_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "prescriptions_order_id_fkey"
             columns: ["order_id"]
@@ -2307,10 +2371,14 @@ export type Database = {
       profiles: {
         Row: {
           address: string | null
+          allergies: string[] | null
+          chronic_conditions: string[] | null
           city: string | null
           created_at: string
           date_of_birth: string | null
           email: string | null
+          emergency_contact_name: string | null
+          emergency_contact_phone: string | null
           full_name: string | null
           gender: string | null
           id: string
@@ -2323,10 +2391,14 @@ export type Database = {
         }
         Insert: {
           address?: string | null
+          allergies?: string[] | null
+          chronic_conditions?: string[] | null
           city?: string | null
           created_at?: string
           date_of_birth?: string | null
           email?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
           full_name?: string | null
           gender?: string | null
           id?: string
@@ -2339,10 +2411,14 @@ export type Database = {
         }
         Update: {
           address?: string | null
+          allergies?: string[] | null
+          chronic_conditions?: string[] | null
           city?: string | null
           created_at?: string
           date_of_birth?: string | null
           email?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
           full_name?: string | null
           gender?: string | null
           id?: string
@@ -3117,6 +3193,7 @@ export type Database = {
       wishlists: {
         Row: {
           created_at: string
+          family_member_id: string | null
           id: string
           item_id: string
           item_type: string
@@ -3124,6 +3201,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          family_member_id?: string | null
           id?: string
           item_id: string
           item_type: string
@@ -3131,12 +3209,21 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          family_member_id?: string | null
           id?: string
           item_id?: string
           item_type?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "wishlists_family_member_id_fkey"
+            columns: ["family_member_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

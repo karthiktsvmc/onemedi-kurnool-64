@@ -16,8 +16,19 @@ export interface Profile {
   state?: string;
   pincode?: string;
   profile_image_url?: string;
+  chronic_conditions?: string[];
+  allergies?: string[];
+  emergency_contact_name?: string;
+  emergency_contact_phone?: string;
   created_at: string;
   updated_at: string;
+  // Legacy compatibility fields
+  name?: string;
+  profilePicture?: string;
+  age?: number;
+  weight?: number;
+  height?: number;
+  chronicConditions?: string[];
 }
 
 export function useProfile() {
