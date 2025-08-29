@@ -30,7 +30,7 @@ import { FamilyMembers } from "./frontend/pages/FamilyMembers";
 import { HealthRecords } from "./frontend/pages/HealthRecords";
 import { Wallet } from "./frontend/pages/Wallet";
 import { Support } from "./frontend/pages/Support";
-import { AdminDashboard } from "./admin/pages/AdminDashboard";
+import { OrderManagement } from "./admin/pages/OrderManagement";
 import { AdminLayout } from "./admin/components/AdminLayout";
 import { PageDesignControl } from "./admin/pages/PageDesignControl";
 import { UserManagement } from "./admin/pages/UserManagement";
@@ -125,17 +125,15 @@ const App = () => (
         <Route path="/diet-plans" element={<DietPlans />} />
         <Route path="/medicine/:id" element={<MedicineDetails />} />
         <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<AdminDashboard />} />
+          <Route index element={<OrderManagement />} />
+          <Route path="orders" element={<OrderManagement />} />
           
           {/* Core Management */}
           <Route path="page-design" element={<PageDesignControl />} />
           <Route path="users" element={<UserManagement />} />
           <Route path="products" element={<ProductServiceManagement />} />
-          <Route path="medicines" element={<div>Medicines Management (Use /admin/products)</div>} />
           
           {/* Service Modules */}
-          <Route path="orders" element={<div>Orders Management (Coming Soon)</div>} />
-          <Route path="medicines" element={<div>Medicines Management (Coming Soon)</div>} />
           <Route path="lab-tests" element={<LabTestManagement />} />
           <Route path="scans" element={<ScanManagement />} />
           <Route path="doctors" element={<DoctorManagement />} />
