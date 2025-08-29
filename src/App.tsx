@@ -31,6 +31,8 @@ import { HealthRecords } from "./frontend/pages/HealthRecords";
 import { Wallet } from "./frontend/pages/Wallet";
 import { Support } from "./frontend/pages/Support";
 import { OrderManagement } from "./admin/pages/OrderManagement";
+import VendorManagement from "./admin/pages/VendorManagement";
+import InventoryManagement from "./admin/pages/InventoryManagement";
 import { AdminLayout } from "./admin/components/AdminLayout";
 import { PageDesignControl } from "./admin/pages/PageDesignControl";
 import { UserManagement } from "./admin/pages/UserManagement";
@@ -127,6 +129,8 @@ const App = () => (
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<OrderManagement />} />
           <Route path="orders" element={<OrderManagement />} />
+          <Route path="vendors" element={<VendorManagement />} />
+          <Route path="inventory" element={<InventoryManagement />} />
           
           {/* Core Management */}
           <Route path="page-design" element={<PageDesignControl />} />
