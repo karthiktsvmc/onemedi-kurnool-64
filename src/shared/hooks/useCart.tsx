@@ -6,13 +6,15 @@ import { useToast } from '@/shared/hooks/use-toast';
 export interface CartItem {
   id: string;
   user_id: string;
-  item_type: 'medicine' | 'lab_test' | 'scan' | 'consultation' | 'homecare' | 'insurance' | 'diabetes_product';
+  item_type: string; // Allow any string from database
   item_id: string;
   vendor_id?: string;
   quantity: number;
   unit_price: number;
   total_price: number;
   prescription_required: boolean;
+  created_at?: string;
+  updated_at?: string;
   // Additional fields for display
   item_name?: string;
   item_image?: string;
@@ -210,6 +212,8 @@ export function useCart() {
     fetchCartItems();
   }, [user]);
 
+  const cartCount = getTotalItems(); // Add cartCount for Header compatibility
+
   return {
     cartItems,
     loading,
@@ -219,6 +223,7 @@ export function useCart() {
     clearCart,
     getTotalPrice,
     getTotalItems,
+    cartCount,
     refetch: fetchCartItems,
   };
 }

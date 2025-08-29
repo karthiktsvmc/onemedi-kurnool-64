@@ -65,7 +65,6 @@ export const useOrders = () => {
           order_items (*),
           shipping_address:addresses!delivery_address_id (*)
         `)
-        .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -93,13 +92,14 @@ export const useOrders = () => {
     setError(null);
 
     try {
-      // Create the order
+      // Create the order - use only fields that exist in database
       const { data: orderResult, error: orderError } = await supabase
         .from('orders')
         .insert({
           user_id: user.id,
-          total_amount: orderData.total_amount,
+          order_number: `OM${Date.now()}`, // Generate simple order number
           subtotal: orderData.total_amount - (orderData.gst_amount || 0) - (orderData.delivery_charges || 0),
+          total_amount: orderData.total_amount,
           gst_amount: orderData.gst_amount || 0,
           delivery_charges: orderData.delivery_charges || 0,
           discount_amount: orderData.discount_amount || 0,
@@ -158,8 +158,7 @@ export const useOrders = () => {
       const { error } = await supabase
         .from('orders')
         .update({ status, updated_at: new Date().toISOString() })
-        .eq('id', orderId)
-        .eq('user_id', user.id);
+        .eq('id', orderId);
 
       if (error) throw error;
 
