@@ -10,11 +10,10 @@ import { PriceBreakdown } from '@/frontend/components/Cart/PriceBreakdown';
 import { CrossSellGrid } from '@/frontend/components/Cart/CrossSellGrid';
 import { TrustBadgeRow } from '@/frontend/components/Cart/TrustBadgeRow';
 import { 
-  mockCartItems, 
   crossSellItems, 
-  trustBadges,
-  CartItem 
+  trustBadges
 } from '@/frontend/data/mockCartData';
+import { useCart } from '@/shared/hooks/useCart';
 import { 
   ShoppingCart, 
   Upload,
@@ -34,18 +33,25 @@ import {
 } from 'lucide-react';
 
 export const Cart = () => {
-  const [cartItems, setCartItems] = useState<CartItem[]>(mockCartItems);
-  const [savedItems, setSavedItems] = useState<CartItem[]>([]);
+  const {
+    cartItems,
+    loading,
+    addToCart,
+    removeFromCart,
+    updateQuantity: updateCartQuantity,
+    clearCart,
+    getTotalPrice,
+    getTotalItems
+  } = useCart();
+  const [savedItems, setSavedItems] = useState<any[]>([]);
   const [showExitModal, setShowExitModal] = useState(false);
 
   const updateQuantity = (id: string, change: number) => {
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + change) }
-          : item
-      )
-    );
+    const item = cartItems.find(item => item.id === id);
+    if (item) {
+      const newQuantity = Math.max(1, item.quantity + change);
+      updateCartQuantity(id, newQuantity);
+    }
   };
 
   const removeItem = (id: string) => {
@@ -53,7 +59,7 @@ export const Cart = () => {
     if (itemToRemove) {
       setSavedItems(prev => [...prev, itemToRemove]);
     }
-    setCartItems(items => items.filter(item => item.id !== id));
+    removeFromCart(id);
   };
 
   const saveForLater = (id: string) => {
