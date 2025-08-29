@@ -15,7 +15,7 @@ export function useDietGuides() {
 }
 
 export function useDietGuideMutation() {
-  return useSupabaseMutation<DietGuide>({
+  return useSupabaseMutation({
     table: 'diet_guides'
   });
 }

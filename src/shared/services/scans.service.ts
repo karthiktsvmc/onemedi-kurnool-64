@@ -15,7 +15,7 @@ export function useScans() {
 }
 
 export function useScanMutation() {
-  return useSupabaseMutation<Scan>({
+  return useSupabaseMutation({
     table: 'scans'
   });
 }

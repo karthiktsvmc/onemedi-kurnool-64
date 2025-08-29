@@ -28,7 +28,7 @@ export function useAmbulanceServices(options: QueryOptions = {}) {
     ...options,
   });
 
-  const mutation = useSupabaseMutation<AmbulanceService>({
+  const mutation = useSupabaseMutation({
     table: 'ambulance_services',
     onSuccess: () => refetch(),
   });
@@ -68,7 +68,6 @@ export function useAmbulanceServices(options: QueryOptions = {}) {
     updateAmbulanceService: mutation.update,
     deleteAmbulanceService: mutation.remove,
     mutationLoading: mutation.loading,
-    mutationError: mutation.error,
   };
 }
 

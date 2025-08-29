@@ -15,7 +15,7 @@ export function useHomecareServices() {
 }
 
 export function useHomecareServiceMutation() {
-  return useSupabaseMutation<HomecareService>({
+  return useSupabaseMutation({
     table: 'homecare_services'
   });
 }

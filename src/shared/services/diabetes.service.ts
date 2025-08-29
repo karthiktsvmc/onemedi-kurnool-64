@@ -35,19 +35,19 @@ export function useDiabetesExperts() {
 }
 
 export function useDiabetesProductMutation() {
-  return useSupabaseMutation<DiabetesProduct>({
+  return useSupabaseMutation({
     table: 'diabetes_products'
   });
 }
 
 export function useDiabetesServiceMutation() {
-  return useSupabaseMutation<DiabetesService>({
+  return useSupabaseMutation({
     table: 'diabetes_services'
   });
 }
 
 export function useDiabetesExpertMutation() {
-  return useSupabaseMutation<DiabetesExpert>({
+  return useSupabaseMutation({
     table: 'diabetes_experts'
   });
 }

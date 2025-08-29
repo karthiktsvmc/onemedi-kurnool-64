@@ -28,7 +28,7 @@ export function useBloodBanks(options: QueryOptions = {}) {
     ...options,
   });
 
-  const mutation = useSupabaseMutation<BloodBank>({
+  const mutation = useSupabaseMutation({
     table: 'blood_banks',
     onSuccess: () => refetch(),
   });
@@ -68,7 +68,6 @@ export function useBloodBanks(options: QueryOptions = {}) {
     updateBloodBank: mutation.update,
     deleteBloodBank: mutation.remove,
     mutationLoading: mutation.loading,
-    mutationError: mutation.error,
   };
 }
 

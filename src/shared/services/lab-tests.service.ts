@@ -36,7 +36,7 @@ export function useLabTests(options: QueryOptions = {}) {
     autoFetch: true,
   });
 
-  const mutation = useSupabaseMutation<LabTest>({
+  const mutation = useSupabaseMutation({
     table: 'lab_tests',
     onSuccess: () => refetch(),
   });
@@ -107,7 +107,6 @@ export function useLabTests(options: QueryOptions = {}) {
     updateLabTest: mutation.update,
     deleteLabTest: mutation.remove,
     mutationLoading: mutation.loading,
-    mutationError: mutation.error,
   };
 }
 

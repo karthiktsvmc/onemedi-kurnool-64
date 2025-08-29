@@ -15,7 +15,7 @@ export function useInsurancePlans() {
 }
 
 export function useInsurancePlanMutation() {
-  return useSupabaseMutation<InsurancePlan>({
+  return useSupabaseMutation({
     table: 'insurance_plans'
   });
 }

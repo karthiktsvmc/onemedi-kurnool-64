@@ -32,7 +32,7 @@ export function useMedicines(options: QueryOptions = {}) {
     ...options,
   });
 
-  const mutation = useSupabaseMutation<Medicine>({
+  const mutation = useSupabaseMutation({
     table: 'medicines',
     onSuccess: () => refetch(),
   });
@@ -91,7 +91,6 @@ export function useMedicines(options: QueryOptions = {}) {
     updateMedicine: mutation.update,
     deleteMedicine: mutation.remove,
     mutationLoading: mutation.loading,
-    mutationError: mutation.error,
   };
 }
 
