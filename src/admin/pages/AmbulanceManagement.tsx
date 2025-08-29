@@ -1,10 +1,14 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useSupabaseTable } from '@/shared/hooks/useSupabaseTable';
 import { SupabaseTable } from '@/shared/lib/supabase-utils';
 import { DataTable } from '@/admin/components/shared/DataTable';
 import { FormDialog } from '@/admin/components/shared/FormDialog';
 import { PageHeader } from '@/admin/components/shared/PageHeader';
+import { Badge } from '@/shared/components/ui/badge';
+import { Button } from '@/shared/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
+import { Ambulance, Clock, Phone, MapPin } from 'lucide-react';
 
 const ambulanceServicesTable = new SupabaseTable('ambulance_services');
 
