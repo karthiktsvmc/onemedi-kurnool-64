@@ -42,7 +42,7 @@ import DoctorManagement from "./admin/pages/DoctorManagement";
 import ScanManagement from "./admin/pages/ScanManagement";
 import { MedicineDetails } from "./frontend/pages/MedicineDetails";
 import { Hospitals } from "./frontend/pages/Hospitals";
-import { DietPlans } from "./frontend/pages/DietPlans";
+import { OrderTracking } from "./frontend/pages/OrderTracking";
 import NotFound from "./shared/pages/NotFound";
 import { FloatingHelp } from "./frontend/components/Common/FloatingHelp";
 
@@ -92,9 +92,14 @@ const App = () => (
             <Profile />
           </AuthGuard>
         } />
-        <Route path="/my-orders" element={
+        <Route path="/orders" element={
           <AuthGuard>
             <MyOrders />
+          </AuthGuard>
+        } />
+        <Route path="/order-tracking/:orderId" element={
+          <AuthGuard>
+            <OrderTracking />
           </AuthGuard>
         } />
         <Route path="/wishlist" element={
@@ -124,7 +129,7 @@ const App = () => (
         } />
         <Route path="/support" element={<Support />} />
         <Route path="/hospitals" element={<Hospitals />} />
-        <Route path="/diet-plans" element={<DietPlans />} />
+        <Route path="/diet-plans" element={<div>Diet Plans (Coming Soon)</div>} />
         <Route path="/medicine/:id" element={<MedicineDetails />} />
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<OrderManagement />} />

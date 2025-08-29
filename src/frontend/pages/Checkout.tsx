@@ -5,7 +5,7 @@ import { Badge } from '@/shared/components/ui/badge';
 import { Separator } from '@/shared/components/ui/separator';
 import { useAuth } from '@/shared/contexts/AuthContext';
 import { useCart } from '@/shared/hooks/useCart';
-// import { useAddresses } from '@/shared/hooks/useAddresses';
+import { useAddresses } from '@/shared/hooks/useAddresses';
 import { useOrders } from '@/shared/hooks/useOrders';
 import { usePayments } from '@/shared/hooks/usePayments';
 import { useToast } from '@/shared/hooks/use-toast';
@@ -21,7 +21,7 @@ export const Checkout: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { cartItems, getTotalPrice, clearCart } = useCart();
-  // const { addresses } = useAddresses();
+  const { addresses, loading: addressLoading } = useAddresses();
   const { createOrder, loading: orderLoading } = useOrders();
   const { processOnlinePayment, processCODPayment } = usePayments();
   const { toast } = useToast();
@@ -32,15 +32,14 @@ export const Checkout: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [specialInstructions, setSpecialInstructions] = useState('');
 
-  const addresses = []; // Temporary - will be replaced with real addresses hook
   
   // Set default address when addresses load
-  // useEffect(() => {
-  //   if (addresses.length > 0 && !selectedAddress) {
-  //     const defaultAddr = addresses.find(addr => addr.is_default) || addresses[0];
-  //     setSelectedAddress(defaultAddr);
-  //   }
-  // }, [addresses, selectedAddress]);
+  useEffect(() => {
+    if (addresses.length > 0 && !selectedAddress) {
+      const defaultAddr = addresses.find(addr => addr.is_default) || addresses[0];
+      setSelectedAddress(defaultAddr);
+    }
+  }, [addresses, selectedAddress]);
 
   // Redirect if not logged in
   useEffect(() => {
@@ -98,27 +97,30 @@ export const Checkout: React.FC = () => {
     setIsProcessing(true);
 
     try {
-      // Create order items from cart
-      const orderItems = cartItems.map(item => ({
-        item_type: item.item_type,
-        item_id: item.item_id,
-        item_name: item.item_name || 'Product',
-        quantity: item.quantity,
-        unit_price: item.unit_price,
-        total_price: item.total_price,
-        vendor_id: item.vendor_id,
-      }));
-
-      // Create the order
-      const orderId = await createOrder({
+      // Prepare order data
+      const orderData = {
         total_amount: total,
         gst_amount: gstAmount,
         delivery_charges: deliveryFee,
+        discount_amount: 0,
         payment_method: selectedPayment,
         delivery_address_id: selectedAddress.id,
+        delivery_date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 2 days from now
+        delivery_slot: '10:00-12:00',
         special_instructions: specialInstructions,
-        items: orderItems,
-      });
+        items: cartItems.map(item => ({
+          item_type: item.item_type,
+          item_id: item.item_id,
+          item_name: item.item_name || 'Unknown Item',
+          quantity: item.quantity,
+          unit_price: item.unit_price,
+          total_price: item.total_price,
+          vendor_id: item.vendor_id,
+        })),
+      };
+
+      // Create the order
+      const orderId = await createOrder(orderData);
 
       if (!orderId) {
         throw new Error('Failed to create order');
