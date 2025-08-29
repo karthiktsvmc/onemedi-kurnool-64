@@ -14,6 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
+      addresses: {
+        Row: {
+          address_line_1: string
+          address_line_2: string | null
+          city: string
+          created_at: string
+          full_name: string
+          id: string
+          is_default: boolean | null
+          landmark: string | null
+          latitude: number | null
+          longitude: number | null
+          phone: string
+          pincode: string
+          state: string
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          address_line_1: string
+          address_line_2?: string | null
+          city: string
+          created_at?: string
+          full_name: string
+          id?: string
+          is_default?: boolean | null
+          landmark?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          phone: string
+          pincode: string
+          state: string
+          type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          address_line_1?: string
+          address_line_2?: string | null
+          city?: string
+          created_at?: string
+          full_name?: string
+          id?: string
+          is_default?: boolean | null
+          landmark?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          phone?: string
+          pincode?: string
+          state?: string
+          type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       ambulance_services: {
         Row: {
           available_24x7: boolean | null
@@ -238,6 +295,56 @@ export type Database = {
         }
         Relationships: []
       }
+      cart_items: {
+        Row: {
+          created_at: string
+          id: string
+          item_id: string
+          item_type: string
+          prescription_required: boolean | null
+          quantity: number
+          total_price: number
+          unit_price: number
+          updated_at: string
+          user_id: string
+          vendor_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          item_id: string
+          item_type: string
+          prescription_required?: boolean | null
+          quantity?: number
+          total_price: number
+          unit_price: number
+          updated_at?: string
+          user_id: string
+          vendor_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          item_id?: string
+          item_type?: string
+          prescription_required?: boolean | null
+          quantity?: number
+          total_price?: number
+          unit_price?: number
+          updated_at?: string
+          user_id?: string
+          vendor_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cart_items_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       consultation_types: {
         Row: {
           available: boolean | null
@@ -278,6 +385,108 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      coupon_usage: {
+        Row: {
+          coupon_id: string
+          created_at: string
+          discount_amount: number
+          id: string
+          order_id: string
+          user_id: string
+        }
+        Insert: {
+          coupon_id: string
+          created_at?: string
+          discount_amount: number
+          id?: string
+          order_id: string
+          user_id: string
+        }
+        Update: {
+          coupon_id?: string
+          created_at?: string
+          discount_amount?: number
+          id?: string
+          order_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coupon_usage_coupon_id_fkey"
+            columns: ["coupon_id"]
+            isOneToOne: false
+            referencedRelation: "coupons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "coupon_usage_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coupons: {
+        Row: {
+          active: boolean | null
+          applicable_to: string | null
+          code: string
+          created_at: string
+          description: string | null
+          id: string
+          maximum_discount_amount: number | null
+          minimum_order_amount: number | null
+          title: string
+          type: string
+          updated_at: string
+          usage_limit: number | null
+          used_count: number | null
+          user_usage_limit: number | null
+          valid_from: string
+          valid_until: string
+          value: number
+        }
+        Insert: {
+          active?: boolean | null
+          applicable_to?: string | null
+          code: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          maximum_discount_amount?: number | null
+          minimum_order_amount?: number | null
+          title: string
+          type: string
+          updated_at?: string
+          usage_limit?: number | null
+          used_count?: number | null
+          user_usage_limit?: number | null
+          valid_from?: string
+          valid_until: string
+          value: number
+        }
+        Update: {
+          active?: boolean | null
+          applicable_to?: string | null
+          code?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          maximum_discount_amount?: number | null
+          minimum_order_amount?: number | null
+          title?: string
+          type?: string
+          updated_at?: string
+          usage_limit?: number | null
+          used_count?: number | null
+          user_usage_limit?: number | null
+          valid_from?: string
+          valid_until?: string
+          value?: number
+        }
+        Relationships: []
       }
       diabetes_categories: {
         Row: {
@@ -1180,8 +1389,10 @@ export type Database = {
       lab_packages: {
         Row: {
           category_id: string
+          centre: string | null
           created_at: string
           description: string | null
+          "discount price": number | null
           fasting_required: boolean | null
           home_collection_available: boolean | null
           id: string
@@ -1193,8 +1404,10 @@ export type Database = {
         }
         Insert: {
           category_id: string
+          centre?: string | null
           created_at?: string
           description?: string | null
+          "discount price"?: number | null
           fasting_required?: boolean | null
           home_collection_available?: boolean | null
           id?: string
@@ -1206,8 +1419,10 @@ export type Database = {
         }
         Update: {
           category_id?: string
+          centre?: string | null
           created_at?: string
           description?: string | null
+          "discount price"?: number | null
           fasting_required?: boolean | null
           home_collection_available?: boolean | null
           id?: string
@@ -1223,6 +1438,13 @@ export type Database = {
             columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "lab_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lab_packages_centre_fkey"
+            columns: ["centre"]
+            isOneToOne: false
+            referencedRelation: "diagnostics_centres"
             referencedColumns: ["id"]
           },
         ]
@@ -1272,8 +1494,10 @@ export type Database = {
       lab_tests: {
         Row: {
           category_id: string
+          centre: string | null
           created_at: string
           description: string | null
+          "discount price": number | null
           fasting_required: boolean | null
           featured: boolean | null
           home_collection_available: boolean | null
@@ -1286,8 +1510,10 @@ export type Database = {
         }
         Insert: {
           category_id: string
+          centre?: string | null
           created_at?: string
           description?: string | null
+          "discount price"?: number | null
           fasting_required?: boolean | null
           featured?: boolean | null
           home_collection_available?: boolean | null
@@ -1300,8 +1526,10 @@ export type Database = {
         }
         Update: {
           category_id?: string
+          centre?: string | null
           created_at?: string
           description?: string | null
+          "discount price"?: number | null
           fasting_required?: boolean | null
           featured?: boolean | null
           home_collection_available?: boolean | null
@@ -1318,6 +1546,13 @@ export type Database = {
             columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "lab_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lab_tests_centre_fkey"
+            columns: ["centre"]
+            isOneToOne: false
+            referencedRelation: "diagnostics_centres"
             referencedColumns: ["id"]
           },
         ]
@@ -1605,6 +1840,42 @@ export type Database = {
         }
         Relationships: []
       }
+      notifications: {
+        Row: {
+          created_at: string
+          data: Json | null
+          expires_at: string | null
+          id: string
+          message: string
+          read_at: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          data?: Json | null
+          expires_at?: string | null
+          id?: string
+          message: string
+          read_at?: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          data?: Json | null
+          expires_at?: string | null
+          id?: string
+          message?: string
+          read_at?: string | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       offer_strips: {
         Row: {
           active: boolean | null
@@ -1643,6 +1914,184 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      order_items: {
+        Row: {
+          created_at: string
+          id: string
+          item_id: string
+          item_name: string
+          item_type: string
+          order_id: string
+          quantity: number
+          status: string | null
+          total_price: number
+          unit_price: number
+          updated_at: string
+          vendor_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          item_id: string
+          item_name: string
+          item_type: string
+          order_id: string
+          quantity: number
+          status?: string | null
+          total_price: number
+          unit_price: number
+          updated_at?: string
+          vendor_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          item_id?: string
+          item_name?: string
+          item_type?: string
+          order_id?: string
+          quantity?: number
+          status?: string | null
+          total_price?: number
+          unit_price?: number
+          updated_at?: string
+          vendor_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          created_at: string
+          delivery_address_id: string
+          delivery_charges: number
+          delivery_date: string | null
+          delivery_slot: string | null
+          discount_amount: number
+          gst_amount: number
+          id: string
+          order_number: string
+          payment_method: string | null
+          payment_status: string | null
+          special_instructions: string | null
+          status: string
+          subtotal: number
+          total_amount: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          delivery_address_id: string
+          delivery_charges?: number
+          delivery_date?: string | null
+          delivery_slot?: string | null
+          discount_amount?: number
+          gst_amount?: number
+          id?: string
+          order_number: string
+          payment_method?: string | null
+          payment_status?: string | null
+          special_instructions?: string | null
+          status?: string
+          subtotal: number
+          total_amount: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          delivery_address_id?: string
+          delivery_charges?: number
+          delivery_date?: string | null
+          delivery_slot?: string | null
+          discount_amount?: number
+          gst_amount?: number
+          id?: string
+          order_number?: string
+          payment_method?: string | null
+          payment_status?: string | null
+          special_instructions?: string | null
+          status?: string
+          subtotal?: number
+          total_amount?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_delivery_address_id_fkey"
+            columns: ["delivery_address_id"]
+            isOneToOne: false
+            referencedRelation: "addresses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string | null
+          gateway: string
+          gateway_response: Json | null
+          id: string
+          order_id: string
+          payment_id: string | null
+          refund_amount: number | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency?: string | null
+          gateway: string
+          gateway_response?: Json | null
+          id?: string
+          order_id: string
+          payment_id?: string | null
+          refund_amount?: number | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string | null
+          gateway?: string
+          gateway_response?: Json | null
+          id?: string
+          order_id?: string
+          payment_id?: string | null
+          refund_amount?: number | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       physiotherapy_categories: {
         Row: {
@@ -1760,6 +2209,62 @@ export type Database = {
           },
         ]
       }
+      prescriptions: {
+        Row: {
+          created_at: string
+          doctor_name: string | null
+          file_type: string
+          file_url: string
+          id: string
+          notes: string | null
+          order_id: string | null
+          patient_name: string
+          updated_at: string
+          user_id: string
+          verification_status: string | null
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          doctor_name?: string | null
+          file_type: string
+          file_url: string
+          id?: string
+          notes?: string | null
+          order_id?: string | null
+          patient_name: string
+          updated_at?: string
+          user_id: string
+          verification_status?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          doctor_name?: string | null
+          file_type?: string
+          file_url?: string
+          id?: string
+          notes?: string | null
+          order_id?: string | null
+          patient_name?: string
+          updated_at?: string
+          user_id?: string
+          verification_status?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prescriptions_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           address: string | null
@@ -1850,6 +2355,59 @@ export type Database = {
         }
         Relationships: []
       }
+      reviews: {
+        Row: {
+          comment: string | null
+          created_at: string
+          helpful_count: number | null
+          id: string
+          item_id: string
+          item_type: string
+          order_id: string | null
+          rating: number
+          title: string | null
+          updated_at: string
+          user_id: string
+          verified_purchase: boolean | null
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          helpful_count?: number | null
+          id?: string
+          item_id: string
+          item_type: string
+          order_id?: string | null
+          rating: number
+          title?: string | null
+          updated_at?: string
+          user_id: string
+          verified_purchase?: boolean | null
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          helpful_count?: number | null
+          id?: string
+          item_id?: string
+          item_type?: string
+          order_id?: string | null
+          rating?: number
+          title?: string | null
+          updated_at?: string
+          user_id?: string
+          verified_purchase?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       scan_categories: {
         Row: {
           created_at: string
@@ -1922,9 +2480,12 @@ export type Database = {
       scans: {
         Row: {
           category_id: string
+          centre: string | null
           created_at: string
           description: string | null
+          "discount price": number | null
           featured: boolean | null
+          "home pickup": boolean | null
           id: string
           image_url: string | null
           instructions: string | null
@@ -1934,9 +2495,12 @@ export type Database = {
         }
         Insert: {
           category_id: string
+          centre?: string | null
           created_at?: string
           description?: string | null
+          "discount price"?: number | null
           featured?: boolean | null
+          "home pickup"?: boolean | null
           id?: string
           image_url?: string | null
           instructions?: string | null
@@ -1946,9 +2510,12 @@ export type Database = {
         }
         Update: {
           category_id?: string
+          centre?: string | null
           created_at?: string
           description?: string | null
+          "discount price"?: number | null
           featured?: boolean | null
+          "home pickup"?: boolean | null
           id?: string
           image_url?: string | null
           instructions?: string | null
@@ -2284,6 +2851,69 @@ export type Database = {
         }
         Relationships: []
       }
+      vendors: {
+        Row: {
+          active: boolean | null
+          address: string
+          city: string
+          commission_rate: number | null
+          contact_person: string | null
+          created_at: string
+          email: string | null
+          id: string
+          latitude: number | null
+          license_number: string | null
+          longitude: number | null
+          name: string
+          phone: string | null
+          pincode: string
+          state: string
+          type: string
+          updated_at: string
+          verification_status: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          address: string
+          city: string
+          commission_rate?: number | null
+          contact_person?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          latitude?: number | null
+          license_number?: string | null
+          longitude?: number | null
+          name: string
+          phone?: string | null
+          pincode: string
+          state: string
+          type: string
+          updated_at?: string
+          verification_status?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          address?: string
+          city?: string
+          commission_rate?: number | null
+          contact_person?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          latitude?: number | null
+          license_number?: string | null
+          longitude?: number | null
+          name?: string
+          phone?: string | null
+          pincode?: string
+          state?: string
+          type?: string
+          updated_at?: string
+          verification_status?: string | null
+        }
+        Relationships: []
+      }
       wellness_categories: {
         Row: {
           created_at: string
@@ -2352,6 +2982,30 @@ export type Database = {
           },
         ]
       }
+      wishlists: {
+        Row: {
+          created_at: string
+          id: string
+          item_id: string
+          item_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          item_id: string
+          item_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          item_id?: string
+          item_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -2360,6 +3014,10 @@ export type Database = {
       calculate_distance: {
         Args: { lat1: number; lat2: number; lng1: number; lng2: number }
         Returns: number
+      }
+      generate_order_number: {
+        Args: Record<PropertyKey, never>
+        Returns: string
       }
       get_current_user_role: {
         Args: Record<PropertyKey, never>
@@ -2411,7 +3069,7 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "super_admin" | "admin" | "moderator" | "user"
+      app_role: "super_admin" | "admin" | "moderator" | "user" | "manager"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -2539,7 +3197,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["super_admin", "admin", "moderator", "user"],
+      app_role: ["super_admin", "admin", "moderator", "user", "manager"],
     },
   },
 } as const
