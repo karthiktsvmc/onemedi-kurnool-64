@@ -9,9 +9,12 @@ import { MobileMenu } from './MobileMenu';
 import { OffersStrip } from '@/frontend/components/Home/OffersStrip';
 import { ServiceDropdown } from './ServiceDropdown';
 import { MoreServicesDropdown } from './MoreServicesDropdown';
+import { AuthButton } from './AuthButton';
+import { useCart } from '@/shared/hooks/useCart';
 export const Header = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const { cartCount } = useCart();
   const [selectedLocation, setSelectedLocation] = useState({
     address: 'Kurnool, Andhra Pradesh',
     coordinates: {
@@ -183,17 +186,21 @@ export const Header = () => {
               </span>
             </Button>
             
-            <Button variant="ghost" size="sm" className="relative hidden md:flex">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="relative hidden md:flex"
+              onClick={() => window.location.href = '/cart'}
+            >
               <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 bg-emergency text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                2
-              </span>
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-emergency text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
             </Button>
             
-            <Button variant="ghost" size="sm" className="mx-0 my-0 px-[6px]">
-              <User className="h-5 w-5" />
-              <span className="hidden sm:inline ml-2">Profile</span>
-            </Button>
+            <AuthButton />
 
             <Button 
               variant="ghost" 
@@ -221,11 +228,18 @@ export const Header = () => {
                 3
               </span>
             </Button>
-            <Button variant="ghost" size="sm" className="relative md:hidden">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="relative md:hidden"
+              onClick={() => window.location.href = '/cart'}
+            >
               <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 bg-emergency text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                2
-              </span>
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-emergency text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
             </Button>
           </div>
         </div>

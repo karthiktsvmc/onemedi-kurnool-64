@@ -2,6 +2,7 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { LocationProvider } from '@/shared/contexts/LocationContext';
+import { AuthProvider } from '@/shared/contexts/AuthContext';
 import { Toaster } from '@/shared/components/ui/toaster';
 
 const queryClient = new QueryClient({
@@ -20,10 +21,12 @@ interface AppProvidersProps {
 export const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <LocationProvider>
-        {children}
-        <Toaster />
-      </LocationProvider>
+      <AuthProvider>
+        <LocationProvider>
+          {children}
+          <Toaster />
+        </LocationProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 };

@@ -1,6 +1,8 @@
 
 import { Toaster as Sonner } from "@/shared/components/ui/sonner";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthGuard } from '@/shared/components/AuthGuard';
+import Auth from '@/frontend/pages/Auth';
 import { Home } from "./frontend/pages/Home";
 import { Medicines } from "./frontend/pages/Medicines";
 import { MedicineHome } from "./frontend/pages/MedicineHome";
@@ -63,16 +65,61 @@ const App = () => (
         <Route path="/ambulance" element={<Ambulance />} />
         <Route path="/insurance" element={<Insurance />} />
         <Route path="/diabetes-care" element={<DiabetesCare />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/order-confirmation" element={<OrderConfirmation />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/my-orders" element={<MyOrders />} />
-        <Route path="/wishlist" element={<Wishlist />} />
-        <Route path="/saved-addresses" element={<SavedAddresses />} />
-        <Route path="/family-members" element={<FamilyMembers />} />
-        <Route path="/health-records" element={<HealthRecords />} />
-        <Route path="/wallet" element={<Wallet />} />
+        
+        {/* Authentication Routes */}
+        <Route path="/auth" element={<Auth />} />
+        
+        {/* Protected Routes - Require Authentication */}
+        <Route path="/cart" element={
+          <AuthGuard>
+            <Cart />
+          </AuthGuard>
+        } />
+        <Route path="/checkout" element={
+          <AuthGuard>
+            <Checkout />
+          </AuthGuard>
+        } />
+        <Route path="/order-confirmation" element={
+          <AuthGuard>
+            <OrderConfirmation />
+          </AuthGuard>
+        } />
+        <Route path="/profile" element={
+          <AuthGuard>
+            <Profile />
+          </AuthGuard>
+        } />
+        <Route path="/my-orders" element={
+          <AuthGuard>
+            <MyOrders />
+          </AuthGuard>
+        } />
+        <Route path="/wishlist" element={
+          <AuthGuard>
+            <Wishlist />
+          </AuthGuard>
+        } />
+        <Route path="/saved-addresses" element={
+          <AuthGuard>
+            <SavedAddresses />
+          </AuthGuard>
+        } />
+        <Route path="/family-members" element={
+          <AuthGuard>
+            <FamilyMembers />
+          </AuthGuard>
+        } />
+        <Route path="/health-records" element={
+          <AuthGuard>
+            <HealthRecords />
+          </AuthGuard>
+        } />
+        <Route path="/wallet" element={
+          <AuthGuard>
+            <Wallet />
+          </AuthGuard>
+        } />
         <Route path="/support" element={<Support />} />
         <Route path="/hospitals" element={<Hospitals />} />
         <Route path="/diet-plans" element={<DietPlans />} />
