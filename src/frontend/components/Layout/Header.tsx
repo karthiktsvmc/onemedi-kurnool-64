@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { Menu, Search, ShoppingCart, MapPin, User, ChevronDown, Pill, TestTube, Scan, Stethoscope, Home, Activity, MoreHorizontal, Heart, Building, Ambulance, Droplets, Shield, Utensils, BookOpen, Tag, LogOut } from 'lucide-react';
-import { AuthStatusButton } from './AuthStatusButton';
+import { Menu, Search, ShoppingCart, MapPin, User, ChevronDown, Pill, TestTube, Scan, Stethoscope, Home, Activity, MoreHorizontal, Heart, Building, Ambulance, Droplets, Shield, Utensils, BookOpen, Tag } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
 import { cn } from '@/shared/lib/utils';
-import { useAuth } from '@/shared/contexts/AuthContext';
 import { LocationDisplay } from './LocationDisplay';
 import { SmartSearchBar } from './SmartSearchBar';
 import { MobileMenu } from './MobileMenu';
@@ -14,7 +12,6 @@ import { MoreServicesDropdown } from './MoreServicesDropdown';
 export const Header = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const { user, signOut, isAdmin } = useAuth();
   const [selectedLocation, setSelectedLocation] = useState({
     address: 'Kurnool, Andhra Pradesh',
     coordinates: {
@@ -179,39 +176,24 @@ export const Header = () => {
 
           {/* Action Buttons */}
           <div className="flex items-center space-x-2">
-            {user ? (
-              <>
-                <Button variant="ghost" size="sm" className="relative hidden md:flex">
-                  <Heart className="h-5 w-5" />
-                  <span className="absolute -top-1 -right-1 bg-emergency text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    3
-                  </span>
-                </Button>
-                
-                <Button variant="ghost" size="sm" className="relative hidden md:flex">
-                  <ShoppingCart className="h-5 w-5" />
-                  <span className="absolute -top-1 -right-1 bg-emergency text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    2
-                  </span>
-                </Button>
-                
-                <AuthStatusButton />
-
-                {isAdmin() && (
-                  <Button variant="outline" size="sm" onClick={() => window.location.href = '/admin'}>
-                    Admin
-                  </Button>
-                )}
-
-                {user && (
-                  <Button variant="ghost" size="sm" onClick={signOut} className="hidden md:flex">
-                    <LogOut className="h-5 w-5" />
-                  </Button>
-                )}
-              </>
-            ) : (
-              <AuthStatusButton />
-            )}
+            <Button variant="ghost" size="sm" className="relative hidden md:flex">
+              <Heart className="h-5 w-5" />
+              <span className="absolute -top-1 -right-1 bg-emergency text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                3
+              </span>
+            </Button>
+            
+            <Button variant="ghost" size="sm" className="relative hidden md:flex">
+              <ShoppingCart className="h-5 w-5" />
+              <span className="absolute -top-1 -right-1 bg-emergency text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                2
+              </span>
+            </Button>
+            
+            <Button variant="ghost" size="sm" className="mx-0 my-0 px-[6px]">
+              <User className="h-5 w-5" />
+              <span className="hidden sm:inline ml-2">Profile</span>
+            </Button>
 
             <Button 
               variant="ghost" 
@@ -233,22 +215,18 @@ export const Header = () => {
             <div className="flex-1">
               <SmartSearchBar onSearch={handleSearch} />
             </div>
-            {user && (
-              <>
-                <Button variant="ghost" size="sm" className="relative md:hidden">
-                  <Heart className="h-5 w-5" />
-                  <span className="absolute -top-1 -right-1 bg-emergency text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    3
-                  </span>
-                </Button>
-                <Button variant="ghost" size="sm" className="relative md:hidden">
-                  <ShoppingCart className="h-5 w-5" />
-                  <span className="absolute -top-1 -right-1 bg-emergency text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    2
-                  </span>
-                </Button>
-              </>
-            )}
+            <Button variant="ghost" size="sm" className="relative md:hidden">
+              <Heart className="h-5 w-5" />
+              <span className="absolute -top-1 -right-1 bg-emergency text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                3
+              </span>
+            </Button>
+            <Button variant="ghost" size="sm" className="relative md:hidden">
+              <ShoppingCart className="h-5 w-5" />
+              <span className="absolute -top-1 -right-1 bg-emergency text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                2
+              </span>
+            </Button>
           </div>
         </div>
 

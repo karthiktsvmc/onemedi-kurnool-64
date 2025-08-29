@@ -1,112 +1,84 @@
-import { useState, useEffect } from 'react';
-import { Camera, Edit2, Save, X, Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { Camera, Edit2, Save, X } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select';
+import { Textarea } from '@/shared/components/ui/textarea';
+import { Badge } from '@/shared/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/ui/avatar';
 import { Header } from '@/frontend/components/Layout/Header';
 import { BottomNav } from '@/frontend/components/Layout/BottomNav';
-import { useProfile } from '@/shared/hooks/useProfile';
-import { useAuth } from '@/shared/contexts/AuthContext';
-import { AuthGuard } from '@/shared/components/AuthGuard';
+import { mockUserProfile } from '@/frontend/data/mockProfileData';
+import { useToast } from '@/shared/hooks/use-toast';
 
 export const Profile = () => {
-  const { user, signOut } = useAuth();
-  const { profile, loading, updating, updateProfile } = useProfile();
   const [isEditing, setIsEditing] = useState(false);
-  const [editedProfile, setEditedProfile] = useState({
-    full_name: '',
-    phone: '',
-    email: '',
-    gender: '',
-    date_of_birth: '',
-    address: '',
-    city: '',
-    state: '',
-    pincode: '',
-  });
+  const [profile, setProfile] = useState(mockUserProfile);
+  const [editedProfile, setEditedProfile] = useState(mockUserProfile);
+  const { toast } = useToast();
 
-  useEffect(() => {
-    if (profile) {
-      setEditedProfile({
-        full_name: profile.full_name || '',
-        phone: profile.phone || '',
-        email: profile.email || '',
-        gender: profile.gender || '',
-        date_of_birth: profile.date_of_birth || '',
-        address: profile.address || '',
-        city: profile.city || '',
-        state: profile.state || '',
-        pincode: profile.pincode || '',
-      });
-    }
-  }, [profile]);
-
-  const handleSave = async () => {
-    const success = await updateProfile(editedProfile);
-    if (success) {
-      setIsEditing(false);
-    }
+  const handleSave = () => {
+    setProfile(editedProfile);
+    setIsEditing(false);
+    toast({
+      title: "Profile Updated",
+      description: "Your profile has been successfully updated.",
+    });
   };
 
   const handleCancel = () => {
-    if (profile) {
-      setEditedProfile({
-        full_name: profile.full_name || '',
-        phone: profile.phone || '',
-        email: profile.email || '',
-        gender: profile.gender || '',
-        date_of_birth: profile.date_of_birth || '',
-        address: profile.address || '',
-        city: profile.city || '',
-        state: profile.state || '',
-        pincode: profile.pincode || '',
-      });
-    }
+    setEditedProfile(profile);
     setIsEditing(false);
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    );
-  }
+  const addCondition = (condition: string) => {
+    if (condition && !editedProfile.chronicConditions?.includes(condition)) {
+      setEditedProfile({
+        ...editedProfile,
+        chronicConditions: [...(editedProfile.chronicConditions || []), condition]
+      });
+    }
+  };
+
+  const removeCondition = (condition: string) => {
+    setEditedProfile({
+      ...editedProfile,
+      chronicConditions: editedProfile.chronicConditions?.filter(c => c !== condition)
+    });
+  };
 
   return (
-    <AuthGuard requireAuth>
-      <div className="min-h-screen bg-background">
-        <Header />
-        
-        <main className="container mx-auto px-4 py-6 pb-20">
-          <div className="max-w-2xl mx-auto space-y-6">
-            {/* Profile Header */}
-            <Card>
-              <CardHeader className="text-center">
-                <div className="relative mx-auto w-24 h-24 mb-4">
-                  <Avatar className="w-24 h-24">
-                    <AvatarImage src={profile?.profile_image_url} alt={profile?.full_name || 'User'} />
-                    <AvatarFallback className="text-lg">
-                      {profile?.full_name?.split(' ').map(n => n[0]).join('') || user?.email?.[0].toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  {isEditing && (
-                    <Button
-                      size="icon"
-                      variant="secondary"
-                      className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full"
-                    >
-                      <Camera className="h-4 w-4" />
-                    </Button>
-                  )}
-                </div>
-                <CardTitle className="text-xl">{profile?.full_name || 'User Profile'}</CardTitle>
-                <p className="text-muted-foreground">{profile?.email || user?.email}</p>
-              </CardHeader>
-            </Card>
+    <div className="min-h-screen bg-background">
+      <Header />
+      
+      <main className="container mx-auto px-4 py-6 pb-20">
+        <div className="max-w-2xl mx-auto space-y-6">
+          {/* Profile Header */}
+          <Card>
+            <CardHeader className="text-center">
+              <div className="relative mx-auto w-24 h-24 mb-4">
+                <Avatar className="w-24 h-24">
+                  <AvatarImage src={profile.profilePicture} alt={profile.name} />
+                  <AvatarFallback className="text-lg">
+                    {profile.name.split(' ').map(n => n[0]).join('')}
+                  </AvatarFallback>
+                </Avatar>
+                {isEditing && (
+                  <Button
+                    size="icon"
+                    variant="secondary"
+                    className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full"
+                  >
+                    <Camera className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+              <CardTitle className="text-xl">{profile.name}</CardTitle>
+              <p className="text-muted-foreground">{profile.email}</p>
+            </CardHeader>
+          </Card>
 
           {/* Personal Information */}
           <Card>
@@ -136,10 +108,9 @@ export const Profile = () => {
                   <Button
                     size="sm"
                     onClick={handleSave}
-                    disabled={updating}
                     className="h-8"
                   >
-                    {updating ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Save className="h-4 w-4 mr-2" />}
+                    <Save className="h-4 w-4 mr-2" />
                     Save
                   </Button>
                 </div>
@@ -151,8 +122,8 @@ export const Profile = () => {
                   <Label htmlFor="name">Full Name</Label>
                   <Input
                     id="name"
-                    value={isEditing ? editedProfile.full_name : (profile?.full_name || '')}
-                    onChange={(e) => setEditedProfile({...editedProfile, full_name: e.target.value})}
+                    value={isEditing ? editedProfile.name : profile.name}
+                    onChange={(e) => setEditedProfile({...editedProfile, name: e.target.value})}
                     disabled={!isEditing}
                   />
                 </div>
@@ -160,7 +131,7 @@ export const Profile = () => {
                   <Label htmlFor="phone">Phone Number</Label>
                   <Input
                     id="phone"
-                    value={isEditing ? editedProfile.phone : (profile?.phone || '')}
+                    value={isEditing ? editedProfile.phone : profile.phone}
                     onChange={(e) => setEditedProfile({...editedProfile, phone: e.target.value})}
                     disabled={!isEditing}
                   />
@@ -170,7 +141,7 @@ export const Profile = () => {
                   <Input
                     id="email"
                     type="email"
-                    value={isEditing ? editedProfile.email : (profile?.email || '')}
+                    value={isEditing ? editedProfile.email : profile.email}
                     onChange={(e) => setEditedProfile({...editedProfile, email: e.target.value})}
                     disabled={!isEditing}
                   />
@@ -178,8 +149,8 @@ export const Profile = () => {
                 <div className="space-y-2">
                   <Label htmlFor="gender">Gender</Label>
                   <Select
-                    value={isEditing ? editedProfile.gender : (profile?.gender || '')}
-                    onValueChange={(value) => setEditedProfile({...editedProfile, gender: value})}
+                    value={isEditing ? editedProfile.gender : profile.gender}
+                    onValueChange={(value) => setEditedProfile({...editedProfile, gender: value as any})}
                     disabled={!isEditing}
                   >
                     <SelectTrigger>
@@ -193,80 +164,108 @@ export const Profile = () => {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="date_of_birth">Date of Birth</Label>
+                  <Label htmlFor="age">Age</Label>
                   <Input
-                    id="date_of_birth"
-                    type="date"
-                    value={isEditing ? editedProfile.date_of_birth : (profile?.date_of_birth || '')}
-                    onChange={(e) => setEditedProfile({...editedProfile, date_of_birth: e.target.value})}
+                    id="age"
+                    type="number"
+                    value={isEditing ? editedProfile.age : profile.age}
+                    onChange={(e) => setEditedProfile({...editedProfile, age: parseInt(e.target.value)})}
                     disabled={!isEditing}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="address">Address</Label>
+                  <Label htmlFor="weight">Weight (kg)</Label>
                   <Input
-                    id="address"
-                    value={isEditing ? editedProfile.address : (profile?.address || '')}
-                    onChange={(e) => setEditedProfile({...editedProfile, address: e.target.value})}
+                    id="weight"
+                    type="number"
+                    value={isEditing ? editedProfile.weight || '' : profile.weight || ''}
+                    onChange={(e) => setEditedProfile({...editedProfile, weight: parseInt(e.target.value) || undefined})}
                     disabled={!isEditing}
-                    placeholder="Street address"
+                    placeholder="Optional"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="city">City</Label>
+                  <Label htmlFor="height">Height (cm)</Label>
                   <Input
-                    id="city"
-                    value={isEditing ? editedProfile.city : (profile?.city || '')}
-                    onChange={(e) => setEditedProfile({...editedProfile, city: e.target.value})}
+                    id="height"
+                    type="number"
+                    value={isEditing ? editedProfile.height || '' : profile.height || ''}
+                    onChange={(e) => setEditedProfile({...editedProfile, height: parseInt(e.target.value) || undefined})}
                     disabled={!isEditing}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="state">State</Label>
-                  <Input
-                    id="state"
-                    value={isEditing ? editedProfile.state : (profile?.state || '')}
-                    onChange={(e) => setEditedProfile({...editedProfile, state: e.target.value})}
-                    disabled={!isEditing}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="pincode">Pincode</Label>
-                  <Input
-                    id="pincode"
-                    value={isEditing ? editedProfile.pincode : (profile?.pincode || '')}
-                    onChange={(e) => setEditedProfile({...editedProfile, pincode: e.target.value})}
-                    disabled={!isEditing}
+                    placeholder="Optional"
                   />
                 </div>
               </div>
             </CardContent>
           </Card>
 
+          {/* Health Information */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Health Information</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                This information helps us provide better healthcare recommendations
+              </p>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label>Chronic Conditions</Label>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {(isEditing ? editedProfile.chronicConditions : profile.chronicConditions)?.map((condition, index) => (
+                    <Badge
+                      key={index}
+                      variant="secondary"
+                      className="gap-1"
+                    >
+                      {condition}
+                      {isEditing && (
+                        <button
+                          onClick={() => removeCondition(condition)}
+                          className="ml-1 text-muted-foreground hover:text-destructive"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      )}
+                    </Badge>
+                  ))}
+                </div>
+                {isEditing && (
+                  <div className="flex gap-2">
+                    <Select onValueChange={addCondition}>
+                      <SelectTrigger className="w-auto">
+                        <SelectValue placeholder="Add condition..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Diabetes Type 1">Diabetes Type 1</SelectItem>
+                        <SelectItem value="Diabetes Type 2">Diabetes Type 2</SelectItem>
+                        <SelectItem value="Hypertension">Hypertension</SelectItem>
+                        <SelectItem value="Heart Disease">Heart Disease</SelectItem>
+                        <SelectItem value="Asthma">Asthma</SelectItem>
+                        <SelectItem value="Thyroid">Thyroid</SelectItem>
+                        <SelectItem value="Arthritis">Arthritis</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Security */}
           <Card>
             <CardHeader>
               <CardTitle>Security</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent>
               <Button variant="outline" className="w-full">
                 Change Password
-              </Button>
-              <Button 
-                variant="destructive" 
-                onClick={signOut}
-                className="w-full"
-              >
-                Sign Out
               </Button>
             </CardContent>
           </Card>
         </div>
       </main>
 
-        <BottomNav />
-      </div>
-    </AuthGuard>
+      <BottomNav />
+    </div>
   );
 };

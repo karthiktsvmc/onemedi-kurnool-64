@@ -2,7 +2,6 @@
 import { Toaster as Sonner } from "@/shared/components/ui/sonner";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home } from "./frontend/pages/Home";
-import Auth from "./frontend/pages/Auth";
 import { Medicines } from "./frontend/pages/Medicines";
 import { MedicineHome } from "./frontend/pages/MedicineHome";
 import { CategoryListing } from "./frontend/pages/CategoryListing";
@@ -40,28 +39,18 @@ import ScanManagement from "./admin/pages/ScanManagement";
 import { MedicineDetails } from "./frontend/pages/MedicineDetails";
 import { Hospitals } from "./frontend/pages/Hospitals";
 import { DietPlans } from "./frontend/pages/DietPlans";
-import { PrivacyPolicy } from "./frontend/pages/PrivacyPolicy";
-import { TermsConditions } from "./frontend/pages/TermsConditions";
-import { AboutUs } from "./frontend/pages/AboutUs";
-import { ReturnsRefunds } from "./frontend/pages/ReturnsRefunds";
 import NotFound from "./shared/pages/NotFound";
 import { FloatingHelp } from "./frontend/components/Common/FloatingHelp";
-import { ProtectedRoute } from "./shared/components/ProtectedRoute";
 
 const App = () => (
   <>
     <Sonner />
     <BrowserRouter>
       <Routes>
-        {/* Public Routes */}
-        <Route path="/auth" element={<Auth />} />
-        
-        {/* Public Browsing Routes - No auth required */}
         <Route path="/" element={<Home />} />
         <Route path="/medicines" element={<MedicineHome />} />
         <Route path="/medicines/category/:categoryId" element={<CategoryListing />} />
         <Route path="/medicines/old" element={<Medicines />} />
-        <Route path="/medicine/:id" element={<MedicineDetails />} />
         <Route path="/lab-tests" element={<LabTests />} />
         <Route path="/lab-tests/:testId" element={<LabTestDetails />} />
         <Route path="/scans" element={<Scans />} />
@@ -74,28 +63,21 @@ const App = () => (
         <Route path="/ambulance" element={<Ambulance />} />
         <Route path="/insurance" element={<Insurance />} />
         <Route path="/diabetes-care" element={<DiabetesCare />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order-confirmation" element={<OrderConfirmation />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/my-orders" element={<MyOrders />} />
+        <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/saved-addresses" element={<SavedAddresses />} />
+        <Route path="/family-members" element={<FamilyMembers />} />
+        <Route path="/health-records" element={<HealthRecords />} />
+        <Route path="/wallet" element={<Wallet />} />
+        <Route path="/support" element={<Support />} />
         <Route path="/hospitals" element={<Hospitals />} />
         <Route path="/diet-plans" element={<DietPlans />} />
-        <Route path="/support" element={<Support />} />
-        <Route path="/privacy" element={<PrivacyPolicy />} />
-        <Route path="/terms" element={<TermsConditions />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/returns" element={<ReturnsRefunds />} />
-        
-        {/* Auth Required Routes - Cart, Orders, Profile */}
-        <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
-        <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
-        <Route path="/order-confirmation" element={<ProtectedRoute><OrderConfirmation /></ProtectedRoute>} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/my-orders" element={<ProtectedRoute><MyOrders /></ProtectedRoute>} />
-        <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
-        <Route path="/saved-addresses" element={<ProtectedRoute><SavedAddresses /></ProtectedRoute>} />
-        <Route path="/family-members" element={<ProtectedRoute><FamilyMembers /></ProtectedRoute>} />
-        <Route path="/health-records" element={<ProtectedRoute><HealthRecords /></ProtectedRoute>} />
-        <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
-        
-        {/* Admin Routes - Require Admin Access */}
-        <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminLayout /></ProtectedRoute>}>
+        <Route path="/medicine/:id" element={<MedicineDetails />} />
+        <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
           
           {/* Core Management */}

@@ -1,6 +1,5 @@
 import { Header } from '@/frontend/components/Layout/Header';
 import { BottomNav } from '@/frontend/components/Layout/BottomNav';
-import { useAuth } from '@/shared/contexts/AuthContext';
 import { ServiceTile } from '@/frontend/components/Layout/ServiceTile';
 import { ServiceCarousel } from '@/frontend/components/Home/ServiceCarousel';
 import { HeroBanners } from '@/frontend/components/Home/HeroBanners';
@@ -14,7 +13,6 @@ import { Pill, TestTube, Stethoscope, Hospital, Home as HomeIcon, Heart, Ambulan
 import { Link } from 'react-router-dom';
 import { medicinesData, labTestsData, scansData, doctorsData, homeCareData, diabetesCareData, heroBannersData, testimonialsData, partnersData, trustBadgesData, healthTipsData } from '@/frontend/data/mockCarouselData';
 export const Home = () => {
-  const { user } = useAuth();
   const services = [{
     icon: Pill,
     title: 'Medicines',
@@ -69,7 +67,7 @@ export const Home = () => {
     icon: Heart,
     title: 'Blood Bank',
     subtitle: 'Find donors',
-    link: '/blood-banks',
+    link: '/blood-bank',
     gradient: 'bg-gradient-to-br from-red-400 to-pink-500'
   }, {
     icon: Shield,
@@ -81,7 +79,7 @@ export const Home = () => {
     icon: Apple,
     title: 'Diet Guide',
     subtitle: 'Nutrition plans',
-    link: '/diet-plans',
+    link: '/diet',
     gradient: 'bg-gradient-to-br from-green-400 to-green-500'
   }];
   const handleAddToCart = (id: string) => {
@@ -100,23 +98,10 @@ export const Home = () => {
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-primary-light via-primary/5 to-health-green-light md:py-6 px-0 py-0">
           <div className="container mx-auto text-center py-0">
-            {user && (
-              <div className="mb-2 md:mb-4">
-                <p className="text-sm md:text-lg text-primary/80">
-                  Welcome back, {user.email?.split('@')[0]}! 👋
-                </p>
-              </div>
-            )}
             <h1 className="md:text-4xl text-primary mb-4 md:mb-6 animate-fade-in font-extrabold text-sm">ONE STOP FOR ALL YOUR MEDICAL NEEDS</h1>
             
             {/* Trust Indicators */}
-            {!user && (
-              <div className="mb-2 md:mb-4">
-                <p className="text-xs md:text-sm text-muted-foreground">
-                  Browse freely or <Link to="/auth" className="text-primary hover:underline font-medium">sign in</Link> for personalized features
-                </p>
-              </div>
-            )}
+            
           </div>
         </section>
 

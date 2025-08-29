@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '@/shared/contexts/AuthContext';
-import { useProfile } from '@/shared/hooks/useProfile';
+import React, { useState } from 'react';
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
@@ -21,8 +19,6 @@ export const CustomerDetails: React.FC<CustomerDetailsProps> = ({
   isLoggedIn = false,
   onUpdate
 }) => {
-  const { user: authUser } = useAuth();
-  const { profile } = useProfile();
   const [isEditing, setIsEditing] = useState(!isLoggedIn);
   const [saveToProfile, setSaveToProfile] = useState(true);
   const [formData, setFormData] = useState<CheckoutUser>(
@@ -35,22 +31,6 @@ export const CustomerDetails: React.FC<CustomerDetailsProps> = ({
       age: undefined
     }
   );
-
-  // Auto-populate from profile data when available
-  useEffect(() => {
-    if (profile && authUser) {
-      const profileData: CheckoutUser = {
-        id: authUser.id,
-        name: profile.full_name || '',
-        email: profile.email || authUser.email || '',
-        phone: profile.phone || '',
-        gender: profile.gender as any,
-        age: profile.date_of_birth ? new Date().getFullYear() - new Date(profile.date_of_birth).getFullYear() : undefined
-      };
-      setFormData(profileData);
-      onUpdate(profileData);
-    }
-  }, [profile, authUser, onUpdate]);
 
   const handleInputChange = (field: keyof CheckoutUser, value: any) => {
     const updatedData = { ...formData, [field]: value };
