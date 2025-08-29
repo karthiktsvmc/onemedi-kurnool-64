@@ -3,6 +3,7 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { LocationProvider } from '@/shared/contexts/LocationContext';
 import { AuthProvider } from '@/shared/contexts/AuthContext';
+import { DataProvider } from '@/shared/components/DataLoader';
 import { Toaster } from '@/shared/components/ui/toaster';
 
 const queryClient = new QueryClient({
@@ -23,8 +24,10 @@ export const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <LocationProvider>
-          {children}
-          <Toaster />
+          <DataProvider>
+            {children}
+            <Toaster />
+          </DataProvider>
         </LocationProvider>
       </AuthProvider>
     </QueryClientProvider>
