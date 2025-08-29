@@ -37,6 +37,7 @@ import { ProductServiceManagement } from "./admin/pages/ProductServiceManagement
 import { LabTestManagement } from "./admin/pages/LabTestManagement";
 import DoctorManagement from "./admin/pages/DoctorManagement";
 import ScanManagement from "./admin/pages/ScanManagement";
+import { PrescriptionVerification } from "./admin/pages/PrescriptionVerification";
 import { MedicineDetails } from "./frontend/pages/MedicineDetails";
 import { Hospitals } from "./frontend/pages/Hospitals";
 import { DietPlans } from "./frontend/pages/DietPlans";
@@ -44,6 +45,9 @@ import { PrivacyPolicy } from "./frontend/pages/PrivacyPolicy";
 import { TermsConditions } from "./frontend/pages/TermsConditions";
 import { AboutUs } from "./frontend/pages/AboutUs";
 import { ReturnsRefunds } from "./frontend/pages/ReturnsRefunds";
+import { PrescriptionUpload } from "./frontend/pages/PrescriptionUpload";
+import { Orders } from "./frontend/pages/Orders";
+import { OrderDetails } from "./frontend/pages/OrderDetails";
 import NotFound from "./shared/pages/NotFound";
 import { FloatingHelp } from "./frontend/components/Common/FloatingHelp";
 import { ProtectedRoute } from "./shared/components/ProtectedRoute";
@@ -59,6 +63,7 @@ const App = () => (
         {/* Public Browsing Routes - No auth required */}
         <Route path="/" element={<Home />} />
         <Route path="/medicines" element={<MedicineHome />} />
+        <Route path="/medicines/upload-prescription" element={<PrescriptionUpload />} />
         <Route path="/medicines/category/:categoryId" element={<CategoryListing />} />
         <Route path="/medicines/old" element={<Medicines />} />
         <Route path="/medicine/:id" element={<MedicineDetails />} />
@@ -86,6 +91,8 @@ const App = () => (
         <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
         <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
         <Route path="/order-confirmation" element={<ProtectedRoute><OrderConfirmation /></ProtectedRoute>} />
+        <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+        <Route path="/orders/:orderId" element={<ProtectedRoute><OrderDetails /></ProtectedRoute>} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/my-orders" element={<ProtectedRoute><MyOrders /></ProtectedRoute>} />
         <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
@@ -106,6 +113,7 @@ const App = () => (
           
           {/* Service Modules */}
           <Route path="orders" element={<div>Orders Management (Coming Soon)</div>} />
+          <Route path="prescriptions" element={<PrescriptionVerification />} />
           <Route path="medicines" element={<div>Medicines Management (Coming Soon)</div>} />
           <Route path="lab-tests" element={<LabTestManagement />} />
           <Route path="scans" element={<ScanManagement />} />
