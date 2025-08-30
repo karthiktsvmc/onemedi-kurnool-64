@@ -224,6 +224,138 @@ export type Database = {
         }
         Relationships: []
       }
+      care_taker_services: {
+        Row: {
+          care_taker_id: string | null
+          created_at: string | null
+          experience_years: number | null
+          id: string
+          service_id: string | null
+          specialization_notes: string | null
+        }
+        Insert: {
+          care_taker_id?: string | null
+          created_at?: string | null
+          experience_years?: number | null
+          id?: string
+          service_id?: string | null
+          specialization_notes?: string | null
+        }
+        Update: {
+          care_taker_id?: string | null
+          created_at?: string | null
+          experience_years?: number | null
+          id?: string
+          service_id?: string | null
+          specialization_notes?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "care_taker_services_care_taker_id_fkey"
+            columns: ["care_taker_id"]
+            isOneToOne: false
+            referencedRelation: "care_takers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_taker_services_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "homecare_services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      care_takers: {
+        Row: {
+          age: number | null
+          available: boolean | null
+          bio: string | null
+          city: string | null
+          created_at: string | null
+          email: string | null
+          experience_years: number | null
+          gender: string | null
+          hourly_rate: number | null
+          id: string
+          image_url: string | null
+          languages: string[] | null
+          latitude: number | null
+          location_restricted: boolean | null
+          longitude: number | null
+          name: string
+          phone: string | null
+          pincode: string | null
+          qualifications: string[] | null
+          rating: number | null
+          review_count: number | null
+          service_radius_km: number | null
+          services: string[] | null
+          specializations: string[] | null
+          state: string | null
+          updated_at: string | null
+          verified: boolean | null
+        }
+        Insert: {
+          age?: number | null
+          available?: boolean | null
+          bio?: string | null
+          city?: string | null
+          created_at?: string | null
+          email?: string | null
+          experience_years?: number | null
+          gender?: string | null
+          hourly_rate?: number | null
+          id?: string
+          image_url?: string | null
+          languages?: string[] | null
+          latitude?: number | null
+          location_restricted?: boolean | null
+          longitude?: number | null
+          name: string
+          phone?: string | null
+          pincode?: string | null
+          qualifications?: string[] | null
+          rating?: number | null
+          review_count?: number | null
+          service_radius_km?: number | null
+          services?: string[] | null
+          specializations?: string[] | null
+          state?: string | null
+          updated_at?: string | null
+          verified?: boolean | null
+        }
+        Update: {
+          age?: number | null
+          available?: boolean | null
+          bio?: string | null
+          city?: string | null
+          created_at?: string | null
+          email?: string | null
+          experience_years?: number | null
+          gender?: string | null
+          hourly_rate?: number | null
+          id?: string
+          image_url?: string | null
+          languages?: string[] | null
+          latitude?: number | null
+          location_restricted?: boolean | null
+          longitude?: number | null
+          name?: string
+          phone?: string | null
+          pincode?: string | null
+          qualifications?: string[] | null
+          rating?: number | null
+          review_count?: number | null
+          service_radius_km?: number | null
+          services?: string[] | null
+          specializations?: string[] | null
+          state?: string | null
+          updated_at?: string | null
+          verified?: boolean | null
+        }
+        Relationships: []
+      }
       carousel_items: {
         Row: {
           carousel_id: string
@@ -1207,6 +1339,91 @@ export type Database = {
         }
         Relationships: []
       }
+      homecare_bookings: {
+        Row: {
+          booking_date: string
+          care_taker_id: string | null
+          created_at: string | null
+          customer_address: string | null
+          customer_phone: string | null
+          discount_amount: number | null
+          duration_minutes: number | null
+          final_amount: number
+          id: string
+          offer_id: string | null
+          service_id: string | null
+          sessions: number | null
+          special_instructions: string | null
+          start_time: string | null
+          status: string | null
+          total_amount: number
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          booking_date: string
+          care_taker_id?: string | null
+          created_at?: string | null
+          customer_address?: string | null
+          customer_phone?: string | null
+          discount_amount?: number | null
+          duration_minutes?: number | null
+          final_amount: number
+          id?: string
+          offer_id?: string | null
+          service_id?: string | null
+          sessions?: number | null
+          special_instructions?: string | null
+          start_time?: string | null
+          status?: string | null
+          total_amount: number
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          booking_date?: string
+          care_taker_id?: string | null
+          created_at?: string | null
+          customer_address?: string | null
+          customer_phone?: string | null
+          discount_amount?: number | null
+          duration_minutes?: number | null
+          final_amount?: number
+          id?: string
+          offer_id?: string | null
+          service_id?: string | null
+          sessions?: number | null
+          special_instructions?: string | null
+          start_time?: string | null
+          status?: string | null
+          total_amount?: number
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "homecare_bookings_care_taker_id_fkey"
+            columns: ["care_taker_id"]
+            isOneToOne: false
+            referencedRelation: "care_takers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "homecare_bookings_offer_id_fkey"
+            columns: ["offer_id"]
+            isOneToOne: false
+            referencedRelation: "homecare_offers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "homecare_bookings_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "homecare_services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       homecare_categories: {
         Row: {
           created_at: string
@@ -1231,6 +1448,63 @@ export type Database = {
           image_url?: string | null
           name?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      homecare_offers: {
+        Row: {
+          active: boolean | null
+          applicable_ids: string[] | null
+          applicable_to: string
+          created_at: string | null
+          description: string | null
+          discount_value: number
+          id: string
+          maximum_discount_amount: number | null
+          minimum_order_amount: number | null
+          offer_type: string
+          title: string
+          updated_at: string | null
+          usage_limit: number | null
+          used_count: number | null
+          valid_from: string | null
+          valid_until: string
+        }
+        Insert: {
+          active?: boolean | null
+          applicable_ids?: string[] | null
+          applicable_to: string
+          created_at?: string | null
+          description?: string | null
+          discount_value: number
+          id?: string
+          maximum_discount_amount?: number | null
+          minimum_order_amount?: number | null
+          offer_type: string
+          title: string
+          updated_at?: string | null
+          usage_limit?: number | null
+          used_count?: number | null
+          valid_from?: string | null
+          valid_until: string
+        }
+        Update: {
+          active?: boolean | null
+          applicable_ids?: string[] | null
+          applicable_to?: string
+          created_at?: string | null
+          description?: string | null
+          discount_value?: number
+          id?: string
+          maximum_discount_amount?: number | null
+          minimum_order_amount?: number | null
+          offer_type?: string
+          title?: string
+          updated_at?: string | null
+          usage_limit?: number | null
+          used_count?: number | null
+          valid_from?: string | null
+          valid_until?: string
         }
         Relationships: []
       }
