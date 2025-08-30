@@ -1,4 +1,5 @@
 
+import React from "react";
 import { Toaster as Sonner } from "@/shared/components/ui/sonner";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthGuard } from '@/shared/components/AuthGuard';
@@ -40,6 +41,8 @@ import { ProductServiceManagement } from "./admin/pages/ProductServiceManagement
 import { LabTestManagement } from "./admin/pages/LabTestManagement";
 import DoctorManagement from "./admin/pages/DoctorManagement";
 import ScanManagement from "./admin/pages/ScanManagement";
+import MarketingDashboard from "./admin/pages/MarketingDashboard";
+import AnalyticsDashboard from "./admin/pages/AnalyticsDashboard";
 import { MedicineDetails } from "./frontend/pages/MedicineDetails";
 import { Hospitals } from "./frontend/pages/Hospitals";
 import { OrderTracking } from "./frontend/pages/OrderTracking";
@@ -155,7 +158,8 @@ const App = () => (
           
           {/* Management & Settings */}
           <Route path="categories" element={<div>Categories Management (Coming Soon)</div>} />
-          <Route path="analytics" element={<div>Analytics Dashboard (Coming Soon)</div>} />
+          <Route path="marketing" element={<MarketingDashboard />} />
+          <Route path="analytics" element={<AnalyticsDashboard />} />
           <Route path="reports" element={<div>Reports Dashboard (Coming Soon)</div>} />
           <Route path="settings" element={<div>Settings (Coming Soon)</div>} />
         </Route>

@@ -18,6 +18,7 @@ import {
   LayoutDashboard,
   MapPin,
   Megaphone,
+  BarChart3,
   Tag
 } from "lucide-react";
 import {
@@ -58,6 +59,8 @@ const managementModules = [
   { title: "Vendors", url: "/admin/vendors", icon: Building2, badge: undefined },
   { title: "Inventory", url: "/admin/inventory", icon: Package, badge: undefined },
   { title: "Categories", url: "/admin/categories", icon: PlusCircle, badge: undefined },
+  { title: "Marketing", url: "/admin/marketing", icon: Megaphone, badge: undefined },
+  { title: "Analytics", url: "/admin/analytics", icon: BarChart3, badge: undefined },
   { title: "Settings", url: "/admin/settings", icon: Settings, badge: undefined },
 ];
 
