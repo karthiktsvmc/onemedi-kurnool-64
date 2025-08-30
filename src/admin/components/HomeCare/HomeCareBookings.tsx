@@ -58,8 +58,7 @@ export function HomeCareBookings() {
         .select(`
           *,
           homecare_services(name),
-          care_takers(name),
-          profiles(full_name)
+          care_takers(name)
         `)
         .order('created_at', { ascending: false });
 
@@ -70,7 +69,8 @@ export function HomeCareBookings() {
         ...booking,
         service_name: booking.homecare_services?.name || 'Unknown Service',
         care_taker_name: booking.care_takers?.name || 'Unassigned',
-        customer_name: booking.profiles?.full_name || 'Unknown Customer'
+        customer_name: 'Customer', // We'll get this from a separate query if needed
+        status: booking.status as 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled'
       })) || [];
 
       setBookings(transformedBookings);
@@ -271,6 +271,8 @@ export function HomeCareBookings() {
       description="Manage and track home care service bookings"
     >
       <DataTable
+        title="Home Care Bookings"
+        description="Track and manage all home care service bookings"
         data={bookings}
         columns={columns}
         loading={loading}

@@ -94,13 +94,9 @@ export function HomeCareManagement() {
 
         <TabsContent value="import-export">
           <BulkImportExport 
-            entityType="homecare"
-            availableEntities={[
-              { id: 'services', name: 'Home Care Services' },
-              { id: 'categories', name: 'Service Categories' },
-              { id: 'caretakers', name: 'Care Takers' },
-              { id: 'offers', name: 'Offers & Discounts' }
-            ]}
+            onDataUpdate={() => {
+              console.log('Home care data updated');
+            }}
           />
         </TabsContent>
       </Tabs>

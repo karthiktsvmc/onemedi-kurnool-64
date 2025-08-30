@@ -241,6 +241,8 @@ export function HomeCareCategories() {
         description="Manage service categories for organizing home care services"
       >
         <DataTable
+          title="Home Care Categories"
+          description="Manage service categories for organizing home care services"
           data={categories}
           columns={columns}
           loading={loading}

@@ -48,7 +48,21 @@ export function HomeCareOffers() {
         .order('created_at', { ascending: false });
 
       if (offersError) throw offersError;
-      setOffers(offersData || []);
+      
+      // Transform offers to match interface
+      const transformedOffers = offersData?.map(offer => ({
+        ...offer,
+        offer_type: offer.offer_type as 'percentage' | 'fixed_amount' | 'buy_one_get_one',
+        applicable_to: offer.applicable_to as 'all' | 'category' | 'service' | 'location',
+        applicable_ids: offer.applicable_ids || [],
+        description: offer.description || '',
+        valid_from: offer.valid_from || new Date().toISOString(),
+        valid_until: offer.valid_until || new Date().toISOString(),
+        created_at: offer.created_at || new Date().toISOString(),
+        updated_at: offer.updated_at || new Date().toISOString()
+      })) || [];
+      
+      setOffers(transformedOffers);
 
       // Fetch categories for form dropdown
       const { data: categoriesData, error: categoriesError } = await supabase
@@ -369,6 +383,8 @@ export function HomeCareOffers() {
         description="Manage promotional offers and discounts for home care services"
       >
         <DataTable
+          title="Home Care Offers"
+          description="Manage promotional offers and discounts"
           data={offers}
           columns={columns}
           loading={loading}

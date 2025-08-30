@@ -418,16 +418,18 @@ export function CareTakerManagement() {
         title="Care Taker Management" 
         description="Manage care taker profiles, qualifications, and availability"
       >
-        <DataTable
-          data={careTakers}
-          columns={columns}
-          loading={loading}
-          onAdd={() => setShowAddDialog(true)}
-          onEdit={(careTaker) => setEditingCareTaker(careTaker)}
-          onDelete={handleDelete}
-          onRefresh={fetchCareTakers}
-          searchPlaceholder="Search care takers..."
-        />
+      <DataTable
+        title="Care Takers"
+        description="Manage care takers and their profiles"
+        data={careTakers}
+        columns={columns}
+        loading={loading}
+        onAdd={() => setShowAddDialog(true)}
+        onEdit={(careTaker) => setEditingCareTaker(careTaker)}
+        onDelete={handleDelete}
+        onRefresh={fetchCareTakers}
+        searchPlaceholder="Search care takers..."
+      />
       </AdminCard>
 
       {/* Add Care Taker Dialog */}
