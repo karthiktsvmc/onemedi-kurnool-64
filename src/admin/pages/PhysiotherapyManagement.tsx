@@ -179,8 +179,8 @@ export const PhysiotherapyManagement: React.FC = () => {
       { value: 'specific_services', label: 'Specific Services' },
       { value: 'specific_therapists', label: 'Specific Therapists' }
     ], defaultValue: 'all' },
-    { name: 'valid_from', label: 'Valid From', type: 'datetime-local' },
-    { name: 'valid_until', label: 'Valid Until', type: 'datetime-local', required: true },
+    { name: 'valid_from', label: 'Valid From', type: 'date' },
+    { name: 'valid_until', label: 'Valid Until', type: 'date', required: true },
     { name: 'usage_limit', label: 'Usage Limit', type: 'number' },
     { name: 'active', label: 'Active', type: 'checkbox', defaultValue: true }
   ];
@@ -211,7 +211,7 @@ export const PhysiotherapyManagement: React.FC = () => {
     <div className="space-y-6">
       <PageHeader
         title="Physiotherapy Management"
-        subtitle="Manage physiotherapy services, therapists, categories, and offers"
+        description="Manage physiotherapy services, therapists, categories, and offers"
       />
 
       {/* Overview Cards */}
@@ -286,7 +286,7 @@ export const PhysiotherapyManagement: React.FC = () => {
             <h3 className="text-lg font-semibold">Service Categories</h3>
             <FormDialog
               title="Add New Category"
-              fields={categoryFormFields}
+              fields={categoryFormFields as any}
               onSubmit={handleCategoryCreate}
               trigger={
                 <Button>
@@ -311,7 +311,7 @@ export const PhysiotherapyManagement: React.FC = () => {
             <h3 className="text-lg font-semibold">Physiotherapists</h3>
             <FormDialog
               title="Add New Therapist"
-              fields={therapistFormFields}
+              fields={therapistFormFields as any}
               onSubmit={handleTherapistCreate}
               trigger={
                 <Button>
@@ -336,7 +336,7 @@ export const PhysiotherapyManagement: React.FC = () => {
             <h3 className="text-lg font-semibold">Services</h3>
             <FormDialog
               title="Add New Service"
-              fields={serviceFormFields}
+              fields={serviceFormFields as any}
               onSubmit={handleServiceCreate}
               trigger={
                 <Button>
@@ -361,7 +361,7 @@ export const PhysiotherapyManagement: React.FC = () => {
             <h3 className="text-lg font-semibold">Offers & Discounts</h3>
             <FormDialog
               title="Add New Offer"
-              fields={offerFormFields}
+              fields={offerFormFields as any}
               onSubmit={handleOfferCreate}
               trigger={
                 <Button>
