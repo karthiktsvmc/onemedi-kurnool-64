@@ -3,12 +3,13 @@ import { useState, useCallback } from 'react';
 import { useSupabaseQuery } from '@/shared/hooks/useSupabaseQuery';
 import { useSupabaseMutation } from '@/shared/hooks/useSupabaseMutation';
 import { useRealtimeSubscription } from '@/shared/hooks/useRealtimeSubscription';
-import { useLocation } from '@/shared/contexts/LocationContext';
+// Removed useLocation import since we no longer filter by location
+// import { useLocation } from '@/shared/contexts/LocationContext';
 import { supabaseClient } from '@/shared/lib/supabase-client';
 import type { Medicine, MedicineInsert, MedicineUpdate, QueryOptions } from '@/shared/types/database';
 
 export function useMedicines(options: QueryOptions = {}) {
-  const { currentLocation } = useLocation();
+  // const { currentLocation } = useLocation();
   const [medicines, setMedicines] = useState<Medicine[]>([]);
 
   const {
@@ -23,11 +24,7 @@ export function useMedicines(options: QueryOptions = {}) {
       category:medicine_categories(id, name, image_url),
       brand:medicine_brands(id, name, logo_url)
     `,
-    locationFilter: currentLocation ? { 
-      city: currentLocation.city,
-      state: currentLocation.state,
-      pincode: currentLocation.pincode 
-    } : undefined,
+    // Remove locationFilter to avoid filtering on non-existent columns
     onSuccess: (data) => setMedicines(data),
     ...options,
   });
@@ -112,4 +109,3 @@ export function useMedicineCategories() {
     refetch,
   };
 }
-
