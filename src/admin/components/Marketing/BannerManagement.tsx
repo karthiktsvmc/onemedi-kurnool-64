@@ -65,13 +65,13 @@ export function BannerManagement() {
 
   const columns = [
     {
-      accessorKey: 'image_url',
-      header: 'Preview',
-      cell: ({ row }: any) => (
+      key: 'image_url',
+      label: 'Preview',
+      render: (value: any) => (
         <div className="w-16 h-10 bg-muted rounded overflow-hidden">
-          {row.getValue('image_url') ? (
+          {value ? (
             <img
-              src={row.getValue('image_url')}
+              src={value}
               alt=""
               className="w-full h-full object-cover"
             />
@@ -84,30 +84,30 @@ export function BannerManagement() {
       ),
     },
     {
-      accessorKey: 'title',
-      header: 'Title',
+      key: 'title',
+      label: 'Title',
     },
     {
-      accessorKey: 'subtitle',
-      header: 'Subtitle',
-      cell: ({ row }: any) => (
+      key: 'subtitle',
+      label: 'Subtitle',
+      render: (value: any) => (
         <div className="max-w-xs truncate text-muted-foreground">
-          {row.getValue('subtitle') || 'No subtitle'}
+          {value || 'No subtitle'}
         </div>
       ),
     },
     {
-      accessorKey: 'sort_order',
-      header: 'Order',
-      cell: ({ row }: any) => (
+      key: 'sort_order',
+      label: 'Order',
+      render: (value: any, row: any) => (
         <div className="flex items-center gap-1">
-          <span className="text-sm">{row.getValue('sort_order')}</span>
+          <span className="text-sm">{value}</span>
           <div className="flex flex-col">
             <Button
               size="sm"
               variant="ghost"
               className="h-4 w-4 p-0"
-              onClick={() => updateSortOrder(row.original.id, 'up')}
+              onClick={() => updateSortOrder(row.id, 'up')}
             >
               <ArrowUp className="h-3 w-3" />
             </Button>
@@ -115,7 +115,7 @@ export function BannerManagement() {
               size="sm"
               variant="ghost"
               className="h-4 w-4 p-0"
-              onClick={() => updateSortOrder(row.original.id, 'down')}
+              onClick={() => updateSortOrder(row.id, 'down')}
             >
               <ArrowDown className="h-3 w-3" />
             </Button>
@@ -124,20 +124,20 @@ export function BannerManagement() {
       ),
     },
     {
-      accessorKey: 'active',
-      header: 'Status',
-      cell: ({ row }: any) => (
+      key: 'active',
+      label: 'Status',
+      render: (value: any, row: any) => (
         <div className="flex items-center gap-2">
-          <Badge variant={row.getValue('active') ? 'default' : 'secondary'}>
-            {row.getValue('active') ? 'Active' : 'Inactive'}
+          <Badge variant={value ? 'default' : 'secondary'}>
+            {value ? 'Active' : 'Inactive'}
           </Badge>
           <Button
             size="sm"
             variant="ghost"
             className="h-6 w-6 p-0"
-            onClick={() => toggleActive(row.original.id, row.getValue('active'))}
+            onClick={() => toggleActive(row.id, value)}
           >
-            {row.getValue('active') ? (
+            {value ? (
               <EyeOff className="h-3 w-3" />
             ) : (
               <Eye className="h-3 w-3" />
@@ -147,13 +147,12 @@ export function BannerManagement() {
       ),
     },
     {
-      accessorKey: 'link',
-      header: 'Link',
-      cell: ({ row }: any) => {
-        const link = row.getValue('link');
-        return link ? (
+      key: 'link',
+      label: 'Link',
+      render: (value: any) => {
+        return value ? (
           <a
-            href={link}
+            href={value}
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary hover:underline text-sm"
@@ -223,6 +222,7 @@ export function BannerManagement() {
         </CardHeader>
         <CardContent>
           <DataTable
+            title="Banners"
             columns={columns}
             data={banners || []}
             loading={loading}
@@ -236,83 +236,91 @@ export function BannerManagement() {
       </Card>
 
       {/* Create/Edit Dialog */}
-      <FormDialog
-        open={isDialogOpen}
-        onOpenChange={setIsDialogOpen}
-        title={editingBanner ? 'Edit Banner' : 'Create Banner'}
-        onSubmit={handleSubmit}
-        loading={mutationLoading}
-      >
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="title">Title</Label>
-            <Input
-              id="title"
-              name="title"
-              defaultValue={editingBanner?.title}
-              placeholder="Your Health, Our Priority"
-              required
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="subtitle">Subtitle</Label>
-            <Input
-              id="subtitle"
-              name="subtitle"
-              defaultValue={editingBanner?.subtitle}
-              placeholder="Get medicines, lab tests, and scans delivered to your doorstep"
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="image_url">Image URL</Label>
-            <Input
-              id="image_url"
-              name="image_url"
-              defaultValue={editingBanner?.image_url}
-              placeholder="https://example.com/banner.jpg"
-              required
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="link">Link (Optional)</Label>
-            <Input
-              id="link"
-              name="link"
-              defaultValue={editingBanner?.link}
-              placeholder="/medicines or https://example.com"
-            />
-          </div>
-          
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="sort_order">Sort Order</Label>
-              <Input
-                id="sort_order"
-                name="sort_order"
-                type="number"
-                defaultValue={editingBanner?.sort_order || 0}
-                placeholder="0"
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="active">Status</Label>
-              <Select name="active" defaultValue={editingBanner?.active ? 'true' : 'false'}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="true">Active</SelectItem>
-                  <SelectItem value="false">Inactive</SelectItem>
-                </SelectContent>
-              </Select>
+      {isDialogOpen && (
+        <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm">
+          <div className="fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg sm:rounded-lg">
+            <h3 className="text-lg font-semibold">{editingBanner ? 'Edit Banner' : 'Create Banner'}</h3>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="title">Title</Label>
+                <Input
+                  id="title"
+                  name="title"
+                  defaultValue={editingBanner?.title}
+                  placeholder="Your Health, Our Priority"
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="subtitle">Subtitle</Label>
+                <Input
+                  id="subtitle"
+                  name="subtitle"
+                  defaultValue={editingBanner?.subtitle}
+                  placeholder="Get medicines, lab tests, and scans delivered to your doorstep"
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="image_url">Image URL</Label>
+                <Input
+                  id="image_url"
+                  name="image_url"
+                  defaultValue={editingBanner?.image_url}
+                  placeholder="https://example.com/banner.jpg"
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="link">Link (Optional)</Label>
+                <Input
+                  id="link"
+                  name="link"
+                  defaultValue={editingBanner?.link}
+                  placeholder="/medicines or https://example.com"
+                />
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="sort_order">Sort Order</Label>
+                  <Input
+                    id="sort_order"
+                    name="sort_order"
+                    type="number"
+                    defaultValue={editingBanner?.sort_order || 0}
+                    placeholder="0"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="active">Status</Label>
+                  <Select name="active" defaultValue={editingBanner?.active ? 'true' : 'false'}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="true">Active</SelectItem>
+                      <SelectItem value="false">Inactive</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              
+              <div className="flex gap-2 mt-4">
+                <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={() => handleSubmit(new FormData())} disabled={mutationLoading}>
+                  {mutationLoading ? 'Saving...' : 'Save'}
+                </Button>
+              </div>
             </div>
           </div>
         </div>
-      </FormDialog>
+      )}
     </div>
   );
 }
