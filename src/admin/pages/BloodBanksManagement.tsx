@@ -2,22 +2,28 @@ import React from 'react';
 import { PageHeader } from '@/admin/components/shared/PageHeader';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
 import { DataTable } from '@/admin/components/shared/DataTable';
-import { FormDialog } from '@/admin/components/shared/FormDialog';
+import { FormDialog, type FormField } from '@/admin/components/shared/FormDialog';
 import { useSupabaseTable } from '@/shared/hooks/useSupabaseTable';
+import { bloodBanksTable } from '@/shared/lib/supabase-utils';
 import { Button } from '@/shared/components/ui/button';
 import { Plus, Building2, Users, Package } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
 
+// Create table instances for blood donors and inventory
+import { SupabaseTable } from '@/shared/lib/supabase-utils';
+const bloodDonorsTable = new SupabaseTable('blood_donors');
+const bloodInventoryTable = new SupabaseTable('blood_inventory');
+
 export const BloodBanksManagement: React.FC = () => {
   // Initialize Supabase tables
-  const bloodBanksTable = useSupabaseTable('blood_banks');
-  const donorsTable = useSupabaseTable('blood_donors');
-  const inventoryTable = useSupabaseTable('blood_inventory');
+  const bloodBanks = useSupabaseTable(bloodBanksTable);
+  const donors = useSupabaseTable(bloodDonorsTable);
+  const inventory = useSupabaseTable(bloodInventoryTable);
 
   // Data fetching
-  const { data: bloodBanks, loading: bloodBanksLoading, refetch: refetchBloodBanks } = bloodBanksTable;
-  const { data: donors, loading: donorsLoading, refetch: refetchDonors } = donorsTable;
-  const { data: inventory, loading: inventoryLoading, refetch: refetchInventory } = inventoryTable;
+  const { data: bloodBanksData, loading: bloodBanksLoading, refetch: refetchBloodBanks } = bloodBanks;
+  const { data: donorsData, loading: donorsLoading, refetch: refetchDonors } = donors;
+  const { data: inventoryData, loading: inventoryLoading, refetch: refetchInventory } = inventory;
 
   // Column definitions
   const bloodBankColumns = [
@@ -27,7 +33,7 @@ export const BloodBanksManagement: React.FC = () => {
     { key: 'contact', label: 'Contact', sortable: true },
     { key: 'license_number', label: 'License', sortable: true },
     { key: 'storage_capacity', label: 'Storage Capacity', sortable: true },
-    { key: 'active', label: 'Status', render: (value: boolean) => value ? 'Active' : 'Inactive' }
+    { key: 'created_at', label: 'Created At', sortable: true }
   ];
 
   const donorColumns = [
@@ -52,7 +58,7 @@ export const BloodBanksManagement: React.FC = () => {
   ];
 
   // Form field definitions
-  const bloodBankFormFields = [
+  const bloodBankFormFields: FormField[] = [
     { name: 'name', label: 'Blood Bank Name', type: 'text', required: true },
     { name: 'category', label: 'Category', type: 'select', options: [
       { value: 'government', label: 'Government' },
@@ -67,16 +73,15 @@ export const BloodBanksManagement: React.FC = () => {
     { name: 'contact', label: 'Contact', type: 'text' },
     { name: 'emergency_contact', label: 'Emergency Contact', type: 'text' },
     { name: 'license_number', label: 'License Number', type: 'text' },
-    { name: 'storage_capacity', label: 'Storage Capacity (units)', type: 'number', defaultValue: 0 },
+    { name: 'storage_capacity', label: 'Storage Capacity (units)', type: 'number' },
     { name: 'available_blood_groups', label: 'Available Blood Groups', type: 'textarea', placeholder: 'Enter blood groups separated by commas (A+, B+, O+, etc.)' },
     { name: 'facilities', label: 'Facilities', type: 'textarea', placeholder: 'Enter facilities separated by commas' },
     { name: 'image_url', label: 'Image URL', type: 'text' },
-    { name: 'location_restricted', label: 'Location Restricted', type: 'checkbox', defaultValue: true },
-    { name: 'service_radius_km', label: 'Service Radius (km)', type: 'number', defaultValue: 15 },
-    { name: 'active', label: 'Active', type: 'checkbox', defaultValue: true }
+    { name: 'location_restricted', label: 'Location Restricted', type: 'boolean' },
+    { name: 'service_radius_km', label: 'Service Radius (km)', type: 'number' },
   ];
 
-  const donorFormFields = [
+  const donorFormFields: FormField[] = [
     { name: 'name', label: 'Donor Name', type: 'text', required: true },
     { name: 'blood_group', label: 'Blood Group', type: 'select', options: [
       { value: 'A+', label: 'A+' },
@@ -88,7 +93,7 @@ export const BloodBanksManagement: React.FC = () => {
       { value: 'O+', label: 'O+' },
       { value: 'O-', label: 'O-' }
     ], required: true },
-    { name: 'phone', label: 'Phone', type: 'text', required: true },
+    { name: 'phone', label: 'Phone', type: 'tel', required: true },
     { name: 'email', label: 'Email', type: 'email' },
     { name: 'age', label: 'Age', type: 'number' },
     { name: 'weight', label: 'Weight (kg)', type: 'number', step: 0.1 },
@@ -102,12 +107,12 @@ export const BloodBanksManagement: React.FC = () => {
     { name: 'state', label: 'State', type: 'text', required: true },
     { name: 'pincode', label: 'Pincode', type: 'text' },
     { name: 'last_donation_date', label: 'Last Donation Date', type: 'date' },
-    { name: 'eligible_for_donation', label: 'Eligible for Donation', type: 'checkbox', defaultValue: true },
-    { name: 'active', label: 'Active', type: 'checkbox', defaultValue: true }
+    { name: 'eligible_for_donation', label: 'Eligible for Donation', type: 'boolean' },
+    { name: 'active', label: 'Active', type: 'boolean' }
   ];
 
-  const inventoryFormFields = [
-    { name: 'blood_bank_id', label: 'Blood Bank', type: 'select', options: bloodBanks?.map(bb => ({ value: bb.id, label: bb.name })) || [], required: true },
+  const inventoryFormFields: FormField[] = [
+    { name: 'blood_bank_id', label: 'Blood Bank', type: 'select', options: bloodBanksData?.map(bb => ({ value: bb.id, label: bb.name })) || [], required: true },
     { name: 'blood_group', label: 'Blood Group', type: 'select', options: [
       { value: 'A+', label: 'A+' },
       { value: 'A-', label: 'A-' },
@@ -123,8 +128,8 @@ export const BloodBanksManagement: React.FC = () => {
       { value: 'plasma', label: 'Plasma' },
       { value: 'platelets', label: 'Platelets' },
       { value: 'rbc', label: 'Red Blood Cells' }
-    ], defaultValue: 'whole_blood' },
-    { name: 'units_available', label: 'Units Available', type: 'number', required: true, defaultValue: 0 },
+    ] },
+    { name: 'units_available', label: 'Units Available', type: 'number', required: true },
     { name: 'expiry_date', label: 'Expiry Date', type: 'date' }
   ];
 
@@ -138,7 +143,7 @@ export const BloodBanksManagement: React.FC = () => {
       data.facilities = data.facilities.split(',').map((item: string) => item.trim());
     }
     
-    await bloodBanksTable.create(data);
+    await bloodBanks.createItem(data);
     refetchBloodBanks();
   };
 
@@ -151,27 +156,27 @@ export const BloodBanksManagement: React.FC = () => {
       data.facilities = data.facilities.split(',').map((item: string) => item.trim());
     }
     
-    await bloodBanksTable.update(id, data);
+    await bloodBanks.updateItem(id, data);
     refetchBloodBanks();
   };
 
   const handleDonorCreate = async (data: any) => {
-    await donorsTable.create(data);
+    await donors.createItem(data);
     refetchDonors();
   };
 
   const handleDonorUpdate = async (id: string, data: any) => {
-    await donorsTable.update(id, data);
+    await donors.updateItem(id, data);
     refetchDonors();
   };
 
   const handleInventoryCreate = async (data: any) => {
-    await inventoryTable.create(data);
+    await inventory.createItem(data);
     refetchInventory();
   };
 
   const handleInventoryUpdate = async (id: string, data: any) => {
-    await inventoryTable.update(id, data);
+    await inventory.updateItem(id, data);
     refetchInventory();
   };
 
@@ -179,7 +184,7 @@ export const BloodBanksManagement: React.FC = () => {
     <div className="space-y-6">
       <PageHeader
         title="Blood Banks Management"
-        subtitle="Manage blood banks, donors, and blood inventory"
+        description="Manage blood banks, donors, and blood inventory"
       />
 
       {/* Overview Cards */}
@@ -190,8 +195,8 @@ export const BloodBanksManagement: React.FC = () => {
             <Building2 className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{bloodBanks?.filter(bb => bb.active).length || 0}</div>
-            <p className="text-xs text-muted-foreground">Active blood banks</p>
+            <div className="text-2xl font-bold">{bloodBanksData?.length || 0}</div>
+            <p className="text-xs text-muted-foreground">Total blood banks</p>
           </CardContent>
         </Card>
 
@@ -201,7 +206,7 @@ export const BloodBanksManagement: React.FC = () => {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{donors?.filter(d => d.active && d.eligible_for_donation).length || 0}</div>
+            <div className="text-2xl font-bold">{donorsData?.filter(d => d.active && d.eligible_for_donation).length || 0}</div>
             <p className="text-xs text-muted-foreground">Eligible donors</p>
           </CardContent>
         </Card>
@@ -213,7 +218,7 @@ export const BloodBanksManagement: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {inventory?.reduce((total, item) => total + (item.units_available || 0), 0) || 0}
+              {inventoryData?.reduce((total, item) => total + (item.units_available || 0), 0) || 0}
             </div>
             <p className="text-xs text-muted-foreground">Total units available</p>
           </CardContent>
@@ -253,7 +258,7 @@ export const BloodBanksManagement: React.FC = () => {
           </div>
           <DataTable
             title="Blood Banks"
-            data={bloodBanks || []}
+            data={bloodBanksData || []}
             columns={bloodBankColumns}
             loading={bloodBanksLoading}
             onRefresh={refetchBloodBanks}
@@ -270,7 +275,7 @@ export const BloodBanksManagement: React.FC = () => {
                 trigger={<Button variant="outline" size="sm">Edit</Button>}
               />
             )}
-            onDelete={(id) => bloodBanksTable.delete(id).then(() => refetchBloodBanks())}
+            onDelete={(id) => bloodBanks.deleteItem(id).then(() => refetchBloodBanks())}
             searchPlaceholder="Search blood banks..."
           />
         </TabsContent>
@@ -292,7 +297,7 @@ export const BloodBanksManagement: React.FC = () => {
           </div>
           <DataTable
             title="Blood Donors"
-            data={donors || []}
+            data={donorsData || []}
             columns={donorColumns}
             loading={donorsLoading}
             onRefresh={refetchDonors}
@@ -305,7 +310,7 @@ export const BloodBanksManagement: React.FC = () => {
                 trigger={<Button variant="outline" size="sm">Edit</Button>}
               />
             )}
-            onDelete={(id) => donorsTable.delete(id).then(() => refetchDonors())}
+            onDelete={(id) => donors.deleteItem(id).then(() => refetchDonors())}
             searchPlaceholder="Search donors..."
           />
         </TabsContent>
@@ -327,7 +332,7 @@ export const BloodBanksManagement: React.FC = () => {
           </div>
           <DataTable
             title="Blood Inventory"
-            data={inventory || []}
+            data={inventoryData || []}
             columns={inventoryColumns}
             loading={inventoryLoading}
             onRefresh={refetchInventory}
@@ -340,7 +345,7 @@ export const BloodBanksManagement: React.FC = () => {
                 trigger={<Button variant="outline" size="sm">Edit</Button>}
               />
             )}
-            onDelete={(id) => inventoryTable.delete(id).then(() => refetchInventory())}
+            onDelete={(id) => inventory.deleteItem(id).then(() => refetchInventory())}
             searchPlaceholder="Search inventory..."
           />
         </TabsContent>
