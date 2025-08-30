@@ -44,6 +44,12 @@ import ScanManagement from "./admin/pages/ScanManagement";
 import MarketingDashboard from "./admin/pages/MarketingDashboard";
 import AnalyticsDashboard from "./admin/pages/AnalyticsDashboard";
 import { HomeCareManagement } from "./admin/pages/HomeCareManagement";
+import DiabetesCareManagement from "./admin/pages/DiabetesCareManagement";
+import { PhysiotherapyManagement } from "./admin/pages/PhysiotherapyManagement";
+import { InsuranceManagement } from "./admin/pages/InsuranceManagement";
+import { HospitalsManagement } from "./admin/pages/HospitalsManagement";
+import { BloodBanksManagement } from "./admin/pages/BloodBanksManagement";
+import AmbulanceManagement from "./admin/pages/AmbulanceManagement";
 import { MedicineDetails } from "./frontend/pages/MedicineDetails";
 import { Hospitals } from "./frontend/pages/Hospitals";
 import { OrderTracking } from "./frontend/pages/OrderTracking";
@@ -151,11 +157,12 @@ const App = () => (
           <Route path="scans" element={<ScanManagement />} />
           <Route path="doctors" element={<DoctorManagement />} />
           <Route path="home-care" element={<HomeCareManagement />} />
-          <Route path="diabetes-care" element={<div>Diabetes Care Management (Coming Soon)</div>} />
-          <Route path="physiotherapy" element={<div>Physiotherapy Management (Coming Soon)</div>} />
-          <Route path="hospitals" element={<div>Hospitals Management (Coming Soon)</div>} />
-          <Route path="blood-banks" element={<div>Blood Banks Management (Coming Soon)</div>} />
-          <Route path="insurance" element={<div>Insurance Management (Coming Soon)</div>} />
+          <Route path="diabetes-care" element={<DiabetesCareManagement />} />
+          <Route path="physiotherapy" element={<PhysiotherapyManagement />} />
+          <Route path="hospitals" element={<HospitalsManagement />} />
+          <Route path="blood-banks" element={<BloodBanksManagement />} />
+          <Route path="ambulance" element={<AmbulanceManagement />} />
+          <Route path="insurance" element={<InsuranceManagement />} />
           
           {/* Management & Settings */}
           <Route path="categories" element={<div>Categories Management (Coming Soon)</div>} />
