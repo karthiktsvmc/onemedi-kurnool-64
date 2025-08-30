@@ -2,130 +2,120 @@ import React from 'react';
 import { PageHeader } from '@/admin/components/shared/PageHeader';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
 import { DataTable } from '@/admin/components/shared/DataTable';
-import { FormDialog } from '@/admin/components/shared/FormDialog';
+import { FormDialog, type FormField } from '@/admin/components/shared/FormDialog';
 import { useSupabaseTable } from '@/shared/hooks/useSupabaseTable';
+import { insurancePlansTable } from '@/shared/lib/supabase-utils';
 import { Button } from '@/shared/components/ui/button';
-import { Plus, Building, Shield, Package } from 'lucide-react';
+import { Plus, Shield, Building2, Package } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
+
+// Create table instances
+import { SupabaseTable } from '@/shared/lib/supabase-utils';
+const insuranceProvidersTable = new SupabaseTable('insurance_providers');
+const insuranceCategoriesTable = new SupabaseTable('insurance_categories');
 
 export const InsuranceManagement: React.FC = () => {
   // Initialize Supabase tables
-  const providersTable = useSupabaseTable('insurance_providers');
-  const categoriesTable = useSupabaseTable('insurance_categories');
-  const plansTable = useSupabaseTable('insurance_plans');
+  const plans = useSupabaseTable(insurancePlansTable);
+  const providers = useSupabaseTable(insuranceProvidersTable);
+  const categories = useSupabaseTable(insuranceCategoriesTable);
 
   // Data fetching
-  const { data: providers, loading: providersLoading, refetch: refetchProviders } = providersTable;
-  const { data: categories, loading: categoriesLoading, refetch: refetchCategories } = categoriesTable;
-  const { data: plans, loading: plansLoading, refetch: refetchPlans } = plansTable;
+  const { data: plansData, loading: plansLoading, refetch: refetchPlans } = plans;
+  const { data: providersData, loading: providersLoading, refetch: refetchProviders } = providers;
+  const { data: categoriesData, loading: categoriesLoading, refetch: refetchCategories } = categories;
 
   // Column definitions
+  const planColumns = [
+    { key: 'name', label: 'Plan Name', sortable: true },
+    { key: 'provider', label: 'Provider', sortable: true },
+    { key: 'premium', label: 'Premium', render: (value: number) => `₹${value}`, sortable: true },
+    { key: 'coverage_amount', label: 'Coverage', render: (value: number) => `₹${value}`, sortable: true },
+    { key: 'duration', label: 'Duration (years)', sortable: true },
+    { key: 'created_at', label: 'Created At', sortable: true }
+  ];
+
   const providerColumns = [
-    { key: 'company_name', label: 'Company Name', sortable: true },
-    { key: 'contact_email', label: 'Email', sortable: true },
-    { key: 'contact_phone', label: 'Phone', sortable: true },
+    { key: 'name', label: 'Provider Name', sortable: true },
+    { key: 'type', label: 'Type', sortable: true },
+    { key: 'contact', label: 'Contact', sortable: true },
     { key: 'license_number', label: 'License', sortable: true },
-    { key: 'website', label: 'Website' },
-    { 
-      key: 'logo_url', 
-      label: 'Logo',
-      render: (value: string) => value ? <img src={value} alt="Logo" className="w-12 h-12 object-cover rounded" /> : 'No logo'
-    },
-    { key: 'active', label: 'Status', render: (value: boolean) => value ? 'Active' : 'Inactive' }
+    { key: 'rating', label: 'Rating', render: (value: number) => `${value}/5`, sortable: true },
+    { key: 'created_at', label: 'Created At', sortable: true }
   ];
 
   const categoryColumns = [
     { key: 'name', label: 'Category Name', sortable: true },
     { key: 'description', label: 'Description' },
-    { 
-      key: 'image_url', 
-      label: 'Image',
-      render: (value: string) => value ? <img src={value} alt="Category" className="w-12 h-12 object-cover rounded" /> : 'No image'
-    },
-    { key: 'active', label: 'Status', render: (value: boolean) => value ? 'Active' : 'Inactive' }
-  ];
-
-  const planColumns = [
-    { key: 'name', label: 'Plan Name', sortable: true },
-    { key: 'plan_type', label: 'Type', sortable: true },
-    { key: 'provider', label: 'Provider', sortable: true },
-    { key: 'premium', label: 'Premium', render: (value: number) => `₹${value}`, sortable: true },
-    { key: 'coverage_amount', label: 'Coverage', render: (value: number) => `₹${value}`, sortable: true },
-    { key: 'duration', label: 'Duration', render: (value: number) => `${value} years`, sortable: true },
-    { key: 'city', label: 'Location', sortable: true },
-    { key: 'active', label: 'Status', render: (value: boolean) => value ? 'Active' : 'Inactive' }
+    { key: 'min_age', label: 'Min Age', sortable: true },
+    { key: 'max_age', label: 'Max Age', sortable: true },
+    { key: 'created_at', label: 'Created At', sortable: true }
   ];
 
   // Form field definitions
-  const providerFormFields = [
-    { name: 'company_name', label: 'Company Name', type: 'text', required: true },
-    { name: 'contact_email', label: 'Contact Email', type: 'email' },
-    { name: 'contact_phone', label: 'Contact Phone', type: 'text' },
-    { name: 'website', label: 'Website', type: 'text' },
-    { name: 'description', label: 'Description', type: 'textarea' },
-    { name: 'license_number', label: 'License Number', type: 'text' },
-    { name: 'logo_url', label: 'Logo URL', type: 'text' },
-    { name: 'active', label: 'Active', type: 'checkbox', defaultValue: true }
-  ];
-
-  const categoryFormFields = [
-    { name: 'name', label: 'Category Name', type: 'text', required: true },
-    { name: 'description', label: 'Description', type: 'textarea' },
-    { name: 'image_url', label: 'Image URL', type: 'text' },
-    { name: 'active', label: 'Active', type: 'checkbox', defaultValue: true }
-  ];
-
-  const planFormFields = [
-    { name: 'provider_id', label: 'Provider', type: 'select', options: providers?.map(p => ({ value: p.id, label: p.company_name })) || [], required: true },
-    { name: 'category_id', label: 'Category', type: 'select', options: categories?.map(c => ({ value: c.id, label: c.name })) || [] },
+  const planFormFields: FormField[] = [
+    { name: 'provider_id', label: 'Provider', type: 'select', options: providersData?.map(p => ({ value: p.id, label: p.name })) || [], required: true },
+    { name: 'category_id', label: 'Category', type: 'select', options: categoriesData?.map(c => ({ value: c.id, label: c.name })) || [] },
     { name: 'name', label: 'Plan Name', type: 'text', required: true },
-    { name: 'plan_type', label: 'Plan Type', type: 'select', options: [
-      { value: 'health', label: 'Health Insurance' },
-      { value: 'life', label: 'Life Insurance' },
-      { value: 'critical_illness', label: 'Critical Illness' },
-      { value: 'maternity', label: 'Maternity' },
-      { value: 'senior_citizen', label: 'Senior Citizen' },
-      { value: 'opd', label: 'OPD Cover' },
-      { value: 'comprehensive', label: 'Comprehensive' }
-    ] },
     { name: 'description', label: 'Description', type: 'textarea' },
     { name: 'premium', label: 'Premium Amount', type: 'number', required: true },
     { name: 'coverage_amount', label: 'Coverage Amount', type: 'number', required: true },
     { name: 'duration', label: 'Duration (years)', type: 'number', required: true },
     { name: 'features', label: 'Features', type: 'textarea', placeholder: 'Enter features separated by commas' },
     { name: 'exclusions', label: 'Exclusions', type: 'textarea', placeholder: 'Enter exclusions separated by commas' },
-    { name: 'benefits', label: 'Benefits', type: 'textarea', placeholder: 'Enter benefits separated by commas' },
-    { name: 'terms_conditions', label: 'Terms & Conditions', type: 'textarea', placeholder: 'Enter terms separated by commas' },
-    { name: 'waiting_period', label: 'Waiting Period (days)', type: 'number', defaultValue: 0 },
-    { name: 'claim_process', label: 'Claim Process', type: 'textarea' },
-    { name: 'network_hospitals', label: 'Network Hospitals', type: 'textarea', placeholder: 'Enter hospital names separated by commas' },
+    { name: 'image_url', label: 'Image URL', type: 'text' }
+  ];
+
+  const providerFormFields: FormField[] = [
+    { name: 'name', label: 'Provider Name', type: 'text', required: true },
+    { name: 'type', label: 'Type', type: 'select', options: [
+      { value: 'life', label: 'Life Insurance' },
+      { value: 'health', label: 'Health Insurance' },
+      { value: 'motor', label: 'Motor Insurance' },
+      { value: 'travel', label: 'Travel Insurance' },
+      { value: 'home', label: 'Home Insurance' }
+    ]},
+    { name: 'description', label: 'Description', type: 'textarea' },
+    { name: 'contact', label: 'Contact', type: 'text' },
+    { name: 'email', label: 'Email', type: 'email' },
+    { name: 'website', label: 'Website', type: 'text' },
+    { name: 'license_number', label: 'License Number', type: 'text' },
+    { name: 'address', label: 'Address', type: 'textarea' },
     { name: 'city', label: 'City', type: 'text' },
     { name: 'state', label: 'State', type: 'text' },
     { name: 'pincode', label: 'Pincode', type: 'text' },
-    { name: 'service_radius_km', label: 'Service Radius (km)', type: 'number', defaultValue: 100 },
-    { name: 'image_url', label: 'Image URL', type: 'text' },
-    { name: 'location_restricted', label: 'Location Restricted', type: 'checkbox' },
-    { name: 'active', label: 'Active', type: 'checkbox', defaultValue: true }
+    { name: 'rating', label: 'Rating', type: 'number', min: 0, max: 5, step: 0.1 },
+    { name: 'review_count', label: 'Review Count', type: 'number' },
+    { name: 'established_year', label: 'Established Year', type: 'number' },
+    { name: 'image_url', label: 'Image URL', type: 'text' }
+  ];
+
+  const categoryFormFields: FormField[] = [
+    { name: 'name', label: 'Category Name', type: 'text', required: true },
+    { name: 'description', label: 'Description', type: 'textarea' },
+    { name: 'min_age', label: 'Minimum Age', type: 'number' },
+    { name: 'max_age', label: 'Maximum Age', type: 'number' },
+    { name: 'image_url', label: 'Image URL', type: 'text' }
   ];
 
   // CRUD handlers
   const handleProviderCreate = async (data: any) => {
-    await providersTable.create(data);
+    await providers.createItem(data);
     refetchProviders();
   };
 
   const handleProviderUpdate = async (id: string, data: any) => {
-    await providersTable.update(id, data);
+    await providers.updateItem(id, data);
     refetchProviders();
   };
 
   const handleCategoryCreate = async (data: any) => {
-    await categoriesTable.create(data);
+    await categories.createItem(data);
     refetchCategories();
   };
 
   const handleCategoryUpdate = async (id: string, data: any) => {
-    await categoriesTable.update(id, data);
+    await categories.updateItem(id, data);
     refetchCategories();
   };
 
@@ -137,17 +127,8 @@ export const InsuranceManagement: React.FC = () => {
     if (data.exclusions && typeof data.exclusions === 'string') {
       data.exclusions = data.exclusions.split(',').map((item: string) => item.trim());
     }
-    if (data.benefits && typeof data.benefits === 'string') {
-      data.benefits = data.benefits.split(',').map((item: string) => item.trim());
-    }
-    if (data.terms_conditions && typeof data.terms_conditions === 'string') {
-      data.terms_conditions = data.terms_conditions.split(',').map((item: string) => item.trim());
-    }
-    if (data.network_hospitals && typeof data.network_hospitals === 'string') {
-      data.network_hospitals = data.network_hospitals.split(',').map((item: string) => item.trim());
-    }
     
-    await plansTable.create(data);
+    await plans.createItem(data);
     refetchPlans();
   };
 
@@ -159,17 +140,8 @@ export const InsuranceManagement: React.FC = () => {
     if (data.exclusions && typeof data.exclusions === 'string') {
       data.exclusions = data.exclusions.split(',').map((item: string) => item.trim());
     }
-    if (data.benefits && typeof data.benefits === 'string') {
-      data.benefits = data.benefits.split(',').map((item: string) => item.trim());
-    }
-    if (data.terms_conditions && typeof data.terms_conditions === 'string') {
-      data.terms_conditions = data.terms_conditions.split(',').map((item: string) => item.trim());
-    }
-    if (data.network_hospitals && typeof data.network_hospitals === 'string') {
-      data.network_hospitals = data.network_hospitals.split(',').map((item: string) => item.trim());
-    }
     
-    await plansTable.update(id, data);
+    await plans.updateItem(id, data);
     refetchPlans();
   };
 
@@ -177,7 +149,7 @@ export const InsuranceManagement: React.FC = () => {
     <div className="space-y-6">
       <PageHeader
         title="Insurance Management"
-        subtitle="Manage insurance providers, categories, and plans"
+        description="Manage insurance providers, categories, and plans"
       />
 
       {/* Overview Cards */}
@@ -185,22 +157,22 @@ export const InsuranceManagement: React.FC = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Insurance Providers</CardTitle>
-            <Building className="h-4 w-4 text-muted-foreground" />
+            <Building2 className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{providers?.filter(p => p.active).length || 0}</div>
-            <p className="text-xs text-muted-foreground">Active providers</p>
+            <div className="text-2xl font-bold">{providersData?.length || 0}</div>
+            <p className="text-xs text-muted-foreground">Total providers</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Plan Categories</CardTitle>
+            <CardTitle className="text-sm font-medium">Insurance Categories</CardTitle>
             <Package className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{categories?.filter(c => c.active).length || 0}</div>
-            <p className="text-xs text-muted-foreground">Active categories</p>
+            <div className="text-2xl font-bold">{categoriesData?.length || 0}</div>
+            <p className="text-xs text-muted-foreground">Total categories</p>
           </CardContent>
         </Card>
 
@@ -210,8 +182,8 @@ export const InsuranceManagement: React.FC = () => {
             <Shield className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{plans?.filter(p => p.active).length || 0}</div>
-            <p className="text-xs text-muted-foreground">Active plans</p>
+            <div className="text-2xl font-bold">{plansData?.length || 0}</div>
+            <p className="text-xs text-muted-foreground">Total plans</p>
           </CardContent>
         </Card>
       </div>
@@ -219,7 +191,7 @@ export const InsuranceManagement: React.FC = () => {
       <Tabs defaultValue="providers" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="providers" className="flex items-center gap-2">
-            <Building className="h-4 w-4" />
+            <Building2 className="h-4 w-4" />
             Providers
           </TabsTrigger>
           <TabsTrigger value="categories" className="flex items-center gap-2">
@@ -249,7 +221,7 @@ export const InsuranceManagement: React.FC = () => {
           </div>
           <DataTable
             title="Insurance Providers"
-            data={providers || []}
+            data={providersData || []}
             columns={providerColumns}
             loading={providersLoading}
             onRefresh={refetchProviders}
@@ -262,7 +234,7 @@ export const InsuranceManagement: React.FC = () => {
                 trigger={<Button variant="outline" size="sm">Edit</Button>}
               />
             )}
-            onDelete={(id) => providersTable.delete(id).then(() => refetchProviders())}
+            onDelete={(id) => providers.deleteItem(id).then(() => refetchProviders())}
             searchPlaceholder="Search providers..."
           />
         </TabsContent>
@@ -284,7 +256,7 @@ export const InsuranceManagement: React.FC = () => {
           </div>
           <DataTable
             title="Insurance Categories"
-            data={categories || []}
+            data={categoriesData || []}
             columns={categoryColumns}
             loading={categoriesLoading}
             onRefresh={refetchCategories}
@@ -297,7 +269,7 @@ export const InsuranceManagement: React.FC = () => {
                 trigger={<Button variant="outline" size="sm">Edit</Button>}
               />
             )}
-            onDelete={(id) => categoriesTable.delete(id).then(() => refetchCategories())}
+            onDelete={(id) => categories.deleteItem(id).then(() => refetchCategories())}
             searchPlaceholder="Search categories..."
           />
         </TabsContent>
@@ -319,7 +291,7 @@ export const InsuranceManagement: React.FC = () => {
           </div>
           <DataTable
             title="Insurance Plans"
-            data={plans || []}
+            data={plansData || []}
             columns={planColumns}
             loading={plansLoading}
             onRefresh={refetchPlans}
@@ -330,16 +302,13 @@ export const InsuranceManagement: React.FC = () => {
                 initialData={{
                   ...plan,
                   features: plan.features ? plan.features.join(', ') : '',
-                  exclusions: plan.exclusions ? plan.exclusions.join(', ') : '',
-                  benefits: plan.benefits ? plan.benefits.join(', ') : '',
-                  terms_conditions: plan.terms_conditions ? plan.terms_conditions.join(', ') : '',
-                  network_hospitals: plan.network_hospitals ? plan.network_hospitals.join(', ') : ''
+                  exclusions: plan.exclusions ? plan.exclusions.join(', ') : ''
                 }}
                 onSubmit={(data) => handlePlanUpdate(plan.id, data)}
                 trigger={<Button variant="outline" size="sm">Edit</Button>}
               />
             )}
-            onDelete={(id) => plansTable.delete(id).then(() => refetchPlans())}
+            onDelete={(id) => plans.deleteItem(id).then(() => refetchPlans())}
             searchPlaceholder="Search plans..."
           />
         </TabsContent>

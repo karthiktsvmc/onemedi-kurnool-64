@@ -2,26 +2,34 @@ import React from 'react';
 import { PageHeader } from '@/admin/components/shared/PageHeader';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
 import { DataTable } from '@/admin/components/shared/DataTable';
-import { FormDialog } from '@/admin/components/shared/FormDialog';
+import { FormDialog, type FormField } from '@/admin/components/shared/FormDialog';
 import { useSupabaseTable } from '@/shared/hooks/useSupabaseTable';
+import { hospitalsTable } from '@/shared/lib/supabase-utils';
 import { Button } from '@/shared/components/ui/button';
 import { Plus, Building2, Package, Users, Activity } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
 
+// Create table instances
+import { SupabaseTable } from '@/shared/lib/supabase-utils';
+const hospitalCategoriesTable = new SupabaseTable('hospital_categories');
+const hospitalServicesTable = new SupabaseTable('hospital_services');
+const hospitalDoctorsTable = new SupabaseTable('hospital_doctors');
+const doctorsTable = new SupabaseTable('doctors');
+
 export const HospitalsManagement: React.FC = () => {
   // Initialize Supabase tables
-  const categoriesTable = useSupabaseTable('hospital_categories');
-  const hospitalsTable = useSupabaseTable('hospitals');
-  const servicesTable = useSupabaseTable('hospital_services');
-  const hospitalDoctorsTable = useSupabaseTable('hospital_doctors');
-  const doctorsTable = useSupabaseTable('doctors');
+  const hospitals = useSupabaseTable(hospitalsTable);
+  const categories = useSupabaseTable(hospitalCategoriesTable);
+  const services = useSupabaseTable(hospitalServicesTable);
+  const hospitalDoctors = useSupabaseTable(hospitalDoctorsTable);
+  const doctors = useSupabaseTable(doctorsTable);
 
   // Data fetching
-  const { data: categories, loading: categoriesLoading, refetch: refetchCategories } = categoriesTable;
-  const { data: hospitals, loading: hospitalsLoading, refetch: refetchHospitals } = hospitalsTable;
-  const { data: services, loading: servicesLoading, refetch: refetchServices } = servicesTable;
-  const { data: hospitalDoctors, loading: hospitalDoctorsLoading, refetch: refetchHospitalDoctors } = hospitalDoctorsTable;
-  const { data: doctors, loading: doctorsLoading } = doctorsTable;
+  const { data: hospitalsData, loading: hospitalsLoading, refetch: refetchHospitals } = hospitals;
+  const { data: categoriesData, loading: categoriesLoading, refetch: refetchCategories } = categories;
+  const { data: servicesData, loading: servicesLoading, refetch: refetchServices } = services;
+  const { data: hospitalDoctorsData, loading: hospitalDoctorsLoading, refetch: refetchHospitalDoctors } = hospitalDoctors;
+  const { data: doctorsData, loading: doctorsLoading } = doctors;
 
   // Column definitions
   const categoryColumns = [
@@ -32,18 +40,15 @@ export const HospitalsManagement: React.FC = () => {
       label: 'Image',
       render: (value: string) => value ? <img src={value} alt="Category" className="w-12 h-12 object-cover rounded" /> : 'No image'
     },
-    { key: 'active', label: 'Status', render: (value: boolean) => value ? 'Active' : 'Inactive' }
+    { key: 'created_at', label: 'Created At', sortable: true }
   ];
 
   const hospitalColumns = [
     { key: 'name', label: 'Hospital Name', sortable: true },
-    { key: 'hospital_type', label: 'Type', sortable: true },
     { key: 'city', label: 'City', sortable: true },
-    { key: 'bed_count', label: 'Beds', sortable: true },
-    { key: 'icu_beds', label: 'ICU Beds', sortable: true },
+    { key: 'contact', label: 'Contact', sortable: true },
     { key: 'emergency_services', label: 'Emergency', render: (value: boolean) => value ? 'Yes' : 'No' },
-    { key: 'rating', label: 'Rating', render: (value: number) => `${value}/5`, sortable: true },
-    { key: 'active', label: 'Status', render: (value: boolean) => value ? 'Active' : 'Inactive' }
+    { key: 'created_at', label: 'Created At', sortable: true }
   ];
 
   const serviceColumns = [
@@ -51,7 +56,7 @@ export const HospitalsManagement: React.FC = () => {
     { key: 'category', label: 'Category', sortable: true },
     { key: 'price', label: 'Price', render: (value: number) => value ? `₹${value}` : 'N/A', sortable: true },
     { key: 'duration_hours', label: 'Duration (hrs)', sortable: true },
-    { key: 'active', label: 'Status', render: (value: boolean) => value ? 'Active' : 'Inactive' }
+    { key: 'created_at', label: 'Created At', sortable: true }
   ];
 
   const hospitalDoctorColumns = [
@@ -60,52 +65,31 @@ export const HospitalsManagement: React.FC = () => {
     { key: 'department', label: 'Department', sortable: true },
     { key: 'position', label: 'Position', sortable: true },
     { key: 'consultation_fee', label: 'Fee', render: (value: number) => value ? `₹${value}` : 'N/A', sortable: true },
-    { key: 'active', label: 'Status', render: (value: boolean) => value ? 'Active' : 'Inactive' }
+    { key: 'created_at', label: 'Created At', sortable: true }
   ];
 
   // Form field definitions
-  const categoryFormFields = [
+  const categoryFormFields: FormField[] = [
     { name: 'name', label: 'Category Name', type: 'text', required: true },
     { name: 'description', label: 'Description', type: 'textarea' },
-    { name: 'image_url', label: 'Image URL', type: 'text' },
-    { name: 'active', label: 'Active', type: 'checkbox', defaultValue: true }
+    { name: 'image_url', label: 'Image URL', type: 'text' }
   ];
 
-  const hospitalFormFields = [
-    { name: 'category_id', label: 'Category', type: 'select', options: categories?.map(c => ({ value: c.id, label: c.name })) || [] },
+  const hospitalFormFields: FormField[] = [
+    { name: 'category_id', label: 'Category', type: 'select', options: categoriesData?.map(c => ({ value: c.id, label: c.name })) || [] },
     { name: 'name', label: 'Hospital Name', type: 'text', required: true },
-    { name: 'hospital_type', label: 'Hospital Type', type: 'select', options: [
-      { value: 'government', label: 'Government' },
-      { value: 'private', label: 'Private' },
-      { value: 'trust', label: 'Trust' },
-      { value: 'corporate', label: 'Corporate' }
-    ]},
     { name: 'address', label: 'Address', type: 'textarea', required: true },
     { name: 'city', label: 'City', type: 'text', required: true },
     { name: 'state', label: 'State', type: 'text', required: true },
     { name: 'pincode', label: 'Pincode', type: 'text', required: true },
     { name: 'contact', label: 'Contact', type: 'text' },
-    { name: 'license_number', label: 'License Number', type: 'text' },
-    { name: 'website', label: 'Website', type: 'text' },
-    { name: 'established_year', label: 'Established Year', type: 'number' },
-    { name: 'bed_count', label: 'Total Beds', type: 'number', defaultValue: 0 },
-    { name: 'icu_beds', label: 'ICU Beds', type: 'number', defaultValue: 0 },
-    { name: 'operation_theaters', label: 'Operation Theaters', type: 'number', defaultValue: 0 },
     { name: 'specialities', label: 'Specialities', type: 'textarea', placeholder: 'Enter specialities separated by commas' },
-    { name: 'accreditation', label: 'Accreditation', type: 'textarea', placeholder: 'Enter accreditations separated by commas' },
-    { name: 'facilities', label: 'Facilities', type: 'textarea', placeholder: 'Enter facilities separated by commas' },
-    { name: 'procedures', label: 'Procedures', type: 'textarea', placeholder: 'Enter procedures separated by commas' },
-    { name: 'emergency_services', label: 'Emergency Services', type: 'checkbox' },
-    { name: 'ambulance_services', label: 'Ambulance Services', type: 'checkbox' },
-    { name: 'pharmacy', label: 'Pharmacy', type: 'checkbox' },
-    { name: 'lab_services', label: 'Lab Services', type: 'checkbox' },
-    { name: 'blood_bank', label: 'Blood Bank', type: 'checkbox' },
-    { name: 'image_url', label: 'Image URL', type: 'text' },
-    { name: 'active', label: 'Active', type: 'checkbox', defaultValue: true }
+    { name: 'emergency_services', label: 'Emergency Services', type: 'boolean' },
+    { name: 'image_url', label: 'Image URL', type: 'text' }
   ];
 
-  const serviceFormFields = [
-    { name: 'hospital_id', label: 'Hospital', type: 'select', options: hospitals?.map(h => ({ value: h.id, label: h.name })) || [], required: true },
+  const serviceFormFields: FormField[] = [
+    { name: 'hospital_id', label: 'Hospital', type: 'select', options: hospitalsData?.map(h => ({ value: h.id, label: h.name })) || [], required: true },
     { name: 'name', label: 'Service Name', type: 'text', required: true },
     { name: 'description', label: 'Description', type: 'textarea' },
     { name: 'category', label: 'Category', type: 'select', options: [
@@ -117,15 +101,12 @@ export const HospitalsManagement: React.FC = () => {
       { value: 'specialized', label: 'Specialized Care' }
     ]},
     { name: 'price', label: 'Price', type: 'number' },
-    { name: 'duration_hours', label: 'Duration (hours)', type: 'number' },
-    { name: 'includes', label: 'Includes', type: 'textarea', placeholder: 'Enter items included separated by commas' },
-    { name: 'excludes', label: 'Excludes', type: 'textarea', placeholder: 'Enter items excluded separated by commas' },
-    { name: 'active', label: 'Active', type: 'checkbox', defaultValue: true }
+    { name: 'duration_hours', label: 'Duration (hours)', type: 'number' }
   ];
 
-  const hospitalDoctorFormFields = [
-    { name: 'hospital_id', label: 'Hospital', type: 'select', options: hospitals?.map(h => ({ value: h.id, label: h.name })) || [], required: true },
-    { name: 'doctor_id', label: 'Doctor', type: 'select', options: doctors?.map(d => ({ value: d.id, label: d.name })) || [], required: true },
+  const hospitalDoctorFormFields: FormField[] = [
+    { name: 'hospital_id', label: 'Hospital', type: 'select', options: hospitalsData?.map(h => ({ value: h.id, label: h.name })) || [], required: true },
+    { name: 'doctor_id', label: 'Doctor', type: 'select', options: doctorsData?.map(d => ({ value: d.id, label: d.name })) || [], required: true },
     { name: 'department', label: 'Department', type: 'text' },
     { name: 'position', label: 'Position', type: 'select', options: [
       { value: 'consultant', label: 'Consultant' },
@@ -135,18 +116,17 @@ export const HospitalsManagement: React.FC = () => {
       { value: 'chief_medical_officer', label: 'Chief Medical Officer' }
     ]},
     { name: 'available_days', label: 'Available Days', type: 'textarea', placeholder: 'Enter days separated by commas (mon, tue, wed, etc.)' },
-    { name: 'consultation_fee', label: 'Consultation Fee', type: 'number' },
-    { name: 'active', label: 'Active', type: 'checkbox', defaultValue: true }
+    { name: 'consultation_fee', label: 'Consultation Fee', type: 'number' }
   ];
 
   // CRUD handlers
   const handleCategoryCreate = async (data: any) => {
-    await categoriesTable.create(data);
+    await categories.createItem(data);
     refetchCategories();
   };
 
   const handleCategoryUpdate = async (id: string, data: any) => {
-    await categoriesTable.update(id, data);
+    await categories.updateItem(id, data);
     refetchCategories();
   };
 
@@ -155,17 +135,8 @@ export const HospitalsManagement: React.FC = () => {
     if (data.specialities && typeof data.specialities === 'string') {
       data.specialities = data.specialities.split(',').map((item: string) => item.trim());
     }
-    if (data.accreditation && typeof data.accreditation === 'string') {
-      data.accreditation = data.accreditation.split(',').map((item: string) => item.trim());
-    }
-    if (data.facilities && typeof data.facilities === 'string') {
-      data.facilities = data.facilities.split(',').map((item: string) => item.trim());
-    }
-    if (data.procedures && typeof data.procedures === 'string') {
-      data.procedures = data.procedures.split(',').map((item: string) => item.trim());
-    }
     
-    await hospitalsTable.create(data);
+    await hospitals.createItem(data);
     refetchHospitals();
   };
 
@@ -174,43 +145,18 @@ export const HospitalsManagement: React.FC = () => {
     if (data.specialities && typeof data.specialities === 'string') {
       data.specialities = data.specialities.split(',').map((item: string) => item.trim());
     }
-    if (data.accreditation && typeof data.accreditation === 'string') {
-      data.accreditation = data.accreditation.split(',').map((item: string) => item.trim());
-    }
-    if (data.facilities && typeof data.facilities === 'string') {
-      data.facilities = data.facilities.split(',').map((item: string) => item.trim());
-    }
-    if (data.procedures && typeof data.procedures === 'string') {
-      data.procedures = data.procedures.split(',').map((item: string) => item.trim());
-    }
     
-    await hospitalsTable.update(id, data);
+    await hospitals.updateItem(id, data);
     refetchHospitals();
   };
 
   const handleServiceCreate = async (data: any) => {
-    // Convert comma-separated strings to arrays
-    if (data.includes && typeof data.includes === 'string') {
-      data.includes = data.includes.split(',').map((item: string) => item.trim());
-    }
-    if (data.excludes && typeof data.excludes === 'string') {
-      data.excludes = data.excludes.split(',').map((item: string) => item.trim());
-    }
-    
-    await servicesTable.create(data);
+    await services.createItem(data);
     refetchServices();
   };
 
   const handleServiceUpdate = async (id: string, data: any) => {
-    // Convert comma-separated strings to arrays
-    if (data.includes && typeof data.includes === 'string') {
-      data.includes = data.includes.split(',').map((item: string) => item.trim());
-    }
-    if (data.excludes && typeof data.excludes === 'string') {
-      data.excludes = data.excludes.split(',').map((item: string) => item.trim());
-    }
-    
-    await servicesTable.update(id, data);
+    await services.updateItem(id, data);
     refetchServices();
   };
 
@@ -220,7 +166,7 @@ export const HospitalsManagement: React.FC = () => {
       data.available_days = data.available_days.split(',').map((day: string) => day.trim());
     }
     
-    await hospitalDoctorsTable.create(data);
+    await hospitalDoctors.createItem(data);
     refetchHospitalDoctors();
   };
 
@@ -230,7 +176,7 @@ export const HospitalsManagement: React.FC = () => {
       data.available_days = data.available_days.split(',').map((day: string) => day.trim());
     }
     
-    await hospitalDoctorsTable.update(id, data);
+    await hospitalDoctors.updateItem(id, data);
     refetchHospitalDoctors();
   };
 
@@ -238,7 +184,7 @@ export const HospitalsManagement: React.FC = () => {
     <div className="space-y-6">
       <PageHeader
         title="Hospitals Management"
-        subtitle="Manage hospital categories, hospitals, services, and doctor assignments"
+        description="Manage hospital categories, hospitals, services, and doctor assignments"
       />
 
       {/* Overview Cards */}
@@ -249,8 +195,8 @@ export const HospitalsManagement: React.FC = () => {
             <Package className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{categories?.filter(c => c.active).length || 0}</div>
-            <p className="text-xs text-muted-foreground">Active categories</p>
+            <div className="text-2xl font-bold">{categoriesData?.length || 0}</div>
+            <p className="text-xs text-muted-foreground">Total categories</p>
           </CardContent>
         </Card>
 
@@ -260,8 +206,8 @@ export const HospitalsManagement: React.FC = () => {
             <Building2 className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{hospitals?.filter(h => h.active).length || 0}</div>
-            <p className="text-xs text-muted-foreground">Active hospitals</p>
+            <div className="text-2xl font-bold">{hospitalsData?.length || 0}</div>
+            <p className="text-xs text-muted-foreground">Total hospitals</p>
           </CardContent>
         </Card>
 
@@ -271,8 +217,8 @@ export const HospitalsManagement: React.FC = () => {
             <Activity className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{services?.filter(s => s.active).length || 0}</div>
-            <p className="text-xs text-muted-foreground">Active services</p>
+            <div className="text-2xl font-bold">{servicesData?.length || 0}</div>
+            <p className="text-xs text-muted-foreground">Total services</p>
           </CardContent>
         </Card>
 
@@ -282,8 +228,8 @@ export const HospitalsManagement: React.FC = () => {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{hospitalDoctors?.filter(hd => hd.active).length || 0}</div>
-            <p className="text-xs text-muted-foreground">Active assignments</p>
+            <div className="text-2xl font-bold">{hospitalDoctorsData?.length || 0}</div>
+            <p className="text-xs text-muted-foreground">Total assignments</p>
           </CardContent>
         </Card>
       </div>
@@ -325,7 +271,7 @@ export const HospitalsManagement: React.FC = () => {
           </div>
           <DataTable
             title="Hospital Categories"
-            data={categories || []}
+            data={categoriesData || []}
             columns={categoryColumns}
             loading={categoriesLoading}
             onRefresh={refetchCategories}
@@ -338,7 +284,7 @@ export const HospitalsManagement: React.FC = () => {
                 trigger={<Button variant="outline" size="sm">Edit</Button>}
               />
             )}
-            onDelete={(id) => categoriesTable.delete(id).then(() => refetchCategories())}
+            onDelete={(id) => categories.deleteItem(id).then(() => refetchCategories())}
             searchPlaceholder="Search categories..."
           />
         </TabsContent>
@@ -360,7 +306,7 @@ export const HospitalsManagement: React.FC = () => {
           </div>
           <DataTable
             title="Hospitals"
-            data={hospitals || []}
+            data={hospitalsData || []}
             columns={hospitalColumns}
             loading={hospitalsLoading}
             onRefresh={refetchHospitals}
@@ -370,16 +316,13 @@ export const HospitalsManagement: React.FC = () => {
                 fields={hospitalFormFields}
                 initialData={{
                   ...hospital,
-                  specialities: hospital.specialities ? hospital.specialities.join(', ') : '',
-                  accreditation: hospital.accreditation ? hospital.accreditation.join(', ') : '',
-                  facilities: hospital.facilities ? hospital.facilities.join(', ') : '',
-                  procedures: hospital.procedures ? hospital.procedures.join(', ') : ''
+                  specialities: hospital.specialities ? hospital.specialities.join(', ') : ''
                 }}
                 onSubmit={(data) => handleHospitalUpdate(hospital.id, data)}
                 trigger={<Button variant="outline" size="sm">Edit</Button>}
               />
             )}
-            onDelete={(id) => hospitalsTable.delete(id).then(() => refetchHospitals())}
+            onDelete={(id) => hospitals.deleteItem(id).then(() => refetchHospitals())}
             searchPlaceholder="Search hospitals..."
           />
         </TabsContent>
@@ -401,7 +344,7 @@ export const HospitalsManagement: React.FC = () => {
           </div>
           <DataTable
             title="Hospital Services"
-            data={services || []}
+            data={servicesData || []}
             columns={serviceColumns}
             loading={servicesLoading}
             onRefresh={refetchServices}
@@ -409,16 +352,12 @@ export const HospitalsManagement: React.FC = () => {
               <FormDialog
                 title="Edit Service"
                 fields={serviceFormFields}
-                initialData={{
-                  ...service,
-                  includes: service.includes ? service.includes.join(', ') : '',
-                  excludes: service.excludes ? service.excludes.join(', ') : ''
-                }}
+                initialData={service}
                 onSubmit={(data) => handleServiceUpdate(service.id, data)}
                 trigger={<Button variant="outline" size="sm">Edit</Button>}
               />
             )}
-            onDelete={(id) => servicesTable.delete(id).then(() => refetchServices())}
+            onDelete={(id) => services.deleteItem(id).then(() => refetchServices())}
             searchPlaceholder="Search services..."
           />
         </TabsContent>
@@ -427,7 +366,7 @@ export const HospitalsManagement: React.FC = () => {
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold">Doctor Assignments</h3>
             <FormDialog
-              title="Assign Doctor to Hospital"
+              title="Add New Doctor Assignment"
               fields={hospitalDoctorFormFields}
               onSubmit={handleHospitalDoctorCreate}
               trigger={
@@ -439,14 +378,14 @@ export const HospitalsManagement: React.FC = () => {
             />
           </div>
           <DataTable
-            title="Hospital Doctor Assignments"
-            data={hospitalDoctors || []}
+            title="Doctor Assignments"
+            data={hospitalDoctorsData || []}
             columns={hospitalDoctorColumns}
             loading={hospitalDoctorsLoading}
             onRefresh={refetchHospitalDoctors}
             onEdit={(assignment) => (
               <FormDialog
-                title="Edit Assignment"
+                title="Edit Doctor Assignment"
                 fields={hospitalDoctorFormFields}
                 initialData={{
                   ...assignment,
@@ -456,7 +395,7 @@ export const HospitalsManagement: React.FC = () => {
                 trigger={<Button variant="outline" size="sm">Edit</Button>}
               />
             )}
-            onDelete={(id) => hospitalDoctorsTable.delete(id).then(() => refetchHospitalDoctors())}
+            onDelete={(id) => hospitalDoctors.deleteItem(id).then(() => refetchHospitalDoctors())}
             searchPlaceholder="Search assignments..."
           />
         </TabsContent>
