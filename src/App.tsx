@@ -43,6 +43,7 @@ import DoctorManagement from "./admin/pages/DoctorManagement";
 import ScanManagement from "./admin/pages/ScanManagement";
 import MarketingDashboard from "./admin/pages/MarketingDashboard";
 import AnalyticsDashboard from "./admin/pages/AnalyticsDashboard";
+import { HomeCareManagement } from "./admin/pages/HomeCareManagement";
 import { MedicineDetails } from "./frontend/pages/MedicineDetails";
 import { Hospitals } from "./frontend/pages/Hospitals";
 import { OrderTracking } from "./frontend/pages/OrderTracking";
@@ -149,7 +150,7 @@ const App = () => (
           <Route path="lab-tests" element={<LabTestManagement />} />
           <Route path="scans" element={<ScanManagement />} />
           <Route path="doctors" element={<DoctorManagement />} />
-          <Route path="home-care" element={<div>Home Care Management (Coming Soon)</div>} />
+          <Route path="home-care" element={<HomeCareManagement />} />
           <Route path="diabetes-care" element={<div>Diabetes Care Management (Coming Soon)</div>} />
           <Route path="physiotherapy" element={<div>Physiotherapy Management (Coming Soon)</div>} />
           <Route path="hospitals" element={<div>Hospitals Management (Coming Soon)</div>} />
