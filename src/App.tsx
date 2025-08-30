@@ -50,7 +50,7 @@ import { InsuranceManagement } from "./admin/pages/InsuranceManagement";
 import { HospitalsManagement } from "./admin/pages/HospitalsManagement";
 import { BloodBanksManagement } from "./admin/pages/BloodBanksManagement";
 import AmbulanceManagement from "./admin/pages/AmbulanceManagement";
-import { MedicineManagement } from "./admin/pages/MedicineManagement";
+import MedicineManagement from "./admin/pages/MedicineManagement";
 import { MedicineDetails } from "./frontend/pages/MedicineDetails";
 import { Hospitals } from "./frontend/pages/Hospitals";
 import { OrderTracking } from "./frontend/pages/OrderTracking";

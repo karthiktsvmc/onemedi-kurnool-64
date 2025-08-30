@@ -317,3 +317,5 @@ export const MedicineManagement = () => {
     </div>
   );
 };
+
+export default MedicineManagement;
