@@ -1957,6 +1957,78 @@ export type Database = {
         }
         Relationships: []
       }
+      medicine_attribute_values: {
+        Row: {
+          attribute_id: string | null
+          created_at: string | null
+          id: string
+          medicine_id: string | null
+          value: string | null
+        }
+        Insert: {
+          attribute_id?: string | null
+          created_at?: string | null
+          id?: string
+          medicine_id?: string | null
+          value?: string | null
+        }
+        Update: {
+          attribute_id?: string | null
+          created_at?: string | null
+          id?: string
+          medicine_id?: string | null
+          value?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medicine_attribute_values_attribute_id_fkey"
+            columns: ["attribute_id"]
+            isOneToOne: false
+            referencedRelation: "medicine_attributes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medicine_attribute_values_medicine_id_fkey"
+            columns: ["medicine_id"]
+            isOneToOne: false
+            referencedRelation: "medicines"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medicine_attributes: {
+        Row: {
+          created_at: string | null
+          id: string
+          label: string
+          name: string
+          options: Json | null
+          required: boolean | null
+          type: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          label: string
+          name: string
+          options?: Json | null
+          required?: boolean | null
+          type?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          label?: string
+          name?: string
+          options?: Json | null
+          required?: boolean | null
+          type?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       medicine_brands: {
         Row: {
           created_at: string
@@ -2022,87 +2094,412 @@ export type Database = {
           },
         ]
       }
+      medicine_inventory_batches: {
+        Row: {
+          batch_number: string
+          cost_price: number | null
+          created_at: string | null
+          expiry_date: string
+          id: string
+          location_id: string | null
+          manufacturer: string | null
+          manufacturing_date: string | null
+          quantity: number
+          status: string | null
+          updated_at: string | null
+          variant_id: string | null
+          vendor_id: string | null
+        }
+        Insert: {
+          batch_number: string
+          cost_price?: number | null
+          created_at?: string | null
+          expiry_date: string
+          id?: string
+          location_id?: string | null
+          manufacturer?: string | null
+          manufacturing_date?: string | null
+          quantity?: number
+          status?: string | null
+          updated_at?: string | null
+          variant_id?: string | null
+          vendor_id?: string | null
+        }
+        Update: {
+          batch_number?: string
+          cost_price?: number | null
+          created_at?: string | null
+          expiry_date?: string
+          id?: string
+          location_id?: string | null
+          manufacturer?: string | null
+          manufacturing_date?: string | null
+          quantity?: number
+          status?: string | null
+          updated_at?: string | null
+          variant_id?: string | null
+          vendor_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medicine_inventory_batches_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "medicine_variants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medicine_locations: {
+        Row: {
+          active: boolean | null
+          address: string | null
+          city: string | null
+          code: string
+          contact: string | null
+          created_at: string | null
+          email: string | null
+          id: string
+          name: string
+          pincode: string | null
+          state: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          address?: string | null
+          city?: string | null
+          code: string
+          contact?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          name: string
+          pincode?: string | null
+          state?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          address?: string | null
+          city?: string | null
+          code?: string
+          contact?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          name?: string
+          pincode?: string | null
+          state?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      medicine_pricing_tiers: {
+        Row: {
+          created_at: string | null
+          id: string
+          location_id: string | null
+          max_quantity: number | null
+          medicine_id: string | null
+          min_quantity: number
+          price: number
+          updated_at: string | null
+          valid_from: string | null
+          valid_until: string | null
+          vendor_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          location_id?: string | null
+          max_quantity?: number | null
+          medicine_id?: string | null
+          min_quantity?: number
+          price: number
+          updated_at?: string | null
+          valid_from?: string | null
+          valid_until?: string | null
+          vendor_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          location_id?: string | null
+          max_quantity?: number | null
+          medicine_id?: string | null
+          min_quantity?: number
+          price?: number
+          updated_at?: string | null
+          valid_from?: string | null
+          valid_until?: string | null
+          vendor_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medicine_pricing_tiers_location_id_fkey"
+            columns: ["location_id"]
+            isOneToOne: false
+            referencedRelation: "medicine_locations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medicine_pricing_tiers_medicine_id_fkey"
+            columns: ["medicine_id"]
+            isOneToOne: false
+            referencedRelation: "medicines"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medicine_tag_relations: {
+        Row: {
+          created_at: string | null
+          id: string
+          medicine_id: string | null
+          tag_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          medicine_id?: string | null
+          tag_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          medicine_id?: string | null
+          tag_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medicine_tag_relations_medicine_id_fkey"
+            columns: ["medicine_id"]
+            isOneToOne: false
+            referencedRelation: "medicines"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medicine_tag_relations_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "medicine_tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medicine_tags: {
+        Row: {
+          color: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          name: string
+          slug: string
+          updated_at: string | null
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          slug: string
+          updated_at?: string | null
+        }
+        Update: {
+          color?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          slug?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      medicine_variants: {
+        Row: {
+          active: boolean | null
+          cost_price: number | null
+          created_at: string | null
+          dimensions: Json | null
+          dosage_form: string | null
+          id: string
+          medicine_id: string | null
+          mrp: number
+          name: string
+          pack_size: string | null
+          sale_price: number
+          sku: string
+          strength: string | null
+          updated_at: string | null
+          weight: number | null
+        }
+        Insert: {
+          active?: boolean | null
+          cost_price?: number | null
+          created_at?: string | null
+          dimensions?: Json | null
+          dosage_form?: string | null
+          id?: string
+          medicine_id?: string | null
+          mrp?: number
+          name: string
+          pack_size?: string | null
+          sale_price?: number
+          sku: string
+          strength?: string | null
+          updated_at?: string | null
+          weight?: number | null
+        }
+        Update: {
+          active?: boolean | null
+          cost_price?: number | null
+          created_at?: string | null
+          dimensions?: Json | null
+          dosage_form?: string | null
+          id?: string
+          medicine_id?: string | null
+          mrp?: number
+          name?: string
+          pack_size?: string | null
+          sale_price?: number
+          sku?: string
+          strength?: string | null
+          updated_at?: string | null
+          weight?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medicine_variants_medicine_id_fkey"
+            columns: ["medicine_id"]
+            isOneToOne: false
+            referencedRelation: "medicines"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       medicines: {
         Row: {
+          backorder_allowed: boolean | null
           brand: string | null
           brand_id: string | null
           branded_alternatives: string[] | null
           category_id: string
           city: string | null
+          composition: string | null
           created_at: string
           description: string | null
+          dimensions: Json | null
           expiry_date: string | null
           featured: boolean | null
           generic_alternative: string | null
+          hsn_code: string | null
           id: string
           image_url: string | null
           latitude: number | null
           location_restricted: boolean | null
           longitude: number | null
+          manufacturer: string | null
+          max_order_quantity: number | null
+          min_order_quantity: number | null
           mrp: number
           name: string
           pharmacy_name: string | null
           pincode: string | null
           prescription_required: boolean | null
+          product_type: Database["public"]["Enums"]["product_type"] | null
           sale_price: number
+          shipping_class: string | null
+          sku: string | null
           state: string | null
           stock_qty: number
+          subscription_interval_days: number | null
           tags: string[] | null
+          tax_configuration_id: string | null
           updated_at: string
+          weight: number | null
         }
         Insert: {
+          backorder_allowed?: boolean | null
           brand?: string | null
           brand_id?: string | null
           branded_alternatives?: string[] | null
           category_id: string
           city?: string | null
+          composition?: string | null
           created_at?: string
           description?: string | null
+          dimensions?: Json | null
           expiry_date?: string | null
           featured?: boolean | null
           generic_alternative?: string | null
+          hsn_code?: string | null
           id?: string
           image_url?: string | null
           latitude?: number | null
           location_restricted?: boolean | null
           longitude?: number | null
+          manufacturer?: string | null
+          max_order_quantity?: number | null
+          min_order_quantity?: number | null
           mrp: number
           name: string
           pharmacy_name?: string | null
           pincode?: string | null
           prescription_required?: boolean | null
+          product_type?: Database["public"]["Enums"]["product_type"] | null
           sale_price: number
+          shipping_class?: string | null
+          sku?: string | null
           state?: string | null
           stock_qty?: number
+          subscription_interval_days?: number | null
           tags?: string[] | null
+          tax_configuration_id?: string | null
           updated_at?: string
+          weight?: number | null
         }
         Update: {
+          backorder_allowed?: boolean | null
           brand?: string | null
           brand_id?: string | null
           branded_alternatives?: string[] | null
           category_id?: string
           city?: string | null
+          composition?: string | null
           created_at?: string
           description?: string | null
+          dimensions?: Json | null
           expiry_date?: string | null
           featured?: boolean | null
           generic_alternative?: string | null
+          hsn_code?: string | null
           id?: string
           image_url?: string | null
           latitude?: number | null
           location_restricted?: boolean | null
           longitude?: number | null
+          manufacturer?: string | null
+          max_order_quantity?: number | null
+          min_order_quantity?: number | null
           mrp?: number
           name?: string
           pharmacy_name?: string | null
           pincode?: string | null
           prescription_required?: boolean | null
+          product_type?: Database["public"]["Enums"]["product_type"] | null
           sale_price?: number
+          shipping_class?: string | null
+          sku?: string | null
           state?: string | null
           stock_qty?: number
+          subscription_interval_days?: number | null
           tags?: string[] | null
+          tax_configuration_id?: string | null
           updated_at?: string
+          weight?: number | null
         }
         Relationships: [
           {
@@ -2117,6 +2514,13 @@ export type Database = {
             columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "medicine_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medicines_tax_configuration_id_fkey"
+            columns: ["tax_configuration_id"]
+            isOneToOne: false
+            referencedRelation: "tax_configurations"
             referencedColumns: ["id"]
           },
         ]
@@ -2985,6 +3389,146 @@ export type Database = {
         }
         Relationships: []
       }
+      shipping_methods: {
+        Row: {
+          active: boolean | null
+          cost: number | null
+          created_at: string | null
+          description: string | null
+          estimated_days: number | null
+          id: string
+          max_weight: number | null
+          min_order_amount: number | null
+          name: string
+          type: string | null
+          updated_at: string | null
+          zone_id: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          cost?: number | null
+          created_at?: string | null
+          description?: string | null
+          estimated_days?: number | null
+          id?: string
+          max_weight?: number | null
+          min_order_amount?: number | null
+          name: string
+          type?: string | null
+          updated_at?: string | null
+          zone_id?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          cost?: number | null
+          created_at?: string | null
+          description?: string | null
+          estimated_days?: number | null
+          id?: string
+          max_weight?: number | null
+          min_order_amount?: number | null
+          name?: string
+          type?: string | null
+          updated_at?: string | null
+          zone_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shipping_methods_zone_id_fkey"
+            columns: ["zone_id"]
+            isOneToOne: false
+            referencedRelation: "shipping_zones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shipping_zones: {
+        Row: {
+          active: boolean | null
+          cities: Json | null
+          created_at: string | null
+          id: string
+          name: string
+          pincodes: Json | null
+          states: Json | null
+          updated_at: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          cities?: Json | null
+          created_at?: string | null
+          id?: string
+          name: string
+          pincodes?: Json | null
+          states?: Json | null
+          updated_at?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          cities?: Json | null
+          created_at?: string | null
+          id?: string
+          name?: string
+          pincodes?: Json | null
+          states?: Json | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      stock_alert_configurations: {
+        Row: {
+          created_at: string | null
+          email_notifications: boolean | null
+          expiry_alert_days: number | null
+          id: string
+          location_id: string | null
+          low_stock_threshold: number | null
+          medicine_id: string | null
+          out_of_stock_threshold: number | null
+          sms_notifications: boolean | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email_notifications?: boolean | null
+          expiry_alert_days?: number | null
+          id?: string
+          location_id?: string | null
+          low_stock_threshold?: number | null
+          medicine_id?: string | null
+          out_of_stock_threshold?: number | null
+          sms_notifications?: boolean | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email_notifications?: boolean | null
+          expiry_alert_days?: number | null
+          id?: string
+          location_id?: string | null
+          low_stock_threshold?: number | null
+          medicine_id?: string | null
+          out_of_stock_threshold?: number | null
+          sms_notifications?: boolean | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stock_alert_configurations_location_id_fkey"
+            columns: ["location_id"]
+            isOneToOne: false
+            referencedRelation: "medicine_locations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stock_alert_configurations_medicine_id_fkey"
+            columns: ["medicine_id"]
+            isOneToOne: false
+            referencedRelation: "medicines"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       stock_movements: {
         Row: {
           created_at: string
@@ -3136,6 +3680,42 @@ export type Database = {
           image_url?: string | null
           name?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      tax_configurations: {
+        Row: {
+          active: boolean | null
+          applicable_states: Json | null
+          created_at: string | null
+          hsn_code: string | null
+          id: string
+          name: string
+          rate: number
+          type: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          applicable_states?: Json | null
+          created_at?: string | null
+          hsn_code?: string | null
+          id?: string
+          name: string
+          rate?: number
+          type?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          applicable_states?: Json | null
+          created_at?: string | null
+          hsn_code?: string | null
+          id?: string
+          name?: string
+          rate?: number
+          type?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -3563,6 +4143,12 @@ export type Database = {
     }
     Enums: {
       app_role: "super_admin" | "admin" | "moderator" | "user" | "manager"
+      product_type:
+        | "simple"
+        | "variable"
+        | "grouped"
+        | "digital"
+        | "subscription"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -3691,6 +4277,13 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["super_admin", "admin", "moderator", "user", "manager"],
+      product_type: [
+        "simple",
+        "variable",
+        "grouped",
+        "digital",
+        "subscription",
+      ],
     },
   },
 } as const

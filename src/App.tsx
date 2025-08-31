@@ -51,6 +51,7 @@ import { HospitalsManagement } from "./admin/pages/HospitalsManagement";
 import { BloodBanksManagement } from "./admin/pages/BloodBanksManagement";
 import AmbulanceManagement from "./admin/pages/AmbulanceManagement";
 import MedicineManagement from "./admin/pages/MedicineManagement";
+import EnhancedMedicineManagement from "./admin/pages/EnhancedMedicineManagement";
 import { MedicineDetails } from "./frontend/pages/MedicineDetails";
 import { Hospitals } from "./frontend/pages/Hospitals";
 import { OrderTracking } from "./frontend/pages/OrderTracking";
@@ -154,7 +155,7 @@ const App = () => (
           <Route path="products" element={<ProductServiceManagement />} />
           
           {/* Service Modules */}
-          <Route path="medicines" element={<MedicineManagement />} />
+          <Route path="medicines" element={<EnhancedMedicineManagement />} />
           <Route path="lab-tests" element={<LabTestManagement />} />
           <Route path="scans" element={<ScanManagement />} />
           <Route path="doctors" element={<DoctorManagement />} />
