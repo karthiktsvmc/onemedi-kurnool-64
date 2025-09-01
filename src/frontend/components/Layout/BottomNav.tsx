@@ -1,4 +1,4 @@
-import { Home, Stethoscope, TestTube, Scan, Pill, Activity, HeartHandshake } from 'lucide-react';
+import { Home, Stethoscope, TestTube, Scan, Pill, Activity, HeartHandshake, FileText } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export const BottomNav = () => {
@@ -11,8 +11,8 @@ export const BottomNav = () => {
     { icon: TestTube, label: 'Tests', path: '/lab-tests' },
     { icon: Scan, label: 'Scans', path: '/scans' },
     { icon: Pill, label: 'Medicines', path: '/medicines' },
-    { icon: Activity, label: 'Diabetes', path: '/diabetes-care' },
-    { icon: HeartHandshake, label: 'Home Care', path: '/home-care' }
+    { icon: FileText, label: 'Prescriptions', path: '/prescriptions' },
+    { icon: Activity, label: 'Diabetes', path: '/diabetes-care' }
   ];
 
   return (

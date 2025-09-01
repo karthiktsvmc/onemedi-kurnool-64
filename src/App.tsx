@@ -30,6 +30,7 @@ import { SavedAddresses } from "./frontend/pages/SavedAddresses";
 import { FamilyMembers } from "./frontend/pages/FamilyMembers";
 import { HealthRecords } from "./frontend/pages/HealthRecords";
 import { Wallet } from "./frontend/pages/Wallet";
+import { Prescriptions } from "./frontend/pages/Prescriptions";
 import { Support } from "./frontend/pages/Support";
 import { OrderManagement } from "./admin/pages/OrderManagement";
 import VendorManagement from "./admin/pages/VendorManagement";
@@ -47,6 +48,7 @@ import { HomeCareManagement } from "./admin/pages/HomeCareManagement";
 import DiabetesCareManagement from "./admin/pages/DiabetesCareManagement";
 import { PhysiotherapyManagement } from "./admin/pages/PhysiotherapyManagement";
 import { InsuranceManagement } from "./admin/pages/InsuranceManagement";
+import { PrescriptionManagementPage } from "./admin/pages/PrescriptionManagement";
 import { HospitalsManagement } from "./admin/pages/HospitalsManagement";
 import { BloodBanksManagement } from "./admin/pages/BloodBanksManagement";
 import AmbulanceManagement from "./admin/pages/AmbulanceManagement";
@@ -139,6 +141,11 @@ const App = () => (
             <Wallet />
           </AuthGuard>
         } />
+        <Route path="/prescriptions" element={
+          <AuthGuard>
+            <Prescriptions />
+          </AuthGuard>
+        } />
         <Route path="/support" element={<Support />} />
         <Route path="/hospitals" element={<Hospitals />} />
         <Route path="/diet-plans" element={<div>Diet Plans (Coming Soon)</div>} />
@@ -166,6 +173,7 @@ const App = () => (
           <Route path="blood-banks" element={<BloodBanksManagement />} />
           <Route path="ambulance" element={<AmbulanceManagement />} />
           <Route path="insurance" element={<InsuranceManagement />} />
+          <Route path="prescriptions" element={<PrescriptionManagementPage />} />
           
           {/* Management & Settings */}
           <Route path="categories" element={<div>Categories Management (Coming Soon)</div>} />
