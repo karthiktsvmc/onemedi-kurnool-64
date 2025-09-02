@@ -5,11 +5,14 @@ import { ServiceCard } from '@/frontend/components/Services/ServiceCard';
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
 import { Badge } from '@/shared/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/shared/components/ui/dialog';
+import { PrescriptionUploadWidget } from '@/frontend/components/Prescriptions/PrescriptionUploadWidget';
 import { Filter, Search, ChevronDown, Upload, Shield, Truck, Clock } from 'lucide-react';
 export const Medicines = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('popular');
+  const [prescriptionDialogOpen, setPrescriptionDialogOpen] = useState(false);
   const categories = [{
     id: 'all',
     name: 'All Medicines',
@@ -94,6 +97,11 @@ export const Medicines = () => {
   const handleToggleFavorite = (id: string) => {
     console.log('Toggle favorite:', id);
   };
+
+  const handlePrescriptionUpload = (prescriptionIds: string[]) => {
+    console.log('Prescription uploaded:', prescriptionIds);
+    setPrescriptionDialogOpen(false);
+  };
   return <div className="min-h-screen bg-background">
       <Header />
       
@@ -143,9 +151,23 @@ export const Medicines = () => {
                     <p className="text-sm text-muted-foreground">Upload and order your medicines</p>
                   </div>
                 </div>
-                <Button className="bg-primary hover:bg-primary-dark">
-                  Upload Now
-                </Button>
+                <Dialog open={prescriptionDialogOpen} onOpenChange={setPrescriptionDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button className="bg-primary hover:bg-primary-dark">
+                      Upload Now
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle>Upload Prescription</DialogTitle>
+                    </DialogHeader>
+                    <PrescriptionUploadWidget 
+                      onUploadComplete={handlePrescriptionUpload}
+                      multiple={true}
+                      className="border-0"
+                    />
+                  </DialogContent>
+                </Dialog>
               </div>
             </div>
 
