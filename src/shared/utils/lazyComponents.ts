@@ -30,6 +30,5 @@ export const LazyComponents = {
   PrescriptionManagementPage: lazy(() => import('@/admin/pages/PrescriptionManagement').then(m => ({ default: m.PrescriptionManagementPage }))),
   CategoryManagementPage: lazy(() => import('@/admin/pages/CategoryManagement').then(m => ({ default: m.CategoryManagementPage }))),
   ReportsDashboard: lazy(() => import('@/admin/pages/ReportsDashboard').then(m => ({ default: m.ReportsDashboard }))),
-  Settings: lazy(() => import('@/admin/pages/Settings').then(m => ({ default: m.Settings }))),
-};
+  Settings: lazy(() => import('@/admin/pages/Settings').then(m => ({ default: m.Settings })))
 };
