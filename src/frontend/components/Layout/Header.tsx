@@ -155,8 +155,8 @@ export const Header = () => {
   };
 
   const handleSearch = (query: string, category?: string) => {
-    console.log('Search:', query, 'Category:', category);
-    // TODO: Implement search functionality
+    // Implement search functionality
+    navigate(`/search?q=${encodeURIComponent(query)}${category ? `&category=${category}` : ''}`);
   };
   return <header className="bg-card border-b border-border sticky top-0 z-50 shadow-card">
       {/* Top Strip - Offers */}

@@ -3,6 +3,7 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { LocationProvider } from '@/shared/contexts/LocationContext';
 import { AuthProvider } from '@/shared/contexts/AuthContext';
+import { ErrorProvider } from '@/shared/contexts/ErrorContext';
 import { DataProvider } from '@/shared/components/DataLoader';
 import { Toaster } from '@/shared/components/ui/toaster';
 
@@ -22,14 +23,16 @@ interface AppProvidersProps {
 export const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <LocationProvider>
-          <DataProvider>
-            {children}
-            <Toaster />
-          </DataProvider>
-        </LocationProvider>
-      </AuthProvider>
+      <ErrorProvider>
+        <AuthProvider>
+          <LocationProvider>
+            <DataProvider>
+              {children}
+              <Toaster />
+            </DataProvider>
+          </LocationProvider>
+        </AuthProvider>
+      </ErrorProvider>
     </QueryClientProvider>
   );
 };
