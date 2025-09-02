@@ -94,7 +94,9 @@ export const useNotifications = () => {
         
         // Handle notification click based on data
         if (notification.data?.orderId) {
-          window.location.href = `/order-tracking/${notification.data.orderId}`;
+          // Use React Router instead of window.location
+          const navigate = (window as any).navigate || (() => {});
+          navigate(`/order-tracking/${notification.data.orderId}`);
         }
       };
 

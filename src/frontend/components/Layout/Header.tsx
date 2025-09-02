@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Menu, Search, ShoppingCart, MapPin, User, ChevronDown, Pill, TestTube, Scan, Stethoscope, Home, Activity, MoreHorizontal, Heart, Building, Ambulance, Droplets, Shield, Utensils, BookOpen, Tag } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
@@ -12,6 +13,7 @@ import { MoreServicesDropdown } from './MoreServicesDropdown';
 import { AuthButton } from './AuthButton';
 import { useCart } from '@/shared/hooks/useCart';
 export const Header = () => {
+  const navigate = useNavigate();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const { cartCount } = useCart();
@@ -190,7 +192,7 @@ export const Header = () => {
               variant="ghost" 
               size="sm" 
               className="relative hidden md:flex"
-              onClick={() => window.location.href = '/cart'}
+              onClick={() => navigate('/cart')}
             >
               <ShoppingCart className="h-5 w-5" />
               {cartCount > 0 && (
@@ -232,7 +234,7 @@ export const Header = () => {
               variant="ghost" 
               size="sm" 
               className="relative md:hidden"
-              onClick={() => window.location.href = '/cart'}
+              onClick={() => navigate('/cart')}
             >
               <ShoppingCart className="h-5 w-5" />
               {cartCount > 0 && (
@@ -258,7 +260,7 @@ export const Header = () => {
                 <button 
                   className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-primary-light transition-colors text-sm font-medium text-foreground hover:text-primary" 
                   onClick={() => {
-                    window.location.href = service.href;
+                    navigate(service.href);
                     closeAllDropdowns();
                   }}
                 >

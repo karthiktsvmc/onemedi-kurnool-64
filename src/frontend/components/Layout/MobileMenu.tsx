@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { X, User, ShoppingCart, Heart, Wallet, Package, MapPin, Users, FileText, Phone, MessageCircle, HelpCircle, ChevronRight, Settings, LogOut, LogIn, Edit } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
 import { Badge } from '@/shared/components/ui/badge';
@@ -15,6 +16,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
   onClose,
   direction = 'left'
 }) => {
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Mock login state
   const [selectedLanguage, setSelectedLanguage] = useState('English');
   const languages = ['English', 'Telugu', 'हिंदी'];
@@ -132,7 +134,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
   const handleServiceClick = (href: string) => {
     // Use React Router navigation instead of window.location
     if (href.startsWith('/')) {
-      window.location.href = href;
+      navigate(href);
     } else {
       window.open(href, '_blank');
     }

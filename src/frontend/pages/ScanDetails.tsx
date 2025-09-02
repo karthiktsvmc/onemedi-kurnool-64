@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import { Badge } from '@/shared/components/ui/badge';
 import { Button } from '@/shared/components/ui/button';
@@ -24,6 +24,7 @@ import { mockScans } from '@/frontend/data/mockScansData';
 
 export const ScanDetails = () => {
   const { scanId } = useParams();
+  const navigate = useNavigate();
   const [scan, setScan] = useState(mockScans.find(s => s.id === scanId));
   const [selectedCenter, setSelectedCenter] = useState(scan?.centers[0]);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -50,7 +51,7 @@ export const ScanDetails = () => {
 
   const handleBookNow = () => {
     // Navigate to booking flow with selected center
-    window.location.href = `/scans/${scan.id}/book?center=${selectedCenter?.id}`;
+    navigate(`/scans/${scan.id}/book?center=${selectedCenter?.id}`);
   };
 
   const handleAddToCart = () => {
@@ -207,7 +208,7 @@ export const ScanDetails = () => {
                       <div 
                         key={relatedScan.id}
                         className="border rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer"
-                        onClick={() => window.location.href = `/scans/${relatedScan.id}`}
+                        onClick={() => navigate(`/scans/${relatedScan.id}`)}
                       >
                         <img 
                           src={relatedScan.image} 
