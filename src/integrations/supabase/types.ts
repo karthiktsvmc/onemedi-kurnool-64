@@ -273,14 +273,24 @@ export type Database = {
           created_at: string
           default_currency: string | null
           delivery_charge: number | null
+          favicon_url: string | null
           gst_number: string | null
           gst_rate: number | null
           id: string
           invoice_counter: number | null
           invoice_number_format: string | null
+          language: string | null
+          logo_url: string | null
+          maintenance_message: string | null
+          multi_location_enabled: boolean | null
           pan_number: string | null
           service_charge_rate: number | null
+          social_links: Json | null
+          storefront_status: string | null
+          tagline: string | null
+          timezone: string | null
           updated_at: string
+          whatsapp_business_number: string | null
         }
         Insert: {
           company_address?: string | null
@@ -291,14 +301,24 @@ export type Database = {
           created_at?: string
           default_currency?: string | null
           delivery_charge?: number | null
+          favicon_url?: string | null
           gst_number?: string | null
           gst_rate?: number | null
           id?: string
           invoice_counter?: number | null
           invoice_number_format?: string | null
+          language?: string | null
+          logo_url?: string | null
+          maintenance_message?: string | null
+          multi_location_enabled?: boolean | null
           pan_number?: string | null
           service_charge_rate?: number | null
+          social_links?: Json | null
+          storefront_status?: string | null
+          tagline?: string | null
+          timezone?: string | null
           updated_at?: string
+          whatsapp_business_number?: string | null
         }
         Update: {
           company_address?: string | null
@@ -309,14 +329,24 @@ export type Database = {
           created_at?: string
           default_currency?: string | null
           delivery_charge?: number | null
+          favicon_url?: string | null
           gst_number?: string | null
           gst_rate?: number | null
           id?: string
           invoice_counter?: number | null
           invoice_number_format?: string | null
+          language?: string | null
+          logo_url?: string | null
+          maintenance_message?: string | null
+          multi_location_enabled?: boolean | null
           pan_number?: string | null
           service_charge_rate?: number | null
+          social_links?: Json | null
+          storefront_status?: string | null
+          tagline?: string | null
+          timezone?: string | null
           updated_at?: string
+          whatsapp_business_number?: string | null
         }
         Relationships: []
       }
@@ -572,6 +602,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      catalog_settings: {
+        Row: {
+          auto_stock_management: boolean | null
+          backorder_allowed: boolean | null
+          bulk_discounts: Json | null
+          created_at: string | null
+          default_category: string | null
+          id: string
+          low_stock_threshold: number | null
+          pricing_rules: Json | null
+          subscription_pricing_enabled: boolean | null
+          updated_at: string | null
+        }
+        Insert: {
+          auto_stock_management?: boolean | null
+          backorder_allowed?: boolean | null
+          bulk_discounts?: Json | null
+          created_at?: string | null
+          default_category?: string | null
+          id?: string
+          low_stock_threshold?: number | null
+          pricing_rules?: Json | null
+          subscription_pricing_enabled?: boolean | null
+          updated_at?: string | null
+        }
+        Update: {
+          auto_stock_management?: boolean | null
+          backorder_allowed?: boolean | null
+          bulk_discounts?: Json | null
+          created_at?: string | null
+          default_category?: string | null
+          id?: string
+          low_stock_threshold?: number | null
+          pricing_rules?: Json | null
+          subscription_pricing_enabled?: boolean | null
+          updated_at?: string | null
+        }
+        Relationships: []
       }
       consultation_types: {
         Row: {
@@ -2913,6 +2982,45 @@ export type Database = {
         }
         Relationships: []
       }
+      notification_templates: {
+        Row: {
+          content: string
+          created_at: string | null
+          enabled: boolean | null
+          event_trigger: string
+          id: string
+          subject: string | null
+          template_name: string
+          template_type: string
+          updated_at: string | null
+          variables: Json | null
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          enabled?: boolean | null
+          event_trigger: string
+          id?: string
+          subject?: string | null
+          template_name: string
+          template_type: string
+          updated_at?: string | null
+          variables?: Json | null
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          enabled?: boolean | null
+          event_trigger?: string
+          id?: string
+          subject?: string | null
+          template_name?: string
+          template_type?: string
+          updated_at?: string | null
+          variables?: Json | null
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           created_at: string
@@ -3115,6 +3223,48 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      payment_settings: {
+        Row: {
+          api_key_encrypted: string | null
+          api_secret_encrypted: string | null
+          configuration: Json | null
+          created_at: string | null
+          enabled: boolean | null
+          gateway_name: string
+          id: string
+          supported_currencies: string[] | null
+          test_mode: boolean | null
+          updated_at: string | null
+          webhook_url: string | null
+        }
+        Insert: {
+          api_key_encrypted?: string | null
+          api_secret_encrypted?: string | null
+          configuration?: Json | null
+          created_at?: string | null
+          enabled?: boolean | null
+          gateway_name: string
+          id?: string
+          supported_currencies?: string[] | null
+          test_mode?: boolean | null
+          updated_at?: string | null
+          webhook_url?: string | null
+        }
+        Update: {
+          api_key_encrypted?: string | null
+          api_secret_encrypted?: string | null
+          configuration?: Json | null
+          created_at?: string | null
+          enabled?: boolean | null
+          gateway_name?: string
+          id?: string
+          supported_currencies?: string[] | null
+          test_mode?: boolean | null
+          updated_at?: string | null
+          webhook_url?: string | null
+        }
+        Relationships: []
       }
       payments: {
         Row: {
@@ -3459,6 +3609,45 @@ export type Database = {
         }
         Relationships: []
       }
+      regional_settings: {
+        Row: {
+          country: string
+          created_at: string | null
+          default_city: string | null
+          default_state: string | null
+          delivery_coverage: Json | null
+          id: string
+          local_tax_rules: Json | null
+          serviceable_locations: Json | null
+          shipping_zones: Json | null
+          updated_at: string | null
+        }
+        Insert: {
+          country?: string
+          created_at?: string | null
+          default_city?: string | null
+          default_state?: string | null
+          delivery_coverage?: Json | null
+          id?: string
+          local_tax_rules?: Json | null
+          serviceable_locations?: Json | null
+          shipping_zones?: Json | null
+          updated_at?: string | null
+        }
+        Update: {
+          country?: string
+          created_at?: string | null
+          default_city?: string | null
+          default_state?: string | null
+          delivery_coverage?: Json | null
+          id?: string
+          local_tax_rules?: Json | null
+          serviceable_locations?: Json | null
+          shipping_zones?: Json | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       reviews: {
         Row: {
           comment: string | null
@@ -3664,6 +3853,42 @@ export type Database = {
         }
         Relationships: []
       }
+      security_settings: {
+        Row: {
+          activity_monitoring: boolean | null
+          created_at: string | null
+          data_encryption_enabled: boolean | null
+          id: string
+          max_login_attempts: number | null
+          password_policy: Json | null
+          session_timeout: number | null
+          two_factor_enabled: boolean | null
+          updated_at: string | null
+        }
+        Insert: {
+          activity_monitoring?: boolean | null
+          created_at?: string | null
+          data_encryption_enabled?: boolean | null
+          id?: string
+          max_login_attempts?: number | null
+          password_policy?: Json | null
+          session_timeout?: number | null
+          two_factor_enabled?: boolean | null
+          updated_at?: string | null
+        }
+        Update: {
+          activity_monitoring?: boolean | null
+          created_at?: string | null
+          data_encryption_enabled?: boolean | null
+          id?: string
+          max_login_attempts?: number | null
+          password_policy?: Json | null
+          session_timeout?: number | null
+          two_factor_enabled?: boolean | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       services_cards: {
         Row: {
           active: boolean | null
@@ -3752,6 +3977,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      shipping_providers: {
+        Row: {
+          api_endpoint: string | null
+          api_key_encrypted: string | null
+          configuration: Json | null
+          created_at: string | null
+          enabled: boolean | null
+          id: string
+          provider_name: string
+          supported_services: string[] | null
+          updated_at: string | null
+        }
+        Insert: {
+          api_endpoint?: string | null
+          api_key_encrypted?: string | null
+          configuration?: Json | null
+          created_at?: string | null
+          enabled?: boolean | null
+          id?: string
+          provider_name: string
+          supported_services?: string[] | null
+          updated_at?: string | null
+        }
+        Update: {
+          api_endpoint?: string | null
+          api_key_encrypted?: string | null
+          configuration?: Json | null
+          created_at?: string | null
+          enabled?: boolean | null
+          id?: string
+          provider_name?: string
+          supported_services?: string[] | null
+          updated_at?: string | null
+        }
+        Relationships: []
       }
       shipping_zones: {
         Row: {
@@ -3991,6 +4252,42 @@ export type Database = {
           image_url?: string | null
           name?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      system_policies: {
+        Row: {
+          content: string
+          created_at: string | null
+          effective_date: string | null
+          enabled: boolean | null
+          id: string
+          policy_type: string
+          title: string
+          updated_at: string | null
+          version: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          effective_date?: string | null
+          enabled?: boolean | null
+          id?: string
+          policy_type: string
+          title: string
+          updated_at?: string | null
+          version?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          effective_date?: string | null
+          enabled?: boolean | null
+          id?: string
+          policy_type?: string
+          title?: string
+          updated_at?: string | null
+          version?: string | null
         }
         Relationships: []
       }
