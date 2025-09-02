@@ -124,7 +124,12 @@ export const InvoiceTemplates = () => {
       show_prescription_ref: template.show_prescription_ref,
       show_patient_details: template.show_patient_details,
       branding_colors: template.branding_colors || { primary: '#2563eb', secondary: '#64748b' },
-      contact_info: template.contact_info || { address: '', phone: '', email: '', website: '' }
+      contact_info: {
+        address: template.contact_info?.address || '',
+        phone: template.contact_info?.phone || '',
+        email: template.contact_info?.email || '',
+        website: template.contact_info?.website || ''
+      }
     });
     setIsEditing(true);
     setIsDialogOpen(true);
@@ -175,18 +180,17 @@ export const InvoiceTemplates = () => {
   };
 
   return (
-    <AdminLayout>
-      <div className="space-y-6">
-        <PageHeader
-          title="Invoice Templates"
-          description="Customize invoice layouts and branding"
-          actions={
-            <Button onClick={handleCreateNew}>
-              <Plus className="h-4 w-4 mr-2" />
-              New Template
-            </Button>
-          }
-        />
+    <div className="space-y-6">
+      <PageHeader
+        title="Invoice Templates"
+        description="Customize invoice layouts and branding"
+        actions={
+          <Button onClick={handleCreateNew}>
+            <Plus className="h-4 w-4 mr-2" />
+            New Template
+          </Button>
+        }
+      />
 
         {/* Templates Grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -508,6 +512,5 @@ export const InvoiceTemplates = () => {
           </DialogContent>
         </Dialog>
       </div>
-    </AdminLayout>
-  );
+    );
 };

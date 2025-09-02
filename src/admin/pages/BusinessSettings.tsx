@@ -128,12 +128,11 @@ export const BusinessSettings = () => {
   ];
 
   return (
-    <AdminLayout>
-      <div className="space-y-6">
-        <PageHeader
-          title="Business Settings"
-          description="Configure global business and billing settings"
-        />
+    <div className="space-y-6">
+      <PageHeader
+        title="Business Settings"
+        description="Configure global business and billing settings"
+      />
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <Tabs defaultValue="company" className="w-full">
@@ -389,6 +388,5 @@ export const BusinessSettings = () => {
           </div>
         </form>
       </div>
-    </AdminLayout>
-  );
+    );
 };

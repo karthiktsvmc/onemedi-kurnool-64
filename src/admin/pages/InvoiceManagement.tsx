@@ -208,12 +208,11 @@ export const InvoiceManagement = () => {
   ];
 
   return (
-    <AdminLayout>
-      <div className="space-y-6">
-        <PageHeader
-          title="Invoice Management"
-          description="Manage invoices, billing, and payment tracking"
-        />
+    <div className="space-y-6">
+      <PageHeader
+        title="Invoice Management"
+        description="Manage invoices, billing, and payment tracking"
+      />
 
         {/* Statistics Cards */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
@@ -392,6 +391,5 @@ export const InvoiceManagement = () => {
           </DialogContent>
         </Dialog>
       </div>
-    </AdminLayout>
-  );
+    );
 };
