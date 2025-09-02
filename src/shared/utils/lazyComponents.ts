@@ -25,15 +25,11 @@ export const LazyComponents = {
   AdminDashboard: lazy(() => import('@/admin/pages/AdminDashboard').then(m => ({ default: m.AdminDashboard }))),
   EnhancedMedicineManagement: lazy(() => import('@/admin/pages/EnhancedMedicineManagement').then(m => ({ default: m.EnhancedMedicineManagement }))),
   LabTestManagement: lazy(() => import('@/admin/pages/LabTestManagement').then(m => ({ default: m.LabTestManagement }))),
-  ScanManagement: lazy(() => import('@/admin/pages/ScanManagement').then(m => ({ default: m.ScanManagement }))),
-  DoctorManagement: lazy(() => import('@/admin/pages/DoctorManagement').then(m => ({ default: m.DoctorManagement }))),
   OrderManagement: lazy(() => import('@/admin/pages/OrderManagement').then(m => ({ default: m.OrderManagement }))),
   UserManagement: lazy(() => import('@/admin/pages/UserManagement').then(m => ({ default: m.UserManagement }))),
-  VendorManagement: lazy(() => import('@/admin/pages/VendorManagement').then(m => ({ default: m.VendorManagement }))),
-  AnalyticsDashboard: lazy(() => import('@/admin/pages/AnalyticsDashboard').then(m => ({ default: m.AnalyticsDashboard }))),
-  MarketingDashboard: lazy(() => import('@/admin/pages/MarketingDashboard').then(m => ({ default: m.MarketingDashboard }))),
   PrescriptionManagementPage: lazy(() => import('@/admin/pages/PrescriptionManagement').then(m => ({ default: m.PrescriptionManagementPage }))),
   CategoryManagementPage: lazy(() => import('@/admin/pages/CategoryManagement').then(m => ({ default: m.CategoryManagementPage }))),
   ReportsDashboard: lazy(() => import('@/admin/pages/ReportsDashboard').then(m => ({ default: m.ReportsDashboard }))),
   Settings: lazy(() => import('@/admin/pages/Settings').then(m => ({ default: m.Settings }))),
+};
 };
