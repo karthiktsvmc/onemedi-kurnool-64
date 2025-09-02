@@ -54,6 +54,9 @@ import { BloodBanksManagement } from "./admin/pages/BloodBanksManagement";
 import AmbulanceManagement from "./admin/pages/AmbulanceManagement";
 import MedicineManagement from "./admin/pages/MedicineManagement";
 import EnhancedMedicineManagement from "./admin/pages/EnhancedMedicineManagement";
+import { InvoiceManagement } from "./admin/pages/InvoiceManagement";
+import { InvoiceTemplates } from "./admin/pages/InvoiceTemplates";
+import { BusinessSettings } from "./admin/pages/BusinessSettings";
 import { MedicineDetails } from "./frontend/pages/MedicineDetails";
 import { Hospitals } from "./frontend/pages/Hospitals";
 import { OrderTracking } from "./frontend/pages/OrderTracking";
@@ -174,6 +177,11 @@ const App = () => (
           <Route path="ambulance" element={<AmbulanceManagement />} />
           <Route path="insurance" element={<InsuranceManagement />} />
           <Route path="prescriptions" element={<PrescriptionManagementPage />} />
+          
+          {/* Invoice & Billing Management */}
+          <Route path="invoices" element={<InvoiceManagement />} />
+          <Route path="invoice-templates" element={<InvoiceTemplates />} />
+          <Route path="business-settings" element={<BusinessSettings />} />
           
           {/* Management & Settings */}
           <Route path="categories" element={<div>Categories Management (Coming Soon)</div>} />

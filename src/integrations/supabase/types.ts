@@ -263,6 +263,63 @@ export type Database = {
         }
         Relationships: []
       }
+      business_settings: {
+        Row: {
+          company_address: string | null
+          company_email: string | null
+          company_name: string
+          company_phone: string | null
+          company_website: string | null
+          created_at: string
+          default_currency: string | null
+          delivery_charge: number | null
+          gst_number: string | null
+          gst_rate: number | null
+          id: string
+          invoice_counter: number | null
+          invoice_number_format: string | null
+          pan_number: string | null
+          service_charge_rate: number | null
+          updated_at: string
+        }
+        Insert: {
+          company_address?: string | null
+          company_email?: string | null
+          company_name?: string
+          company_phone?: string | null
+          company_website?: string | null
+          created_at?: string
+          default_currency?: string | null
+          delivery_charge?: number | null
+          gst_number?: string | null
+          gst_rate?: number | null
+          id?: string
+          invoice_counter?: number | null
+          invoice_number_format?: string | null
+          pan_number?: string | null
+          service_charge_rate?: number | null
+          updated_at?: string
+        }
+        Update: {
+          company_address?: string | null
+          company_email?: string | null
+          company_name?: string
+          company_phone?: string | null
+          company_website?: string | null
+          created_at?: string
+          default_currency?: string | null
+          delivery_charge?: number | null
+          gst_number?: string | null
+          gst_rate?: number | null
+          id?: string
+          invoice_counter?: number | null
+          invoice_number_format?: string | null
+          pan_number?: string | null
+          service_charge_rate?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       care_taker_services: {
         Row: {
           care_taker_id: string | null
@@ -1755,6 +1812,221 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      invoice_items: {
+        Row: {
+          created_at: string
+          discount_amount: number
+          id: string
+          invoice_id: string
+          item_description: string | null
+          item_id: string | null
+          item_name: string
+          item_type: string
+          quantity: number
+          tax_amount: number
+          tax_rate: number
+          total_amount: number
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string
+          discount_amount?: number
+          id?: string
+          invoice_id: string
+          item_description?: string | null
+          item_id?: string | null
+          item_name: string
+          item_type: string
+          quantity?: number
+          tax_amount?: number
+          tax_rate?: number
+          total_amount?: number
+          unit_price?: number
+        }
+        Update: {
+          created_at?: string
+          discount_amount?: number
+          id?: string
+          invoice_id?: string
+          item_description?: string | null
+          item_id?: string | null
+          item_name?: string
+          item_type?: string
+          quantity?: number
+          tax_amount?: number
+          tax_rate?: number
+          total_amount?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoice_items_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "invoices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      invoice_templates: {
+        Row: {
+          branding_colors: Json | null
+          company_logo_url: string | null
+          contact_info: Json | null
+          created_at: string
+          disclaimers: string | null
+          footer_text: string | null
+          header_text: string | null
+          id: string
+          is_default: boolean | null
+          name: string
+          show_doctor_name: boolean | null
+          show_patient_details: boolean | null
+          show_prescription_ref: boolean | null
+          terms_conditions: string | null
+          updated_at: string
+        }
+        Insert: {
+          branding_colors?: Json | null
+          company_logo_url?: string | null
+          contact_info?: Json | null
+          created_at?: string
+          disclaimers?: string | null
+          footer_text?: string | null
+          header_text?: string | null
+          id?: string
+          is_default?: boolean | null
+          name: string
+          show_doctor_name?: boolean | null
+          show_patient_details?: boolean | null
+          show_prescription_ref?: boolean | null
+          terms_conditions?: string | null
+          updated_at?: string
+        }
+        Update: {
+          branding_colors?: Json | null
+          company_logo_url?: string | null
+          contact_info?: Json | null
+          created_at?: string
+          disclaimers?: string | null
+          footer_text?: string | null
+          header_text?: string | null
+          id?: string
+          is_default?: boolean | null
+          name?: string
+          show_doctor_name?: boolean | null
+          show_patient_details?: boolean | null
+          show_prescription_ref?: boolean | null
+          terms_conditions?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      invoices: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          currency: string | null
+          customer_address: string | null
+          customer_email: string | null
+          customer_name: string
+          customer_phone: string | null
+          delivery_charge: number
+          discount_amount: number
+          doctor_name: string | null
+          due_date: string | null
+          id: string
+          invoice_date: string
+          invoice_number: string
+          notes: string | null
+          order_id: string | null
+          payment_date: string | null
+          payment_method: string | null
+          payment_status: string | null
+          prescription_ref: string | null
+          service_charge: number
+          subtotal: number
+          tax_amount: number
+          template_id: string | null
+          total_amount: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          currency?: string | null
+          customer_address?: string | null
+          customer_email?: string | null
+          customer_name: string
+          customer_phone?: string | null
+          delivery_charge?: number
+          discount_amount?: number
+          doctor_name?: string | null
+          due_date?: string | null
+          id?: string
+          invoice_date?: string
+          invoice_number: string
+          notes?: string | null
+          order_id?: string | null
+          payment_date?: string | null
+          payment_method?: string | null
+          payment_status?: string | null
+          prescription_ref?: string | null
+          service_charge?: number
+          subtotal?: number
+          tax_amount?: number
+          template_id?: string | null
+          total_amount?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          currency?: string | null
+          customer_address?: string | null
+          customer_email?: string | null
+          customer_name?: string
+          customer_phone?: string | null
+          delivery_charge?: number
+          discount_amount?: number
+          doctor_name?: string | null
+          due_date?: string | null
+          id?: string
+          invoice_date?: string
+          invoice_number?: string
+          notes?: string | null
+          order_id?: string | null
+          payment_date?: string | null
+          payment_method?: string | null
+          payment_status?: string | null
+          prescription_ref?: string | null
+          service_charge?: number
+          subtotal?: number
+          tax_amount?: number
+          template_id?: string | null
+          total_amount?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoices_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "invoices_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "invoice_templates"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       lab_categories: {
         Row: {
@@ -4126,6 +4398,10 @@ export type Database = {
       calculate_distance: {
         Args: { lat1: number; lat2: number; lng1: number; lng2: number }
         Returns: number
+      }
+      generate_invoice_number: {
+        Args: Record<PropertyKey, never>
+        Returns: string
       }
       generate_order_number: {
         Args: Record<PropertyKey, never>
