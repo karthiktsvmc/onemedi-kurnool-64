@@ -2337,6 +2337,54 @@ export type Database = {
         }
         Relationships: []
       }
+      marketing_campaigns: {
+        Row: {
+          completed_at: string | null
+          created_at: string | null
+          created_by: string | null
+          id: string
+          message_content: Json
+          name: string
+          scheduled_at: string | null
+          started_at: string | null
+          stats: Json | null
+          status: string | null
+          target_audience: Json | null
+          type: string
+          updated_at: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          message_content: Json
+          name: string
+          scheduled_at?: string | null
+          started_at?: string | null
+          stats?: Json | null
+          status?: string | null
+          target_audience?: Json | null
+          type: string
+          updated_at?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          message_content?: Json
+          name?: string
+          scheduled_at?: string | null
+          started_at?: string | null
+          stats?: Json | null
+          status?: string | null
+          target_audience?: Json | null
+          type?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       medicine_attribute_values: {
         Row: {
           attribute_id: string | null
@@ -3224,6 +3272,39 @@ export type Database = {
           },
         ]
       }
+      payment_gateways: {
+        Row: {
+          config: Json | null
+          created_at: string | null
+          gateway_key: string
+          id: string
+          is_active: boolean | null
+          name: string
+          test_mode: boolean | null
+          updated_at: string | null
+        }
+        Insert: {
+          config?: Json | null
+          created_at?: string | null
+          gateway_key: string
+          id?: string
+          is_active?: boolean | null
+          name: string
+          test_mode?: boolean | null
+          updated_at?: string | null
+        }
+        Update: {
+          config?: Json | null
+          created_at?: string | null
+          gateway_key?: string
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          test_mode?: boolean | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       payment_settings: {
         Row: {
           api_key_encrypted: string | null
@@ -3272,11 +3353,15 @@ export type Database = {
           created_at: string
           currency: string | null
           gateway: string
+          gateway_name: string | null
           gateway_response: Json | null
+          gateway_transaction_id: string | null
           id: string
           order_id: string
           payment_id: string | null
+          payment_method: string | null
           refund_amount: number | null
+          refund_status: string | null
           status: string
           updated_at: string
         }
@@ -3285,11 +3370,15 @@ export type Database = {
           created_at?: string
           currency?: string | null
           gateway: string
+          gateway_name?: string | null
           gateway_response?: Json | null
+          gateway_transaction_id?: string | null
           id?: string
           order_id: string
           payment_id?: string | null
+          payment_method?: string | null
           refund_amount?: number | null
+          refund_status?: string | null
           status?: string
           updated_at?: string
         }
@@ -3298,11 +3387,15 @@ export type Database = {
           created_at?: string
           currency?: string | null
           gateway?: string
+          gateway_name?: string | null
           gateway_response?: Json | null
+          gateway_transaction_id?: string | null
           id?: string
           order_id?: string
           payment_id?: string | null
+          payment_method?: string | null
           refund_amount?: number | null
+          refund_status?: string | null
           status?: string
           updated_at?: string
         }
@@ -3437,15 +3530,21 @@ export type Database = {
           created_at: string
           diagnosis: string | null
           doctor_name: string | null
+          dosage_extracted: Json | null
           family_member_id: string | null
           file_type: string
           file_url: string
           hospital_name: string | null
           id: string
+          medicines_extracted: Json | null
           notes: string | null
+          ocr_confidence: number | null
+          ocr_text: string | null
           order_id: string | null
           patient_name: string
           prescription_date: string | null
+          processed_at: string | null
+          processing_status: string | null
           updated_at: string
           user_id: string
           verification_status: string | null
@@ -3456,15 +3555,21 @@ export type Database = {
           created_at?: string
           diagnosis?: string | null
           doctor_name?: string | null
+          dosage_extracted?: Json | null
           family_member_id?: string | null
           file_type: string
           file_url: string
           hospital_name?: string | null
           id?: string
+          medicines_extracted?: Json | null
           notes?: string | null
+          ocr_confidence?: number | null
+          ocr_text?: string | null
           order_id?: string | null
           patient_name: string
           prescription_date?: string | null
+          processed_at?: string | null
+          processing_status?: string | null
           updated_at?: string
           user_id: string
           verification_status?: string | null
@@ -3475,15 +3580,21 @@ export type Database = {
           created_at?: string
           diagnosis?: string | null
           doctor_name?: string | null
+          dosage_extracted?: Json | null
           family_member_id?: string | null
           file_type?: string
           file_url?: string
           hospital_name?: string | null
           id?: string
+          medicines_extracted?: Json | null
           notes?: string | null
+          ocr_confidence?: number | null
+          ocr_text?: string | null
           order_id?: string | null
           patient_name?: string
           prescription_date?: string | null
+          processed_at?: string | null
+          processing_status?: string | null
           updated_at?: string
           user_id?: string
           verification_status?: string | null
@@ -3606,6 +3717,57 @@ export type Database = {
           sort_order?: number | null
           title?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      pwa_settings: {
+        Row: {
+          app_name: string | null
+          background_color: string | null
+          cache_strategy: string | null
+          created_at: string | null
+          description: string | null
+          display: string | null
+          icons: Json | null
+          id: string
+          offline_fallback: string | null
+          orientation: string | null
+          short_name: string | null
+          start_url: string | null
+          theme_color: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          app_name?: string | null
+          background_color?: string | null
+          cache_strategy?: string | null
+          created_at?: string | null
+          description?: string | null
+          display?: string | null
+          icons?: Json | null
+          id?: string
+          offline_fallback?: string | null
+          orientation?: string | null
+          short_name?: string | null
+          start_url?: string | null
+          theme_color?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          app_name?: string | null
+          background_color?: string | null
+          cache_strategy?: string | null
+          created_at?: string | null
+          description?: string | null
+          display?: string | null
+          icons?: Json | null
+          id?: string
+          offline_fallback?: string | null
+          orientation?: string | null
+          short_name?: string | null
+          start_url?: string | null
+          theme_color?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -3885,6 +4047,66 @@ export type Database = {
           password_policy?: Json | null
           session_timeout?: number | null
           two_factor_enabled?: boolean | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      seo_settings: {
+        Row: {
+          canonical_url: string | null
+          created_at: string | null
+          id: string
+          meta_description: string | null
+          meta_keywords: string[] | null
+          meta_title: string | null
+          og_description: string | null
+          og_image: string | null
+          og_title: string | null
+          page_identifier: string | null
+          page_type: string
+          robots_meta: string | null
+          structured_data: Json | null
+          twitter_description: string | null
+          twitter_image: string | null
+          twitter_title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          canonical_url?: string | null
+          created_at?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_keywords?: string[] | null
+          meta_title?: string | null
+          og_description?: string | null
+          og_image?: string | null
+          og_title?: string | null
+          page_identifier?: string | null
+          page_type: string
+          robots_meta?: string | null
+          structured_data?: Json | null
+          twitter_description?: string | null
+          twitter_image?: string | null
+          twitter_title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          canonical_url?: string | null
+          created_at?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_keywords?: string[] | null
+          meta_title?: string | null
+          og_description?: string | null
+          og_image?: string | null
+          og_title?: string | null
+          page_identifier?: string | null
+          page_type?: string
+          robots_meta?: string | null
+          structured_data?: Json | null
+          twitter_description?: string | null
+          twitter_image?: string | null
+          twitter_title?: string | null
           updated_at?: string | null
         }
         Relationships: []
@@ -4651,6 +4873,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      whatsapp_settings: {
+        Row: {
+          api_key: string | null
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          phone_number: string | null
+          provider: string
+          template_configs: Json | null
+          updated_at: string | null
+          webhook_url: string | null
+        }
+        Insert: {
+          api_key?: string | null
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          phone_number?: string | null
+          provider?: string
+          template_configs?: Json | null
+          updated_at?: string | null
+          webhook_url?: string | null
+        }
+        Update: {
+          api_key?: string | null
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          phone_number?: string | null
+          provider?: string
+          template_configs?: Json | null
+          updated_at?: string | null
+          webhook_url?: string | null
+        }
+        Relationships: []
       }
       wishlists: {
         Row: {
