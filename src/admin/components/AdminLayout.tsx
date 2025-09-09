@@ -2,21 +2,30 @@ import { Outlet } from "react-router-dom";
 import { SidebarProvider } from "@/shared/components/ui/sidebar";
 import { AdminSidebar } from "./AdminSidebar";
 import { AdminHeader } from "./AdminHeader";
+import { AdminAuthGuard } from "./AdminAuthGuard";
+import { RealtimeProvider } from "./RealTimeSync/RealtimeProvider";
+import { ErrorBoundary } from "@/shared/components/ErrorBoundary";
 
 export function AdminLayout() {
   return (
-    <SidebarProvider defaultOpen={true}>
-      <div className="min-h-screen flex w-full bg-background">
-        <AdminSidebar />
-        
-        <div className="flex-1 flex flex-col">
-          <AdminHeader />
-          
-          <main className="flex-1 p-6 overflow-auto">
-            <Outlet />
-          </main>
-        </div>
-      </div>
-    </SidebarProvider>
+    <AdminAuthGuard>
+      <ErrorBoundary>
+        <RealtimeProvider>
+          <SidebarProvider defaultOpen={true}>
+            <div className="min-h-screen flex w-full bg-background">
+              <AdminSidebar />
+              
+              <div className="flex-1 flex flex-col">
+                <AdminHeader />
+                
+                <main className="flex-1 p-6 overflow-auto">
+                  <Outlet />
+                </main>
+              </div>
+            </div>
+          </SidebarProvider>
+        </RealtimeProvider>
+      </ErrorBoundary>
+    </AdminAuthGuard>
   );
 }

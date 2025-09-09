@@ -36,6 +36,8 @@ import { OrderManagement } from "./admin/pages/OrderManagement";
 import VendorManagement from "./admin/pages/VendorManagement";
 import InventoryManagement from "./admin/pages/InventoryManagement";
 import { AdminLayout } from "./admin/components/AdminLayout";
+import { AdminDashboard } from "./admin/pages/AdminDashboard";
+import { Settings } from "./admin/pages/Settings";
 import { PageDesignControl } from "./admin/pages/PageDesignControl";
 import { UserManagement } from "./admin/pages/UserManagement";
 import { ProductServiceManagement } from "./admin/pages/ProductServiceManagement";
@@ -154,7 +156,7 @@ const App = () => (
         <Route path="/diet-plans" element={<div>Diet Plans (Coming Soon)</div>} />
         <Route path="/medicine/:id" element={<MedicineDetails />} />
         <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<OrderManagement />} />
+          <Route index element={<AdminDashboard />} />
           <Route path="orders" element={<OrderManagement />} />
           <Route path="vendors" element={<VendorManagement />} />
           <Route path="inventory" element={<InventoryManagement />} />
@@ -188,7 +190,7 @@ const App = () => (
           <Route path="marketing" element={<MarketingDashboard />} />
           <Route path="analytics" element={<AnalyticsDashboard />} />
           <Route path="reports" element={<div>Reports Dashboard (Coming Soon)</div>} />
-          <Route path="settings" element={<div>Settings (Coming Soon)</div>} />
+          <Route path="settings" element={<Settings />} />
         </Route>
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />

@@ -10,7 +10,10 @@ import {
   Scan,
   Download,
   ArrowUpRight,
-  Clock
+  Clock,
+  Shield,
+  Database,
+  Server
 } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
 import { Badge } from '@/shared/components/ui/badge';
@@ -18,6 +21,8 @@ import { AdminCard } from '../components/shared/AdminCard';
 import { StatCard } from '../components/shared/StatCard';
 import { PageHeader } from '../components/shared/PageHeader';
 import { useAdminStats } from '../hooks/useAdminStats';
+import { ConnectionStatus } from '../components/RealTimeSync/ConnectionStatus';
+import { RealTimeOrderMonitor } from '../components/RealTimeOrderMonitor';
 
 export const AdminDashboard = () => {
   const { stats, serviceStats, loading } = useAdminStats();
@@ -31,7 +36,10 @@ export const AdminDashboard = () => {
     TestTube,
     Stethoscope,
     Activity,
-    Scan
+    Scan,
+    Shield,
+    Database,
+    Server
   };
 
   const recentActivities = [
@@ -39,17 +47,26 @@ export const AdminDashboard = () => {
     { action: 'Medicine stock updated - Paracetamol', time: '15 minutes ago', type: 'inventory' },
     { action: 'New user registered - Dr. Amit Shah', time: '30 minutes ago', type: 'user' },
     { action: 'Lab test report uploaded', time: '1 hour ago', type: 'report' },
-    { action: 'Payment of ₹2,560 received', time: '2 hours ago', type: 'payment' }
+    { action: 'Payment of ₹2,560 received', time: '2 hours ago', type: 'payment' },
+    { action: 'Security alert: Failed login attempts', time: '3 hours ago', type: 'security', urgent: true }
+  ];
+
+  const securityMetrics = [
+    { title: 'Active Sessions', value: '47', icon: 'Users', status: 'normal' },
+    { title: 'Failed Logins', value: '3', icon: 'Shield', status: 'warning' },
+    { title: 'API Calls/min', value: '1.2k', icon: 'Server', status: 'normal' },
+    { title: 'DB Connections', value: '18/50', icon: 'Database', status: 'normal' }
   ];
 
   return (
     <div className="space-y-8">
-      {/* Page Header */}
+      {/* Page Header with Real-time Status */}
       <PageHeader
-        title="Dashboard"
-        description="Welcome back! Here's what's happening with ONE MEDI today."
+        title="Admin Dashboard"
+        description="Real-time monitoring and management of ONE MEDI platform"
         actions={
           <div className="flex items-center gap-3">
+            <ConnectionStatus />
             <Button variant="outline" size="sm">
               <Clock className="h-4 w-4 mr-2" />
               Last 30 days
@@ -77,6 +94,31 @@ export const AdminDashboard = () => {
               iconColor={stat.color}
               loading={loading}
             />
+          );
+        })}
+      </div>
+
+      {/* Real-time Order Monitor */}
+      <RealTimeOrderMonitor />
+
+      {/* Security & System Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        {securityMetrics.map((metric) => {
+          const IconComponent = iconMap[metric.icon as keyof typeof iconMap];
+          return (
+            <AdminCard key={metric.title} className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-muted-foreground">{metric.title}</p>
+                  <p className="text-2xl font-bold">{metric.value}</p>
+                </div>
+                <div className={`p-2 rounded-lg ${
+                  metric.status === 'warning' ? 'bg-yellow-100 text-yellow-600' : 'bg-green-100 text-green-600'
+                }`}>
+                  {IconComponent && <IconComponent className="h-5 w-5" />}
+                </div>
+              </div>
+            </AdminCard>
           );
         })}
       </div>
@@ -133,7 +175,7 @@ export const AdminDashboard = () => {
           title="Recent Activity"
           description="Latest platform updates"
         >
-          <div className="space-y-3">
+          <div className="space-y-3 max-h-96 overflow-y-auto">
             {recentActivities.map((activity, index) => (
               <div key={index} className="flex items-start gap-3 p-3 rounded-lg hover:bg-secondary/30 transition-colors">
                 <div className={`w-2 h-2 rounded-full mt-2 ${activity.urgent ? 'bg-destructive' : 'bg-primary'}`}></div>
@@ -163,15 +205,16 @@ export const AdminDashboard = () => {
       >
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { label: 'Add Product', action: 'add-product', variant: 'default' },
-            { label: 'Process Orders', action: 'orders', variant: 'outline' },
-            { label: 'Inventory Alert', action: 'inventory', variant: 'outline' },
-            { label: 'Generate Report', action: 'reports', variant: 'outline' }
+            { label: 'Add Product', action: '/admin/medicines', variant: 'default' },
+            { label: 'Process Orders', action: '/admin/orders', variant: 'outline' },
+            { label: 'Inventory Alert', action: '/admin/inventory', variant: 'outline' },
+            { label: 'Generate Report', action: '/admin/analytics', variant: 'outline' }
           ].map((action) => (
             <Button 
               key={action.action} 
               variant={action.variant as any}
               className="h-auto py-4 flex-col gap-2"
+              onClick={() => window.location.href = action.action}
             >
               {action.label}
             </Button>
