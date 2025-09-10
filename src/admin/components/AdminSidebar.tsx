@@ -63,7 +63,8 @@ const managementModules = [
   { title: "Categories", url: "/admin/categories", icon: PlusCircle, badge: undefined },
   { title: "Marketing", url: "/admin/marketing", icon: Megaphone, badge: undefined },
   { title: "Analytics", url: "/admin/analytics", icon: BarChart3, badge: undefined },
-  { title: "Business Settings", url: "/admin/business-settings", icon: Settings, badge: "new" },
+  { title: "Security", url: "/admin/security", icon: Shield, badge: "new" },
+  { title: "Business Settings", url: "/admin/business-settings", icon: Settings, badge: undefined },
 ];
 
 export function AdminSidebar() {

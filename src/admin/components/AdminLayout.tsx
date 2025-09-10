@@ -3,14 +3,14 @@ import { SidebarProvider } from "@/shared/components/ui/sidebar";
 import { AdminSidebar } from "./AdminSidebar";
 import { AdminHeader } from "./AdminHeader";
 import { AdminAuthGuard } from "./AdminAuthGuard";
-import { RealtimeProvider } from "./RealTimeSync/RealtimeProvider";
+import { EnhancedRealtimeProvider } from "./RealTimeSync/EnhancedRealtimeProvider";
 import { ErrorBoundary } from "@/shared/components/ErrorBoundary";
 
 export function AdminLayout() {
   return (
     <AdminAuthGuard>
       <ErrorBoundary>
-        <RealtimeProvider>
+        <EnhancedRealtimeProvider>
           <SidebarProvider defaultOpen={true}>
             <div className="min-h-screen flex w-full bg-background">
               <AdminSidebar />
@@ -24,7 +24,7 @@ export function AdminLayout() {
               </div>
             </div>
           </SidebarProvider>
-        </RealtimeProvider>
+        </EnhancedRealtimeProvider>
       </ErrorBoundary>
     </AdminAuthGuard>
   );
