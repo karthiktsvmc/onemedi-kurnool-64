@@ -1,4 +1,5 @@
-import { Bell, Search, Settings, User, LogOut } from "lucide-react";
+import { Bell, Settings, User, LogOut } from "lucide-react";
+import { GlobalSearch } from "./Search/GlobalSearch";
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import {
@@ -47,14 +48,8 @@ export function AdminHeader() {
           </div>
 
           <div className="flex items-center gap-4">
-            {/* Search */}
-            <div className="relative w-64">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                placeholder="Search orders, users, products..."
-                className="pl-10"
-              />
-            </div>
+            {/* Global Search */}
+            <GlobalSearch />
 
             {/* Notifications */}
             <Button variant="ghost" size="icon" className="relative">
