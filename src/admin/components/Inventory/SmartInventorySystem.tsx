@@ -153,76 +153,55 @@ export const SmartInventorySystem: React.FC = () => {
     {
       key: 'name',
       label: 'Product Name',
-      accessorKey: 'name',
-      header: 'Product Name',
-      cell: ({ row }: any) => (
+      render: (value: string, row: InventoryItem) => (
         <div>
-          <div className="font-medium">{row.getValue('name')}</div>
-          <div className="text-sm text-muted-foreground">{row.original.sku}</div>
+          <div className="font-medium">{value}</div>
+          <div className="text-sm text-muted-foreground">{row.sku}</div>
         </div>
       ),
     },
     {
       key: 'currentStock',
       label: 'Current Stock',
-      accessorKey: 'currentStock',
-      header: 'Current Stock',
-      cell: ({ row }: any) => {
-        const item = row.original;
-        return (
-          <div className="text-right">
-            <div className="font-medium">{item.currentStock}</div>
-            <div className="text-xs text-muted-foreground">
-              Min: {item.reorderPoint} | Max: {item.maxStock}
-            </div>
+      render: (value: number, row: InventoryItem) => (
+        <div className="text-right">
+          <div className="font-medium">{value}</div>
+          <div className="text-xs text-muted-foreground">
+            Min: {row.reorderPoint} | Max: {row.maxStock}
           </div>
-        );
-      },
+        </div>
+      ),
     },
     {
       key: 'status',
       label: 'Status',
-      accessorKey: 'status',
-      header: 'Status',
-      cell: ({ row }: any) => (
-        <Badge className={getStatusColor(row.getValue('status'))}>
-          {row.getValue('status').replace('_', ' ')}
+      render: (value: string) => (
+        <Badge className={getStatusColor(value)}>
+          {value.replace('_', ' ')}
         </Badge>
       ),
     },
     {
       key: 'demandTrend',
       label: 'Trend',
-      accessorKey: 'demandTrend',
-      header: 'Trend',
-      cell: ({ row }: any) => getTrendIcon(row.getValue('demandTrend')),
+      render: (value: string) => getTrendIcon(value),
     },
     {
       key: 'predictedRunOut',
       label: 'Predicted Run Out',
-      accessorKey: 'predictedRunOut',
-      header: 'Predicted Run Out',
-      cell: ({ row }: any) => {
-        const date = row.getValue('predictedRunOut');
-        return date ? new Date(date).toLocaleDateString() : '-';
-      },
+      render: (value: Date) => value ? new Date(value).toLocaleDateString() : '-',
     },
     {
       key: 'suggestedReorder',
       label: 'Suggested Reorder',
-      accessorKey: 'suggestedReorder',
-      header: 'Suggested Reorder',
-      cell: ({ row }: any) => {
-        const amount = row.getValue('suggestedReorder');
-        return amount ? (
-          <div className="text-right">
-            <div className="font-medium">{amount} units</div>
-            <div className="text-xs text-muted-foreground">
-              ₹{(amount * row.original.unitCost).toFixed(2)}
-            </div>
+      render: (value: number, row: InventoryItem) => value ? (
+        <div className="text-right">
+          <div className="font-medium">{value} units</div>
+          <div className="text-xs text-muted-foreground">
+            ₹{(value * row.unitCost).toFixed(2)}
           </div>
-        ) : '-';
-      },
+        </div>
+      ) : '-',
     },
   ];
 
@@ -429,12 +408,15 @@ export const SmartInventorySystem: React.FC = () => {
           </div>
 
           {/* Inventory Table */}
-          <Card>
-            <DataTable
-              columns={inventoryColumns}
-              data={filteredItems}
-            />
-          </Card>
+          <DataTable
+            title="Inventory Items"
+            description="Manage product inventory and stock levels"
+            columns={inventoryColumns}
+            data={filteredItems}
+            onAdd={() => console.log('Add new product')}
+            onEdit={(item) => console.log('Edit item:', item)}
+            onDelete={(item) => console.log('Delete item:', item)}
+          />
         </TabsContent>
 
         <TabsContent value="analytics" className="space-y-6">
