@@ -23,13 +23,26 @@ export const AdminAuthGuard: React.FC<AdminAuthGuardProps> = ({
     const checkAdminAccess = async () => {
       if (!loading && user) {
         try {
-          const { data: userRole, error } = await supabase
+          const { data: userRoles, error } = await supabase
             .from('user_roles')
             .select('role')
-            .eq('user_id', user.id)
-            .single();
+            .eq('user_id', user.id);
 
-          if (error || !userRole || !requiredRole.includes(userRole.role)) {
+          if (error || !userRoles || userRoles.length === 0) {
+            toast({
+              title: "Access Denied",
+              description: "You don't have permission to access the admin panel.",
+              variant: "destructive",
+            });
+            navigate('/', { replace: true });
+            return;
+          }
+
+          const hasRequiredRole = userRoles.some(roleData => 
+            requiredRole.includes(roleData.role)
+          );
+
+          if (!hasRequiredRole) {
             toast({
               title: "Access Denied",
               description: "You don't have permission to access the admin panel.",

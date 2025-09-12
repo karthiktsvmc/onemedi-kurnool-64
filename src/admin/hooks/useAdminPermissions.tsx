@@ -48,9 +48,11 @@ export const useAdminPermissions = (): UserPermissions => {
         const userRolesList = userRoles.map(r => r.role);
         setRoles(userRolesList);
 
-        // If super admin, grant all permissions
+        // Define permissions based on roles
+        let allPermissions: AdminPermission[] = [];
+
         if (userRolesList.includes('super_admin')) {
-          setPermissions([
+          allPermissions = [
             'users_read', 'users_write', 'users_delete',
             'orders_read', 'orders_write', 'orders_cancel', 'orders_refund',
             'inventory_read', 'inventory_write', 'inventory_delete',
@@ -62,14 +64,28 @@ export const useAdminPermissions = (): UserPermissions => {
             'marketing_read', 'marketing_write', 'marketing_send',
             'reports_read', 'reports_generate', 'reports_export',
             'system_admin', 'audit_logs_read'
-          ]);
+          ];
+        } else if (userRolesList.includes('admin')) {
+          allPermissions = [
+            'users_read', 'users_write',
+            'orders_read', 'orders_write', 'orders_cancel', 'orders_refund',
+            'inventory_read', 'inventory_write', 'inventory_delete',
+            'analytics_read', 'analytics_export',
+            'settings_read', 'settings_write',
+            'vendors_read', 'vendors_write', 'vendors_approve',
+            'payments_read', 'payments_process', 'payments_refund',
+            'marketing_read', 'marketing_write', 'marketing_send',
+            'reports_read', 'reports_generate', 'reports_export'
+          ];
+        } else if (userRolesList.includes('vendor')) {
+          allPermissions = [
+            'orders_read', 'inventory_read', 'analytics_read'
+          ];
         } else {
-          // Mock permissions for now - in production this would query role_permissions table
-          const mockPermissions: AdminPermission[] = userRolesList.includes('admin') 
-            ? ['users_read', 'users_write', 'orders_read', 'orders_write', 'analytics_read']
-            : ['users_read', 'orders_read'];
-          setPermissions(mockPermissions);
+          allPermissions = ['orders_read'];
         }
+
+        setPermissions(allPermissions);
       } catch (error) {
         console.error('Error fetching permissions:', error);
         setPermissions([]);

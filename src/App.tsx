@@ -88,7 +88,11 @@ const App = () => (
         <Route path="/diabetes-care" element={<DiabetesCare />} />
         
         {/* Authentication Routes */}
-        <Route path="/auth" element={<Auth />} />
+        <Route path="/auth" element={
+          <AuthGuard requireAuth={false}>
+            <Auth />
+          </AuthGuard>
+        } />
         
         {/* Protected Routes - Require Authentication */}
         <Route path="/cart" element={

@@ -4670,21 +4670,30 @@ export type Database = {
       }
       user_roles: {
         Row: {
-          created_at: string
+          assigned_at: string | null
+          assigned_by: string | null
+          created_at: string | null
           id: string
           role: Database["public"]["Enums"]["app_role"]
+          updated_at: string | null
           user_id: string
         }
         Insert: {
-          created_at?: string
+          assigned_at?: string | null
+          assigned_by?: string | null
+          created_at?: string | null
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
+          updated_at?: string | null
           user_id: string
         }
         Update: {
-          created_at?: string
+          assigned_at?: string | null
+          assigned_by?: string | null
+          created_at?: string | null
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
+          updated_at?: string | null
           user_id?: string
         }
         Relationships: []
@@ -4978,9 +4987,17 @@ export type Database = {
           service_data: Json
         }[]
       }
+      is_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
+      is_super_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
     }
     Enums: {
-      app_role: "super_admin" | "admin" | "moderator" | "user" | "manager"
+      app_role: "super_admin" | "admin" | "vendor" | "user"
       product_type:
         | "simple"
         | "variable"
@@ -5114,7 +5131,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["super_admin", "admin", "moderator", "user", "manager"],
+      app_role: ["super_admin", "admin", "vendor", "user"],
       product_type: [
         "simple",
         "variable",
